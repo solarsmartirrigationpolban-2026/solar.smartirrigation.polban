@@ -153,7 +153,7 @@ td{padding:6px 7px;line-height:1.25}
 #page-detail .grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
 #page-trend .charts{grid-template-columns:repeat(2,minmax(0,1fr));flex:1 1 auto}
 #page-trend .chartbox{min-height:0}
-#page-trend .chart{height:100px}
+#page-trend .chart{height:125px}
 #page-alarm .kpis{grid-template-columns:repeat(4,minmax(0,1fr))}
 #page-alarm>.card{min-height:0;flex:1 1 0}
 #page-system .controls{grid-template-columns:repeat(2,minmax(0,1fr));min-height:0;flex:1 1 auto}
@@ -205,7 +205,7 @@ td{padding:6px 7px;line-height:1.25}
  #page-detail .card-head{font-size:7px}
  #page-detail table{font-size:7px}#page-detail th,#page-detail td{padding:3px 4px}
  #page-trend .charts{grid-template-columns:1fr 1fr;gap:5px}
- #page-trend .chart{height:55px}
+ #page-trend .chart{height:82px}
  #page-trend .legend{font-size:6px}
  #page-alarm .kpis{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}
  #page-alarm .metric{font-size:13px!important}
@@ -574,17 +574,17 @@ td{padding:6px 7px;line-height:1.25}
 </section>
 
 <section id="page-trend" class="page hidden"><div class="page-head"><div><div class="eyebrow">HISTORICAL ANALYTICS</div><h1>Trend Analysis</h1><div class="sub">Parameter yang tersedia untuk direkam pada LOG CSV firmware.</div></div><button class="btn" id="exportCsv">↓ Export session CSV</button></div>
-<div class="card" style="margin-bottom:14px"><div class="filters" id="rangeFilters"><button class="active" data-range="1h">1 Hour</button><button data-range="6h">6 Hours</button><button data-range="24h">24 Hours</button><button data-range="7d">7 Days</button></div><div class="hint" style="margin-top:9px">Trend menggunakan sampel telemetry yang diterima dashboard selama sesi browser. Untuk histori lintas sesi, firmware perlu mengirim data historis ke node terpisah di Realtime Database.</div></div>
-<div class="grid charts"><div class="card chartbox"><div class="card-head">SOIL MOISTURE TREND <span>%</span></div><svg id="trendSoil" class="chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#39c982"></i>Soil 1</span><span><i class="key" style="background:#45a8e8"></i>Soil 2</span><span><i class="key" style="background:#e9ad3b"></i>Soil 3</span></div></div>
-<div class="card chartbox"><div class="card-head">DHT22 TREND <span>°C / %RH</span></div><svg id="trendClimate" class="chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#39c982"></i>airTemp</span><span><i class="key" style="background:#45a8e8"></i>airRH</span></div></div>
-<div class="card chartbox"><div class="card-head">PZEM POWER TREND <span>W</span></div><svg id="trendPower" class="chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#e9ad3b"></i>PZEM 1 PV</span><span><i class="key" style="background:#45a8e8"></i>PZEM 2 Load</span></div></div>
-<div class="card chartbox"><div class="card-head">FLOW RATE TREND <span>L/min</span></div><svg id="trendWater" class="chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#39c982"></i>flow.rateLmin</span></div></div></div>
+<div class="card" style="margin-bottom:14px"><div class="filters" id="rangeFilters"><button class="active" data-range="1h">1 Hour</button><button data-range="6h">6 Hours</button><button data-range="24h">24 Hours</button><button data-range="7d">7 Days</button></div><div class="hint" style="margin-top:9px">Sumbu X = waktu penerimaan data; sumbu Y = nilai parameter beserta satuannya. Data yang tersedia saat ini berasal dari sesi browser. Histori lintas sesi memerlukan node histori terpisah di Firebase.</div></div>
+<div class="grid charts"><div class="card chartbox"><div class="card-head">SOIL MOISTURE TREND <span>Y: % · X: waktu</span></div><svg id="trendSoil" class="chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#39c982"></i>Soil 1</span><span><i class="key" style="background:#45a8e8"></i>Soil 2</span><span><i class="key" style="background:#e9ad3b"></i>Soil 3</span></div></div>
+<div class="card chartbox"><div class="card-head">DHT22 TREND <span>°C / %RH · skala terpisah</span></div><svg id="trendClimate" class="chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#39c982"></i>airTemp</span><span><i class="key" style="background:#45a8e8"></i>airRH</span></div></div>
+<div class="card chartbox"><div class="card-head">PZEM POWER TREND <span>Y: W · X: waktu</span></div><svg id="trendPower" class="chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#e9ad3b"></i>PZEM 1 PV</span><span><i class="key" style="background:#45a8e8"></i>PZEM 2 Load</span></div></div>
+<div class="card chartbox"><div class="card-head">FLOW RATE TREND <span>Y: L/min · X: waktu</span></div><svg id="trendWater" class="chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#39c982"></i>flow.rateLmin</span></div></div></div>
 <div class="card" style="margin-top:14px"><div class="card-head">LOGGING CONFIGURATION REFERENCE</div><div class="hint" style="margin-top:8px">LOG_OPTIONS = 1, 2, 5, 10, 15, 30, 60, 120, 300 seconds. CSV log includes soil RAW/PCT, soilAvg/soilValid, DHT, PZEM V/A/W/Wh/kWh + validity, flow rate/total/pulses + validity, relay states, setpoints/hysteresis, daily date and daily totals.</div></div></section>
 
-<section id="page-alarm" class="page hidden"><div class="page-head"><div><div class="eyebrow">DEVICE HEALTH & EVENTS</div><h1>Alarm / Diagnostics</h1><div class="sub">Firmware belum memiliki alarm manager; halaman ini menampilkan diagnosis status yang dapat diturunkan dari flag validitas dan status perangkat.</div></div><span class="tag warn">DIAGNOSTIC RULES</span></div>
-<div class="notice">Tidak ada alarm threshold proses yang didefinisikan pada program. Karena itu, halaman ini tidak mengarang alarm Soil Low / RH Low. Daftar berikut adalah status diagnostik: RTC, SD, DHT (NaN), PZEM dan Flow I2C (validity + timeout 7 detik).</div>
+<section id="page-alarm" class="page hidden"><div class="page-head"><div><div class="eyebrow">DEVICE HEALTH & EVENTS</div><h1>Alarm / Diagnostics</h1><div class="sub">Process alarm dipisahkan dari permintaan kontrol Set Point dan diagnostic perangkat.</div></div><span class="tag warn">DIAGNOSTIC RULES</span></div>
+<div class="notice">Set Point mengatur aksi kontrol, bukan batas alarm. Nilai di bawah Soil Set Point memunculkan status kebutuhan irigasi (bukan alarm). Alarm proses memakai batas terpisah: Soil Low 20%, Soil High 85%, RH Low 40%, RH High 90%. Batas ini adalah nilai awal dan harus divalidasi sesuai tanaman. Diagnostic perangkat tetap dipantau terpisah.</div>
 <div class="grid kpis"><div class="card"><div class="card-head">FAULT / INVALID</div><div class="metric red" id="faultCount">0</div><div class="hint">Current invalid diagnostics</div></div><div class="card"><div class="card-head">WARNING</div><div class="metric amber" id="warningCount">0</div><div class="hint">Device not ready / no data</div></div><div class="card"><div class="card-head">COMMAND STATUS</div><div class="metric" style="font-size:19px" id="cmdStatus">READY</div><div class="hint">commandStatus from Nano reset handshake</div></div><div class="card"><div class="card-head">LOGGER</div><div class="metric" style="font-size:19px" id="alarmLogger">ACTIVE</div><div class="hint">loggingActive</div></div></div>
-<div class="card"><div class="card-head">CURRENT DIAGNOSTIC STATUS</div><div class="table-wrap"><table><thead><tr><th>Subsystem</th><th>Source variable</th><th>Condition</th><th>State</th></tr></thead><tbody id="diagnosticTable"></tbody></table></div></div>
+<div class="card"><div class="card-head">PROCESS ALARM & CONTROL DEMAND</div><div class="table-wrap"><table><thead><tr><th>Parameter</th><th>Reading</th><th>Rule</th><th>State</th></tr></thead><tbody id="processAlarmTable"></tbody></table></div></div><div class="card"><div class="card-head">DEVICE DIAGNOSTIC STATUS</div><div class="table-wrap"><table><thead><tr><th>Subsystem</th><th>Source variable</th><th>Condition</th><th>State</th></tr></thead><tbody id="diagnosticTable"></tbody></table></div></div>
 <div class="card" style="margin-top:14px"><div class="card-head">RESET COMMAND EVENT LOG</div><div class="hint" style="margin:7px 0">Firmware menulis reset event ke /EVENTS.CSV dengan DateTime, Action, Result. Reset memerlukan double-confirm dalam 5 detik dan respons Nano.</div><div class="table-wrap"><table><thead><tr><th>Time</th><th>Action</th><th>Result</th></tr></thead><tbody id="eventTable"><tr><td colspan="3" class="muted">Belum ada event pada demo ini.</td></tr></tbody></table></div></div></section>
 
 <section id="page-system" class="page hidden"><div class="page-head"><div><div class="eyebrow">CONFIGURATION & CONTROL</div><h1>System Settings</h1><div class="sub">Hanya konfigurasi dan perintah yang tersedia pada firmware sumber.</div></div><span class="tag warn">FIREBASE INTEGRATION</span></div>
@@ -653,9 +653,32 @@ function tag(id,on){const e=$(id);if(!e)return;e.textContent=on?'ON':'OFF';e.cla
 function fitCurrentPage(){document.querySelectorAll('.page').forEach(el=>el.style.zoom='1');const el=$('page-'+page),box=$('content')||document.querySelector('.content');if(!el||!box)return;const scale=Math.min(1,box.clientHeight/Math.max(el.scrollHeight,1));if(scale<1)el.style.zoom=String(Math.max(.28,scale))}
 function navTo(p){page=p;document.querySelectorAll('.page').forEach(e=>e.classList.add('hidden'));$('page-'+p).classList.remove('hidden');document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===p));$('crumb').textContent=p[0].toUpperCase()+p.slice(1);if(p==='detail')renderDetail();if(p==='trend')drawCharts();if(p==='alarm')renderDiagnostics();requestAnimationFrame(fitCurrentPage)}
 $('nav').onclick=e=>{const b=e.target.closest('button[data-page]');if(b)navTo(b.dataset.page)};
-function svgChart(id,series){const svg=$(id);if(!svg)return;const usable=series.filter(s=>s.v.length>1&&s.v.every(finite));if(!usable.length){svg.innerHTML='<text x="300" y="92" text-anchor="middle" fill="#7890aa" font-size="13">Menunggu data Firebase</text>';return}const w=600,h=180,p=18,vals=usable.flatMap(s=>s.v),min=Math.min(...vals)-2,max=Math.max(...vals)+2,y=v=>h-p-(v-min)/(max-min||1)*(h-p*2);const grid=[.2,.4,.6,.8].map(t=>`<line x1="0" y1="${p+t*(h-2*p)}" x2="${w}" y2="${p+t*(h-2*p)}" stroke="#29415b" stroke-dasharray="4 5"/>`).join('');svg.innerHTML=grid+usable.map(s=>`<polyline points="${s.v.map((v,i)=>`${i*w/(s.v.length-1)},${y(v)}`).join(' ')}" fill="none" stroke="${s.c}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`).join('')}
-function drawCharts(){const a=history.slice(-40),g=k=>a.map(x=>x[k]);svgChart('overviewSoil',[{v:g('s1'),c:'#39c982'},{v:g('s2'),c:'#45a8e8'},{v:g('s3'),c:'#e9ad3b'}]);svgChart('trendSoil',[{v:g('s1'),c:'#39c982'},{v:g('s2'),c:'#45a8e8'},{v:g('s3'),c:'#e9ad3b'}]);svgChart('trendClimate',[{v:g('temp'),c:'#39c982'},{v:g('rh'),c:'#45a8e8'}]);svgChart('trendPower',[{v:g('pv'),c:'#e9ad3b'},{v:g('load'),c:'#45a8e8'}]);svgChart('trendWater',[{v:g('flow'),c:'#39c982'}]);svgChart('overviewEnergy',[{v:g('pv'),c:'#e9ad3b'},{v:g('load'),c:'#45a8e8'}])}
-function recordHistory(){const x={s1:d.soil[0],s2:d.soil[1],s3:d.soil[2],temp:d.temp,rh:d.rh,pv:d.pz[0].power,load:d.pz[1].power,flow:d.flow.rateLmin};if(Object.values(x).some(finite)){history.push(x);if(history.length>500)history.shift()}}
+function rangeMs(){return ({'1h':3600000,'6h':21600000,'24h':86400000,'7d':604800000})[range]||3600000}
+function selectedHistory(){const cutoff=Date.now()-rangeMs();return history.filter(x=>x.ts>=cutoff)}
+function svgChart(id,series,rows=selectedHistory(),dual=false){
+ const svg=$(id);if(!svg)return;const w=600,h=180,L=48,R=dual?48:14,T=12,B=30,iw=w-L-R,ih=h-T-B;
+ const usable=series.map(s=>({...s,pts:rows.map(x=>x[s.k]).filter(finite)})).filter(s=>s.pts.length);
+ if(!usable.length){svg.innerHTML='<text x="300" y="82" text-anchor="middle" fill="#7890aa" font-size="13">Menunggu data Firebase</text>';return}
+ const all=usable.flatMap(s=>s.pts),min=Math.min(0,...all),max=Math.max(...all),span=max-min||1;
+ usable.forEach(s=>{s.min=dual?Math.min(0,...s.pts):min;s.max=dual?Math.max(...s.pts,1):max;s.span=s.max-s.min||1;s.axisY=v=>T+ih-(v-s.min)/s.span*ih});
+ const y=v=>T+ih-(v-min)/span*ih, x=i=>L+(rows.length<=1?iw: i/(rows.length-1)*iw);
+ let out='';
+ for(let j=0;j<=4;j++){const yy=T+j*ih/4,val=max-j*span/4;out+=`<line x1="${L}" y1="${yy}" x2="${L+iw}" y2="${yy}" stroke="#29415b" stroke-dasharray="3 5"/><text x="${L-7}" y="${yy+3}" text-anchor="end" fill="#8ea3bc" font-size="10">${val.toFixed(val<10?1:0)}</text>${dual?`<text x="${L+iw+7}" y="${yy+3}" fill="#8ea3bc" font-size="10">${(usable[1].max-j*usable[1].span/4).toFixed(0)}</text>`:''}` }
+ const ticks=[0,.25,.5,.75,1];ticks.forEach(t=>{const idx=Math.min(rows.length-1,Math.round(t*(rows.length-1)));if(idx>=0){const label=new Date(rows[idx].ts).toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});out+=`<text x="${L+t*iw}" y="${h-10}" text-anchor="middle" fill="#8ea3bc" font-size="10">${label}</text>`}});
+ usable.forEach(s=>{const pts=rows.map((r,i)=>finite(r[s.k])?`${x(i)},${dual?s.axisY(r[s.k]):y(r[s.k])}`:null).filter(Boolean).join(' ');if(pts)out+=`<polyline points="${pts}" fill="none" stroke="${s.c}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>`});
+ out+=`<text x="${L+iw/2}" y="${h-1}" text-anchor="middle" fill="#8ea3bc" font-size="9">Waktu</text>`;
+ svg.innerHTML=out;
+}
+function drawCharts(){
+ const a=selectedHistory(),g=k=>a.map(x=>x[k]);
+ svgChart('overviewSoil',[{k:'s1',c:'#39c982'},{k:'s2',c:'#45a8e8'},{k:'s3',c:'#e9ad3b'}],history.slice(-40));
+ svgChart('trendSoil',[{k:'s1',c:'#39c982'},{k:'s2',c:'#45a8e8'},{k:'s3',c:'#e9ad3b'}],a);
+ svgChart('trendClimate',[{k:'temp',c:'#39c982'},{k:'rh',c:'#45a8e8'}],a,true);
+ svgChart('trendPower',[{k:'pv',c:'#e9ad3b'},{k:'load',c:'#45a8e8'}],a);
+ svgChart('trendWater',[{k:'flow',c:'#39c982'}],a);
+ svgChart('overviewEnergy',[{k:'pv',c:'#e9ad3b'},{k:'load',c:'#45a8e8'}],history.slice(-40));
+}
+function recordHistory(){const x={ts:Date.now(),s1:d.soil[0],s2:d.soil[1],s3:d.soil[2],temp:d.temp,rh:d.rh,pv:d.pz[0].power,load:d.pz[1].power,flow:d.flow.rateLmin};if(Object.values(x).some(finite)){history.push(x);if(history.length>500)history.shift()}}
 function renderOverview(){
  const avg=finite(d.soilAvg)?d.soilAvg:(d.soil.every(finite)?d.soil.reduce((a,b)=>a+b,0)/3:null);
  $('soilHero').innerHTML=fmt(avg)+ '<span class="unit"> %</span>';
@@ -683,8 +706,8 @@ function renderDetail(){
 }
 function renderDiagnostics(){
  const rows=[['RTC DS3231','telemetry.device.rtcReady','RTC initialization'],['SD Card','telemetry.device.sdReady','SD initialization / file access'],['DHT22','telemetry.climate.valid','Sensor read validity'],['PZEM 1 · PV','telemetry.pzem1.valid / lastOK','Invalid or stale data'],['PZEM 2 · Load','telemetry.pzem2.valid / lastOK','Invalid or stale data'],['Flow · Nano I2C','telemetry.flow.valid / lastOK','Invalid or stale data']];
- const states=[d.rtcReady,d.sdReady,finite(d.temp)&&finite(d.rh),d.pz[0].valid,d.pz[1].valid,d.flow.valid],bad=states.filter(x=>!x).length;
- $('faultCount').textContent=bad;$('warningCount').textContent=bad;$('cmdStatus').textContent=d.commandStatus??'idle';$('alarmLogger').textContent=d.loggingActive?'ACTIVE':'STOPPED';$('navAlarm').textContent=bad;
+ const states=[d.rtcReady,d.sdReady,finite(d.temp)&&finite(d.rh),d.pz[0].valid,d.pz[1].valid,d.flow.valid],bad=states.filter(x=>!x).length,processAlarms=renderProcessAlarms();
+ $('faultCount').textContent=bad+processAlarms;$('warningCount').textContent=bad;$('cmdStatus').textContent=d.commandStatus??'idle';$('alarmLogger').textContent=d.loggingActive?'ACTIVE':'STOPPED';$('navAlarm').textContent=bad+processAlarms;
  $('diagnosticTable').innerHTML=rows.map((r,i)=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td><span class="tag ${states[i]?'':'bad'}">${states[i]?'OK':'NO DATA / NOT READY'}</span></td></tr>`).join('');
  $('eventTable').innerHTML=events.length?events.slice().reverse().map(e=>`<tr><td>${e.time}</td><td>${e.action}</td><td>${e.result}</td></tr>`).join(''):'<tr><td colspan="3" class="muted">Belum ada event dari Firebase.</td></tr>';
 }
@@ -847,7 +870,7 @@ $('pumpSwitch').addEventListener('change',async()=>{
 });
 $('startLog').onclick=()=>loggerCommand(true);$('stopLog').onclick=()=>loggerCommand(false);
 $('resetBtn').onclick=async()=>{const command=Number($('resetTarget').value),label=$('resetTarget').selectedOptions[0].text;if(resetArmed===command&&Date.now()-resetTimer<5000){resetArmed=null;const token=++resetToken;try{await writeDb('commands/reset',{command,token,confirm:true,requestedAt:Date.now()});toast('Reset request dikirim; tunggu ACK dari ESP32/Nano')}catch(e){toast(e.message)}}else{resetArmed=command;resetTimer=Date.now();toast('Target armed: tekan sekali lagi dalam 5 detik untuk konfirmasi '+label)}};
-$('rangeFilters').onclick=e=>{const b=e.target.closest('button[data-range]');if(!b)return;document.querySelectorAll('#rangeFilters button').forEach(x=>x.classList.toggle('active',x===b));range=b.dataset.range;toast('Filter '+b.textContent+' dipilih; data historis perlu node log tersendiri di RTDB')};
+$('rangeFilters').onclick=e=>{const b=e.target.closest('button[data-range]');if(!b)return;document.querySelectorAll('#rangeFilters button').forEach(x=>x.classList.toggle('active',x===b));range=b.dataset.range;drawCharts();toast('Rentang grafik: '+b.textContent)};
 $('exportCsv').onclick=()=>{if(!history.length){toast('Belum ada telemetry untuk diekspor');return}const rows=['timestamp,soil1_pct,soil2_pct,soil3_pct,airTemp_C,airRH_pct,pv_power_W,load_power_W,flow_Lmin',...history.map((x,i)=>[i,x.s1,x.s2,x.s3,x.temp,x.rh,x.pv,x.load,x.flow].join(','))];const blob=new Blob([rows.join('\n')],{type:'text/csv'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='smartfarm-telemetry-session.csv';a.click();URL.revokeObjectURL(a.href)};
 function clock(){$('clock').textContent=new Date().toLocaleString('id-ID',{hour:'2-digit',minute:'2-digit',second:'2-digit',day:'2-digit',month:'short',year:'numeric'})}
 function init(){
