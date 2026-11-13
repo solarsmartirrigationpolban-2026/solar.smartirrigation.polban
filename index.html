@@ -427,18 +427,53 @@ td{padding:6px 7px;line-height:1.25}
 /* Relay 3 switch: checkbox + adjacent slider, following supplied working example */
 .pump-switch{position:relative;display:inline-block;width:50px;height:28px;flex:0 0 50px;cursor:pointer}
 .pump-switch input{position:absolute;opacity:0;width:0;height:0}
-.pump-switch .slider{position:absolute;inset:0;background:#ef4444;border:1px solid #52677f;border-radius:28px;transition:.25s}
-.pump-switch .slider:before{position:absolute;content:"";height:20px;width:20px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.25s}
+.pump-switch .slider{position:absolute;inset:0;background:#ef4444;border:1px solid #52677f;border-radius:28px;transition:background-color .4s ease,border-color .4s ease;will-change:background-color}
+.pump-switch .slider:before{position:absolute;content:"";height:20px;width:20px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:transform .4s cubic-bezier(.4,0,.2,1);transform:translateX(0);will-change:transform}
 .pump-switch input:checked + .slider{background:#22c55e}
 .pump-switch input:checked + .slider:before{transform:translateX(22px)}
 .pump-switch input:focus-visible + .slider{outline:2px solid #60a5fa;outline-offset:3px}
-.pump-switch.pending .slider{background:#a87922!important;opacity:.95}
-.pump-switch input:disabled + .slider{cursor:wait;opacity:.8}
+.pump-switch.pending .slider{box-shadow:0 0 0 2px rgba(234,179,8,.45)}
+.pump-switch input:disabled + .slider{cursor:wait;opacity:1}
 @media(max-width:760px){
  #pumpSwitch{width:0;height:0}
  .pump-switch{width:48px;height:27px;flex-basis:48px}
  .pump-switch .slider:before{width:21px;height:21px;left:3px;bottom:2px}
  .pump-switch input:checked + .slider:before{transform:translateX(21px)}
+}
+
+
+/* v4.1 — distribute Detail content through the available mobile viewport */
+@media(max-width:760px){
+ #page-detail{height:100%;min-height:0;flex:1 1 auto;overflow:hidden;gap:5px}
+ #page-detail .detail-layout{
+   flex:1 1 auto!important;
+   min-height:0!important;
+   height:100%;
+   display:flex!important;
+   flex-direction:column!important;
+   justify-content:space-between;
+   gap:7px!important;
+   overflow:hidden!important;
+ }
+ #page-detail .detail-left,#page-detail .detail-right{display:contents!important}
+ #page-detail .detail-left>.detail-section,
+ #page-detail .detail-right>.detail-section,
+ #page-detail .detail-left>.detail-duo,
+ #page-detail .detail-right>.detail-table-card{
+   width:100%;min-width:0;grid-column:auto!important;grid-row:auto!important;
+ }
+ #page-detail .detail-left>.detail-section{order:1}
+ #page-detail .detail-right>.detail-section:first-child{order:2}
+ #page-detail .detail-left>.detail-duo{order:3;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+ #page-detail .detail-right>.detail-section:nth-child(2){order:4}
+ #page-detail .detail-right>.detail-table-card{order:5}
+ #page-detail .detail-section{flex:0 0 auto}
+ #page-detail .detail-table-card{flex:1 1 auto;min-height:0;display:flex;flex-direction:column}
+ #page-detail .detail-table-card .table-wrap{flex:1 1 auto;min-height:0;overflow:hidden}
+ #page-detail .detail-table-card table{height:100%}
+ #page-detail .sensor-grid .card,#page-detail .detail-card{padding:8px;min-height:70px}
+ #page-detail .detail-card .sensor-value{font-size:clamp(12px,3.2vw,16px)}
+ #page-detail .detail-daily .detail-card{min-height:64px}
 }
 
 </style></head>
@@ -677,8 +712,8 @@ function applyRoot(root){
  $('soilSP').value=cfg.soilSP;$('soilH').value=cfg.soilH;$('rhSP').value=cfg.rhSP;$('rhH').value=cfg.rhH;$('logInterval').value=String(LOG_OPTIONS.indexOf(Number(cfg.logOption))>=0?LOG_OPTIONS.indexOf(Number(cfg.logOption)):3);
  $('logFile').textContent=d.logFileName||'--';$('dataNo').textContent=d.dataNumber;$('waitingCmd').textContent=d.waitingCmd;$('commandStatus').textContent=d.commandStatus;
  $('loggerBadge').textContent=d.loggingActive?'ACTIVE':'STOPPED';$('loggerBadge').className='tag '+(d.loggingActive?'':'off');
- $('pumpSwitch').checked=d.pump;
- $('pumpSwitch').setAttribute('aria-checked',String(d.pump));
+ if(!pumpCommandPending){$('pumpSwitch').checked=d.pump;}
+ $('pumpSwitch').setAttribute('aria-checked',String(pumpCommandPending?$('pumpSwitch').checked:d.pump));
  if(!pumpCommandPending){$('pumpCommandStatus').textContent=d.pump?'POMPA ON · FEEDBACK ESP32':'POMPA OFF · FEEDBACK ESP32';}
  $('relay1State').textContent=d.relay[0]?'ON · AUTO':'OFF · AUTO';$('relay2State').textContent=d.relay[1]?'ON · AUTO':'OFF · AUTO';
  $('conn').textContent='FIREBASE · '+(d.connectionStatus||'ONLINE').toString().toUpperCase();$('sideState').textContent=d.wifiConnected?'DEVICE ONLINE':'FIREBASE LINKED';
@@ -779,8 +814,9 @@ $('pumpSwitch').addEventListener('change',async()=>{
  const wrapper=input.closest('.pump-switch');
  const statusEl=$('pumpCommandStatus');
  pumpCommandPending=true;
- input.disabled=true;
  wrapper.classList.add('pending');
+ // Let the checkbox/slider CSS transition finish before temporarily locking input.
+ setTimeout(()=>{if(pumpCommandPending)input.disabled=true;},450);
  input.setAttribute('aria-checked',String(manualOn));
  statusEl.textContent=manualOn?'PERINTAH ON TERKIRIM · MENUNGGU FEEDBACK':'PERINTAH OFF TERKIRIM · MENUNGGU FEEDBACK';
  try{
