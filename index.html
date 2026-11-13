@@ -142,7 +142,17 @@ td{padding:6px 7px;line-height:1.25}
 .footer-note{display:none}
 /* Compact desktop/tablet compositions. */
 #page-overview{display:flex;flex-direction:column;gap:0}
-#page-overview .hero{flex:0 0 auto}
+#page-overview .hero{flex:0 0 auto;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:9px}
+#page-overview .hero-main,#page-overview .hero-side{min-width:0;display:block}
+#page-overview .hero-main{padding:12px 14px}
+#page-overview .hero-main p{display:none}
+#page-overview .hero-main .big{font-size:clamp(20px,2vw,29px);margin-top:7px}
+#page-overview .hero-side{display:contents}
+#page-overview .hero-side .mini{padding:12px 14px;min-width:0}
+#page-overview .hero-side .metric{font-size:clamp(17px,1.7vw,24px);margin-top:7px}
+#page-overview .hero-main.soil-average{border-color:rgba(57,201,130,.42);background:linear-gradient(145deg,rgba(19,53,57,.9),rgba(10,31,48,.98))}
+#page-overview .hero-main.soil-channel{background:linear-gradient(145deg,rgba(19,42,67,.96),rgba(10,27,46,.98))}
+#page-overview .hero-main.soil-channel .big{color:#dce9f5}
 #page-overview .kpis{grid-template-columns:repeat(4,minmax(0,1fr));flex:0 0 auto}
 #page-overview .grid.two{grid-template-columns:1fr 1fr;flex:1 1 auto;min-height:0}
 #page-overview .charts{flex:1 1 auto;min-height:0}
@@ -153,7 +163,7 @@ td{padding:6px 7px;line-height:1.25}
 #page-detail .grid.two{grid-template-columns:repeat(2,minmax(0,1fr))}
 #page-trend .charts{grid-template-columns:repeat(2,minmax(0,1fr));flex:1 1 auto}
 #page-trend .chartbox{min-height:0}
-#page-trend .chart{height:125px}
+#page-trend .chart{height:112px}
 #page-alarm .kpis{grid-template-columns:repeat(4,minmax(0,1fr))}
 #page-alarm>.card{min-height:0;flex:1 1 0}
 #page-system .controls{grid-template-columns:repeat(2,minmax(0,1fr));min-height:0;flex:1 1 auto}
@@ -164,7 +174,7 @@ td{padding:6px 7px;line-height:1.25}
 @media(max-width:1100px){
  .app{grid-template-columns:190px minmax(0,1fr)}.sidebar{width:190px}
  .content{padding:10px 12px 8px}
- #page-overview .hero{grid-template-columns:1.2fr 1fr}
+ #page-overview .hero{grid-template-columns:repeat(3,minmax(0,1fr))}
  #page-overview .kpis{grid-template-columns:repeat(4,minmax(0,1fr))}
  #page-detail .sensor-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
 }
@@ -488,12 +498,12 @@ td{padding:6px 7px;line-height:1.25}
 .tag.good{background:rgba(40,201,130,.15);color:#43d99a;border-color:rgba(40,201,130,.3)}
 
 .chart-head-tools{display:flex;align-items:center;gap:8px}
-.chart-scale-btn{font:600 9px/1.2 inherit;letter-spacing:.04em;color:#a9c4dc;background:#132b43;border:1px solid #31506d;border-radius:6px;padding:5px 8px;cursor:pointer;white-space:nowrap}
+.chart-scale-btn{display:none}
 .chart-scale-btn:hover{background:#1b3b59;color:#eaf5ff;border-color:#4a789e}
 .chart-scale-btn.is-auto{color:#9be7c1;border-color:#287b5c;background:#10352f}
 .chartbox svg{overflow:visible}
 .chartbox svg path.chart-line{stroke-linecap:round;stroke-linejoin:round;transition:opacity .2s ease}
-.chartbox svg circle[data-point-index]{opacity:.42;stroke-width:1;transition:opacity .18s ease,r .18s ease}
+.chartbox svg circle[data-point-index]{opacity:.18;stroke-width:1;transition:opacity .18s ease,r .18s ease}
 .chartbox svg circle[data-point-index]:hover{opacity:1;r:5.5}
 .chartbox svg .chart-grid{stroke:#35506a;stroke-opacity:.38;stroke-dasharray:2 7}
 .chartbox svg .chart-axis-label{fill:#9bb0c7;font-size:9px}
@@ -503,6 +513,13 @@ td{padding:6px 7px;line-height:1.25}
 .chartbox svg circle[data-point-index]{cursor:pointer}
 .chartbox svg circle[data-point-index]:hover{opacity:1;r:5;stroke-width:1.4}
 #overviewSoil circle,#overviewEnergy circle{display:none}
+#page-trend .chartbox{padding:10px 12px 8px}
+#page-trend .chart{height:108px}
+#page-trend .trend-point-card{min-height:56px}
+#page-trend .chart-head-tools>span{font-size:9px}
+#page-trend .chartbox svg .chart-grid{stroke-dasharray:2 6;stroke-opacity:.25}
+#page-trend .chartbox svg path.chart-line{stroke-width:2.6;filter:drop-shadow(0 1px 3px rgba(55,170,220,.18))}
+#page-trend .chartbox svg text{font-family:Inter,system-ui,sans-serif}
 
 </style></head>
 <body><div class="app">
@@ -512,7 +529,7 @@ td{padding:6px 7px;line-height:1.25}
 <main class="main"><header class="topbar"><div class="crumb">POLBAN <span class="muted">/</span> <b id="crumb">Overview</b></div><div class="top-right"><span id="clock">--:--:--</span><span class="pill"><span class="dot"></span><span id="conn">FIREBASE LINK</span></span><span class="pill">ESP32 + NANO 0x12</span></div></header>
 <div class="content" id="content">
 <section id="page-overview" class="page"><div class="page-head"><div><div class="eyebrow">SYSTEM OPERATIONS</div><h1>Overview</h1><div class="sub">Ringkasan variabel yang benar-benar tersedia pada firmware.</div></div><span class="tag warn" id="deviceDataBadge">WAITING FOR DEVICE DATA</span></div>
-<div class="hero"><div class="card hero-main"><div><div class="card-head">● SOIL MOISTURE AVERAGE · soilAvg</div><div class="big" id="soilHero">42.3<span class="unit"> %</span></div><p>Rata-rata tiga channel soil sensor. Relay 1 dikendalikan otomatis menggunakan soilSetpoint dan soilHyst.</p></div></div><div class="hero-side"><div class="mini"><div class="card-head">☀ PV POWER · PZEM 1</div><div class="metric" id="pvHero">220 <span class="unit">W</span></div><div class="hint">PV sebelum SCC</div></div><div class="mini"><div class="card-head">⚡ LOAD POWER · PZEM 2</div><div class="metric" id="loadHero">145 <span class="unit">W</span></div><div class="hint">DC load</div></div></div></div>
+<div class="hero"><div class="card hero-main soil-channel"><div class="card-head">SOIL SENSOR 1 · soilPct[0]</div><div class="big" id="soil1Hero">--<span class="unit"> %</span></div><div class="hint">Kelembapan tanah channel 1</div></div><div class="card hero-main soil-channel"><div class="card-head">SOIL SENSOR 2 · soilPct[1]</div><div class="big" id="soil2Hero">--<span class="unit"> %</span></div><div class="hint">Kelembapan tanah channel 2</div></div><div class="card hero-main soil-channel"><div class="card-head">SOIL SENSOR 3 · soilPct[2]</div><div class="big" id="soil3Hero">--<span class="unit"> %</span></div><div class="hint">Kelembapan tanah channel 3</div></div><div class="card hero-main soil-average"><div class="card-head">● SOIL AVERAGE · soilAvg</div><div class="big" id="soilHero">--<span class="unit"> %</span></div><div class="hint">Rata-rata tiga sensor</div></div><div class="hero-side"><div class="mini"><div class="card-head">☀ PV POWER · PZEM 1</div><div class="metric" id="pvHero">-- <span class="unit">W</span></div><div class="hint">PV sebelum SCC</div></div><div class="mini"><div class="card-head">⚡ LOAD POWER · PZEM 2</div><div class="metric" id="loadHero">-- <span class="unit">W</span></div><div class="hint">DC load</div></div></div></div>
 <div class="grid kpis">
 <div class="card"><div class="card-head">AIR TEMPERATURE · DHT22</div><div class="metric" id="tempKpi">29.4 <span class="unit">°C</span></div><div class="hint">airTemp · NaN jika gagal baca</div></div>
 <div class="card"><div class="card-head">AIR RELATIVE HUMIDITY</div><div class="metric" id="rhKpi">68.0 <span class="unit">%</span></div><div class="hint">airRH · NaN jika gagal baca</div></div>
@@ -602,18 +619,18 @@ td{padding:6px 7px;line-height:1.25}
 </section>
 
 <section id="page-trend" class="page hidden">
-<div class="page-head"><div><div class="eyebrow">HISTORICAL ANALYTICS</div><h1>Trend Analysis</h1><div class="sub">Pilih rentang waktu, geser periode, lalu klik titik grafik untuk melihat detail pengukuran.</div></div><div class="actions"><button class="btn" id="exportCsv">↓ Export CSV</button><button class="btn primary" id="exportExcel">↓ Export Excel</button></div></div>
+<div class="page-head"><div><div class="eyebrow">HISTORICAL ANALYTICS</div><h1>Trend Analysis</h1><div class="sub">Pilih rentang waktu. Klik grafik untuk detail; klik dua kali untuk kembali ke tampilan default.</div></div><div class="actions"><button class="btn" id="exportCsv">↓ Export CSV</button><button class="btn primary" id="exportExcel">↓ Export Excel</button></div></div>
 <div class="card trend-toolbar">
- <div class="filters" id="rangeFilters"><button class="active" data-range="1h">1 Jam</button><button data-range="6h">6 Jam</button><button data-range="24h">24 Jam</button><button data-range="7d">7 Hari</button></div>
+ <div class="filters" id="rangeFilters"><button data-range="5m">5 Menit</button><button data-range="30m">30 Menit</button><button class="active" data-range="1h">1 Jam</button><button data-range="6h">6 Jam</button><button data-range="24h">24 Jam</button><button data-range="7d">7 Hari</button></div>
  <div class="trend-nav"><button class="btn" id="trendPrev">← Sebelumnya</button><button class="btn" id="trendNext">Berikutnya →</button><button class="btn primary" id="trendLive">Kembali ke Live</button></div>
  <div class="trend-dates"><label>Mulai <input type="datetime-local" id="trendFrom"></label><label>Sampai <input type="datetime-local" id="trendTo"></label><button class="btn" id="applyTrendDates">Terapkan waktu</button></div>
- <div class="hint" id="trendRangeLabel">Rentang data: --</div><div class="hint">Klik titik pada grafik untuk menampilkan waktu dan nilai. Tidak ada tooltip bergerak saat kursor hanya diarahkan. Data historis tersedia selama sesi browser aktif.</div>
+ <div class="hint" id="trendRangeLabel">Rentang data: --</div><div class="hint">Klik grafik sekali untuk memperbesar skala Y dan memilih titik data. Klik dua kali pada grafik untuk kembali ke skala default. Data historis tersedia selama sesi browser aktif.</div>
 </div>
 <div class="grid charts">
- <div class="card chartbox"><div class="card-head">SOIL MOISTURE TREND <span class="chart-head-tools"><span>Y: % · X: waktu</span> <button type="button" class="chart-scale-btn" data-chart-scale="trendSoil" aria-label="Ubah skala sumbu Y">Y: TETAP</button></span></div><svg id="trendSoil" class="chart interactive-chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#39c982"></i>Soil 1</span><span><i class="key" style="background:#45a8e8"></i>Soil 2</span><span><i class="key" style="background:#e9ad3b"></i>Soil 3</span></div></div>
- <div class="card chartbox"><div class="card-head">DHT22 TREND <span class="chart-head-tools"><span>°C / %RH · skala terpisah</span> <button type="button" class="chart-scale-btn" data-chart-scale="trendClimate" aria-label="Ubah skala sumbu Y">Y: TETAP</button></span></div><svg id="trendClimate" class="chart interactive-chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#39c982"></i>airTemp</span><span><i class="key" style="background:#45a8e8"></i>airRH</span></div></div>
- <div class="card chartbox"><div class="card-head">PZEM POWER TREND <span class="chart-head-tools"><span>Y: W · X: waktu</span> <button type="button" class="chart-scale-btn" data-chart-scale="trendPower" aria-label="Ubah skala sumbu Y">Y: TETAP</button></span></div><svg id="trendPower" class="chart interactive-chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#e9ad3b"></i>PZEM 1 PV</span><span><i class="key" style="background:#45a8e8"></i>PZEM 2 Load</span></div></div>
- <div class="card chartbox"><div class="card-head">FLOW RATE TREND <span class="chart-head-tools"><span>Y: L/min · X: waktu</span> <button type="button" class="chart-scale-btn" data-chart-scale="trendWater" aria-label="Ubah skala sumbu Y">Y: TETAP</button></span></div><svg id="trendWater" class="chart interactive-chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#39c982"></i>flow.rateLmin</span></div></div>
+ <div class="card chartbox"><div class="card-head">SOIL MOISTURE TREND <span class="chart-head-tools"><span>Y: % · X: waktu</span></span></div><svg id="trendSoil" class="chart interactive-chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#39c982"></i>Soil 1</span><span><i class="key" style="background:#45a8e8"></i>Soil 2</span><span><i class="key" style="background:#e9ad3b"></i>Soil 3</span></div></div>
+ <div class="card chartbox"><div class="card-head">DHT22 TREND <span class="chart-head-tools"><span>°C / %RH · skala terpisah</span></span></div><svg id="trendClimate" class="chart interactive-chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#39c982"></i>airTemp</span><span><i class="key" style="background:#45a8e8"></i>airRH</span></div></div>
+ <div class="card chartbox"><div class="card-head">PZEM POWER TREND <span class="chart-head-tools"><span>Y: W · X: waktu</span></span></div><svg id="trendPower" class="chart interactive-chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#e9ad3b"></i>PZEM 1 PV</span><span><i class="key" style="background:#45a8e8"></i>PZEM 2 Load</span></div></div>
+ <div class="card chartbox"><div class="card-head">FLOW RATE TREND <span class="chart-head-tools"><span>Y: L/min · X: waktu</span></span></div><svg id="trendWater" class="chart interactive-chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#39c982"></i>flow.rateLmin</span></div></div>
 </div>
 <div class="card trend-point-card"><div class="card-head">DETAIL TITIK DATA <span id="selectedPointSource">Belum dipilih</span></div><div class="hint" id="selectedPointPrompt">Klik salah satu titik pada grafik untuk melihat timestamp dan nilai parameter.</div><div class="trend-point-values" id="selectedPointValues"></div></div>
 <div class="card trend-export-note"><div class="card-head">EXPORT DATA</div><div class="hint">CSV dapat dibuka di Excel. Export Excel menghasilkan file .xlsx. Kedua format mengikuti rentang waktu yang sedang dipilih.</div></div>
@@ -694,16 +711,7 @@ function tag(id,on){const e=$(id);if(!e)return;e.textContent=on?'ON':'OFF';e.cla
 function fitCurrentPage(){document.querySelectorAll('.page').forEach(el=>el.style.zoom='1');const el=$('page-'+page),box=$('content')||document.querySelector('.content');if(!el||!box)return;const scale=Math.min(1,box.clientHeight/Math.max(el.scrollHeight,1));if(scale<1)el.style.zoom=String(Math.max(.28,scale))}
 function navTo(p){page=p;document.querySelectorAll('.page').forEach(e=>e.classList.add('hidden'));$('page-'+p).classList.remove('hidden');document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===p));$('crumb').textContent=p[0].toUpperCase()+p.slice(1);if(p==='detail')renderDetail();if(p==='trend')drawCharts();if(p==='alarm')renderDiagnostics();requestAnimationFrame(fitCurrentPage)}
 $('nav').onclick=e=>{const b=e.target.closest('button[data-page]');if(b)navTo(b.dataset.page)};
-document.querySelectorAll('[data-chart-scale]').forEach(btn=>{
- btn.addEventListener('click',()=>{
-  const svg=$(btn.dataset.chartScale);
-  if(!svg)return;
-  svg.dataset.autoScale=svg.dataset.autoScale==='true'?'false':'true';
-  drawCharts();
- });
-});
-
-function rangeMs(){return ({'1h':3600000,'6h':21600000,'24h':86400000,'7d':604800000})[range]||3600000}
+function rangeMs(){return ({'5m':300000,'30m':1800000,'1h':3600000,'6h':21600000,'24h':86400000,'7d':604800000})[range]||3600000}
 function selectedHistory(){return history.filter(x=>x.ts>=viewStart&&x.ts<=viewEnd)}
 function localDateInput(ts){const d=new Date(ts),p=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`}
 function updateTrendRangeUI(){if($('trendFrom'))$('trendFrom').value=localDateInput(viewStart);if($('trendTo'))$('trendTo').value=localDateInput(viewEnd);if($('trendRangeLabel'))$('trendRangeLabel').textContent=`Rentang: ${new Date(viewStart).toLocaleString('id-ID')} — ${new Date(viewEnd).toLocaleString('id-ID')} · ${selectedHistory().length} sampel`;if($('trendNext'))$('trendNext').disabled=viewEnd>=Date.now()}
@@ -750,7 +758,7 @@ function svgChart(id,series,rows=selectedHistory(),dual=false,unit=''){
  [0,.25,.5,.75,1].forEach(f=>{
   if(!rows.length)return;
   const idx=Math.min(rows.length-1,Math.round(f*(rows.length-1)));
-  const label=new Date(rows[idx].ts).toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
+  const span=(viewEnd-viewStart);const label=new Date(rows[idx].ts).toLocaleTimeString('id-ID',span<=3600000?{hour:'2-digit',minute:'2-digit',second:'2-digit'}:{hour:'2-digit',minute:'2-digit'});
   out+=`<text x="${L+f*iw}" y="${h-15}" text-anchor="middle" fill="#91a9c2" font-size="10">${label}</text>`;
  });
  usable.forEach(s=>{
@@ -774,28 +782,35 @@ function svgChart(id,series,rows=selectedHistory(),dual=false,unit=''){
  out+=`<text x="${L+iw/2}" y="${h-2}" text-anchor="middle" fill="#91a9c2" font-size="9">Waktu (HH:MM)</text><text transform="translate(10 ${T+ih/2}) rotate(-90)" text-anchor="middle" fill="#91a9c2" font-size="9">${unit||'Nilai'}</text>`;
  svg.innerHTML=out;
 
- // Keep the scale button state explicit so the user can always return to the fixed range.
- const scaleBtn=document.querySelector(`[data-chart-scale="${id}"]`);
- if(scaleBtn){
-  scaleBtn.textContent=auto?'Y: OTOMATIS':'Y: TETAP';
-  scaleBtn.classList.toggle('is-auto',auto);
-  scaleBtn.title=auto?'Klik untuk kembali ke skala Y tetap':'Klik untuk menyesuaikan skala Y dengan data';
- }
- if(id.startsWith('trend'))svg.onclick=(ev)=>{
-  const point=ev.target.closest('circle[data-point-index]');
-  if(!point)return;
-  const row=rows[Number(point.dataset.pointIndex)];if(!row)return;
-  const defs={
-   trendSoil:['Soil Moisture',[['Soil 1','s1','%'],['Soil 2','s2','%'],['Soil 3','s3','%']]],
-   trendClimate:['DHT22',[['Air temperature','temp','°C'],['Relative humidity','rh','%']]],
-   trendPower:['PZEM Power',[['PV PZEM 1','pv','W'],['Load PZEM 2','load','W']]],
-   trendWater:['Water Flow',[['Flow rate','flow','L/min']]]
+ if(id.startsWith('trend')){
+  const showPoint=(row)=>{
+   const defs={
+    trendSoil:['Soil Moisture',[['Soil 1','s1','%'],['Soil 2','s2','%'],['Soil 3','s3','%']]],
+    trendClimate:['DHT22',[['Air temperature','temp','°C'],['Relative humidity','rh','%']]],
+    trendPower:['PZEM Power',[['PV PZEM 1','pv','W'],['Load PZEM 2','load','W']]],
+    trendWater:['Water Flow',[['Flow rate','flow','L/min']]]
+   };
+   const meta=defs[id];if(!meta||!row)return;
+   $('selectedPointSource').textContent=meta[0];
+   $('selectedPointPrompt').textContent=new Date(row.ts).toLocaleString('id-ID',{dateStyle:'full',timeStyle:'medium'});
+   $('selectedPointValues').innerHTML=meta[1].filter(k=>finite(row[k[1]])).map(k=>`<span class="trend-point-value">${k[0]} <b>${row[k[1]].toFixed(2)} ${k[2]}</b></span>`).join('')||'<span class="hint">Tidak ada nilai valid pada titik ini.</span>';
   };
-  const meta=defs[id];if(!meta)return;
-  $('selectedPointSource').textContent=meta[0];
-  $('selectedPointPrompt').textContent=new Date(row.ts).toLocaleString('id-ID',{dateStyle:'full',timeStyle:'medium'});
-  $('selectedPointValues').innerHTML=meta[1].filter(k=>finite(row[k[1]])).map(k=>`<span class="trend-point-value">${k[0]} <b>${row[k[1]].toFixed(2)} ${k[2]}</b></span>`).join('')||'<span class="hint">Tidak ada nilai valid pada titik ini.</span>';
- };
+  svg.onclick=(ev)=>{
+   const point=ev.target.closest('circle[data-point-index]');
+   const rect=svg.getBoundingClientRect();
+   const ratio=Math.max(0,Math.min(1,(ev.clientX-rect.left)/Math.max(rect.width,1)));
+   const nearest=point?Number(point.dataset.pointIndex):Math.round(ratio*Math.max(rows.length-1,0));
+   const selected=rows[nearest];
+   if(svg.dataset.autoScale!=='true'){svg.dataset.autoScale='true';drawCharts();}
+   if(selected)showPoint(selected);
+  };
+  svg.ondblclick=()=>{
+   svg.dataset.autoScale='false';drawCharts();
+   $('selectedPointSource').textContent='Tampilan default';
+   $('selectedPointPrompt').textContent='Skala sumbu Y kembali ke rentang tetap. Klik grafik untuk melihat detail lagi.';
+   $('selectedPointValues').innerHTML='';
+  };
+ }
 }
 function drawCharts(){
  const a=selectedHistory(),g=k=>a.map(x=>x[k]);
@@ -810,6 +825,9 @@ function drawCharts(){
 function recordHistory(){const x={ts:Date.now(),s1:d.soil[0],s2:d.soil[1],s3:d.soil[2],temp:d.temp,rh:d.rh,pv:d.pz[0].power,load:d.pz[1].power,flow:d.flow.rateLmin};if(Object.values(x).some(finite)){history.push(x);if(history.length>500)history.shift()}}
 function renderOverview(){
  const avg=finite(d.soilAvg)?d.soilAvg:(d.soil.every(finite)?d.soil.reduce((a,b)=>a+b,0)/3:null);
+ $('soil1Hero').innerHTML=fmt(d.soil[0])+ '<span class="unit"> %</span>';
+ $('soil2Hero').innerHTML=fmt(d.soil[1])+ '<span class="unit"> %</span>';
+ $('soil3Hero').innerHTML=fmt(d.soil[2])+ '<span class="unit"> %</span>';
  $('soilHero').innerHTML=fmt(avg)+ '<span class="unit"> %</span>';
  $('pvHero').innerHTML=fmt(d.pz[0].power)+' <span class="unit">W</span>';
  $('loadHero').innerHTML=fmt(d.pz[1].power)+' <span class="unit">W</span>';
