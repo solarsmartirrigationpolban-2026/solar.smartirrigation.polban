@@ -679,12 +679,12 @@ function svgChart(id,series,rows=selectedHistory(),dual=false,unit=''){
 }
 function drawCharts(){
  const a=selectedHistory(),g=k=>a.map(x=>x[k]);
- svgChart('overviewSoil',[{k:'s1',c:'#39c982'},{k:'s2',c:'#45a8e8'},{k:'s3',c:'#e9ad3b'}],history.slice(-40),false,'%');
+ svgChart('overviewSoil',[{k:'s1',c:'#39c982'},{k:'s2',c:'#45a8e8'},{k:'s3',c:'#e9ad3b'}],a.slice(-40),false,'%');
  svgChart('trendSoil',[{k:'s1',c:'#39c982'},{k:'s2',c:'#45a8e8'},{k:'s3',c:'#e9ad3b'}],a,false,'%');
  svgChart('trendClimate',[{k:'temp',c:'#39c982'},{k:'rh',c:'#45a8e8'}],a,true,'°C / %RH');
  svgChart('trendPower',[{k:'pv',c:'#e9ad3b'},{k:'load',c:'#45a8e8'}],a,false,'W');
  svgChart('trendWater',[{k:'flow',c:'#39c982'}],a,false,'L/min');
- svgChart('overviewEnergy',[{k:'pv',c:'#e9ad3b'},{k:'load',c:'#45a8e8'}],history.slice(-40),false,'W');
+ svgChart('overviewEnergy',[{k:'pv',c:'#e9ad3b'},{k:'load',c:'#45a8e8'}],a.slice(-40),false,'W');
 }
 function recordHistory(){const x={ts:Date.now(),s1:d.soil[0],s2:d.soil[1],s3:d.soil[2],temp:d.temp,rh:d.rh,pv:d.pz[0].power,load:d.pz[1].power,flow:d.flow.rateLmin};if(Object.values(x).some(finite)){history.push(x);if(history.length>500)history.shift()}}
 function renderOverview(){
@@ -712,6 +712,24 @@ function renderDetail(){
  $('dailyDate').textContent=d.dailyDate??'--';$('dailyEnergy').innerHTML=fmt(d.dailyWh[0]/1000,3)+' / '+fmt(d.dailyWh[1]/1000,3)+' <span class="unit">kWh</span>';$('dailyWater').innerHTML=fmt(d.dailyWaterML/1000,3)+' <span class="unit">L</span>';
  $('rawTable').innerHTML=d.soil.map((v,i)=>`<tr><td>soilRaw[${i}] / soilPct[${i}]</td><td>${d.raw[i]??'--'}</td><td>${fmt(v,2)} %</td><td><span class="tag ${d.soilChannelOK[i]?'':'bad'}">${d.soilChannelOK[i]?'VALID':'NO DATA'}</span></td></tr>`).join('')+`<tr><td>airTemp / airRH</td><td>${fmt(d.temp)} / ${fmt(d.rh)}</td><td>°C / %</td><td><span class="tag ${finite(d.temp)&&finite(d.rh)?'':'bad'}">${finite(d.temp)&&finite(d.rh)?'VALID':'NO DATA'}</span></td></tr>`+d.pz.map((p,i)=>`<tr><td>pzem[${i}]</td><td>${fmt(p.voltage,2)} V, ${fmt(p.current,2)} A, ${fmt(p.power,1)} W</td><td>${fmt(p.energyWh,1)} Wh</td><td><span class="tag ${p.valid?'':'bad'}">${p.valid?'VALID':'NO DATA'}</span></td></tr>`).join('')+`<tr><td>flow</td><td>${fmt(d.flow.rateLmin,2)} L/min</td><td>${d.flow.totalML??0} mL · ${d.flow.pulses??0} pulse</td><td><span class="tag ${d.flow.valid?'':'bad'}">${d.flow.valid?'VALID':'NO DATA'}</span></td></tr>`;
 }
+function renderProcessAlarms(){
+ const rows=[];
+ const soilLow=20, soilHigh=85, rhLow=40, rhHigh=90;
+ const avg=finite(d.soilAvg)?d.soilAvg:(d.soil.filter(finite).length?d.soil.filter(finite).reduce((a,b)=>a+b,0)/d.soil.filter(finite).length:null);
+ const add=(name,value,rule,state,kind='normal')=>rows.push(`<tr><td>${name}</td><td>${value}</td><td>${rule}</td><td><span class="tag ${kind==='alarm'?'bad':kind==='demand'?'warn':''}">${state}</span></td></tr>`);
+ if(finite(avg)){
+   const demand=avg<cfg.soilSP-cfg.soilH/2;
+   const alarm=avg<=soilLow||avg>=soilHigh;
+   add('Soil Moisture Average',`${avg.toFixed(1)} %`,`Irrigation demand < ${Number(cfg.soilSP-cfg.soilH/2).toFixed(1)} % · Alarm LOW ≤ ${soilLow}% / HIGH ≥ ${soilHigh}%`,alarm?(avg<=soilLow?'LOW ALARM':'HIGH ALARM'):(demand?'IRRIGATION DEMAND':'NORMAL'),alarm?'alarm':demand?'demand':'normal');
+ } else add('Soil Moisture Average','--','Menunggu telemetry soil','NO DATA','alarm');
+ if(finite(d.rh)){
+   const alarm=d.rh<=rhLow||d.rh>=rhHigh;
+   add('Air Relative Humidity',`${d.rh.toFixed(1)} %`,`LOW ≤ ${rhLow}% · HIGH ≥ ${rhHigh}%`,alarm?(d.rh<=rhLow?'LOW ALARM':'HIGH ALARM'):'NORMAL',alarm?'alarm':'normal');
+ } else add('Air Relative Humidity','--',`LOW ≤ ${rhLow}% · HIGH ≥ ${rhHigh}%`,'NO DATA','alarm');
+ $('processAlarmTable').innerHTML=rows.join('');
+ return rows.filter(r=>r.includes('ALARM')).length;
+}
+
 function renderDiagnostics(){
  const rows=[['RTC DS3231','telemetry.device.rtcReady','RTC initialization'],['SD Card','telemetry.device.sdReady','SD initialization / file access'],['DHT22','telemetry.climate.valid','Sensor read validity'],['PZEM 1 · PV','telemetry.pzem1.valid / lastOK','Invalid or stale data'],['PZEM 2 · Load','telemetry.pzem2.valid / lastOK','Invalid or stale data'],['Flow · Nano I2C','telemetry.flow.valid / lastOK','Invalid or stale data']];
  const states=[d.rtcReady,d.sdReady,finite(d.temp)&&finite(d.rh),d.pz[0].valid,d.pz[1].valid,d.flow.valid],bad=states.filter(x=>!x).length,processAlarms=renderProcessAlarms();
@@ -765,13 +783,14 @@ function applyRoot(root){
  recordHistory();renderOverview();renderDetail();renderDiagnostics();drawCharts();requestAnimationFrame(fitCurrentPage);
 }
 function firebaseConnect() {
-  if (!firebaseConfig.apiKey) {
+  if (!firebaseConfig.apiKey || firebaseConfig.apiKey.includes('PASTE_')) {
     $('conn').textContent = 'CONFIG REQUIRED';
     $('sideState').textContent = 'SET FIREBASE API KEY';
     return;
   }
 
   try {
+    if (typeof firebase === 'undefined') throw new Error('Firebase SDK gagal dimuat. Periksa koneksi internet atau blokir CDN.');
     // Initialize Firebase hanya satu kali
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
@@ -850,6 +869,14 @@ function firebaseConnect() {
 }
 async function writeDb(path,value){if(!db)throw new Error('Firebase belum terhubung. Isi API Key dan pastikan Rules mengizinkan akses.');await db.ref(path).set(value)}
 function validate(id,min,max){const v=Number($(id).value);if(!Number.isFinite(v)||v<min||v>max)throw Error(id+' harus '+min+'–'+max);return v}
+async function loggerCommand(active){
+ try{
+   const requestedAt=Date.now();
+   const seconds=LOG_OPTIONS[Number($('logInterval').value)]||10;
+   await writeDb('commands/logger',{loggingActive:active,logOption:seconds,requestedAt});
+   toast(active?'Perintah Start Logger terkirim. Menunggu feedback perangkat.':'Perintah Stop Logger terkirim. Menunggu feedback perangkat.');
+ }catch(e){toast('Gagal mengirim perintah logger: '+e.message)}
+}
 $('saveSettings').onclick=async()=>{try{const next={soilSetpoint:validate('soilSP',1,99),soilHyst:validate('soilH',1,30),rhSetpoint:validate('rhSP',1,99),rhHyst:validate('rhH',1,30),logOption:LOG_OPTIONS[Number($('logInterval').value)]};await writeDb('configuration',next);toast('Configuration berhasil dikirim ke Realtime Database')}catch(e){toast(e.message)}};
 $('pumpSwitch').addEventListener('change',async()=>{
  const input=$('pumpSwitch');
