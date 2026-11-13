@@ -352,6 +352,95 @@ td{padding:6px 7px;line-height:1.25}
   #page-detail .detail-table-card th,#page-detail .detail-table-card td{font-size:5px;padding:2px}
 }
 
+
+/* v4.4 — corrected mobile detail composition and interactive relay switch */
+@media(max-width:760px){
+  #page-detail{height:100%;min-height:0;overflow:hidden;gap:3px}
+  #page-detail .detail-head{flex:0 0 auto;margin:0;gap:2px}
+  #page-detail .detail-head h1{font-size:14px}
+  #page-detail .detail-head .eyebrow{font-size:6px}
+  #page-detail .detail-head .pill{font-size:6px;padding:2px 4px}
+  #page-detail .detail-layout{
+    display:flex!important;
+    flex:1 1 auto;
+    flex-direction:column;
+    min-height:0;
+    overflow:hidden;
+    gap:4px;
+    align-content:stretch
+  }
+  #page-detail .detail-left,#page-detail .detail-right{display:contents!important}
+  #page-detail .detail-left>.detail-section,
+  #page-detail .detail-right>.detail-section,
+  #page-detail .detail-left>.detail-duo,
+  #page-detail .detail-right>.detail-table-card{
+    display:block;
+    flex:0 0 auto;
+    width:100%;
+    min-width:0;
+    grid-column:auto!important;
+    grid-row:auto!important;
+    order:initial
+  }
+  #page-detail .detail-left>.detail-section{order:1}
+  #page-detail .detail-right>.detail-section:first-child{order:2}
+  #page-detail .detail-left>.detail-duo{order:3;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}
+  #page-detail .detail-right>.detail-section:nth-child(2){order:4}
+  #page-detail .detail-right>.detail-table-card{order:5;min-height:0;overflow:hidden}
+  #page-detail .section-title{font-size:7px;margin:0 0 3px;line-height:1.1}
+  #page-detail .sensor-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px}
+  #page-detail .sensor-grid .card,#page-detail .detail-card{padding:4px;min-width:0}
+  #page-detail .sensor-grid .card-head,#page-detail .detail-card .card-head{font-size:6px;line-height:1.1;gap:2px}
+  #page-detail .sensor-grid .sensor-value{font-size:clamp(10px,2.8vw,14px);margin:2px 0;line-height:1}
+  #page-detail .sensor-grid .hint,#page-detail .detail-card .hint{font-size:6px;line-height:1.1}
+  #page-detail .bar{height:3px;margin-top:3px}
+  #page-detail .detail-energy{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px}
+  #page-detail .detail-daily{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px}
+  #page-detail .detail-card .sensor-value{font-size:clamp(10px,2.7vw,14px);margin:2px 0;line-height:1}
+  #page-detail .detail-card .metric{font-size:clamp(10px,2.8vw,14px);margin:2px 0;line-height:1;white-space:normal}
+  #page-detail .detail-card .status-row{padding:2px 0;font-size:6px;line-height:1.1}
+  #page-detail .tag{font-size:6px;padding:1px 3px;white-space:normal}
+  #page-detail .detail-table-card{padding:4px;overflow:hidden}
+  #page-detail .detail-table-card .card-head{font-size:6px}
+  #page-detail .detail-table-card .table-wrap{overflow:hidden}
+  #page-detail .detail-table-card table{width:100%;min-width:0;table-layout:fixed;font-size:6px}
+  #page-detail .detail-table-card th,#page-detail .detail-table-card td{padding:2px 3px;white-space:normal;overflow-wrap:anywhere;line-height:1.05}
+  #page-detail .detail-table-card th:nth-child(1){width:25%}
+  #page-detail .detail-table-card th:nth-child(2){width:25%}
+  #page-detail .detail-table-card th:nth-child(3){width:30%}
+  #page-detail .detail-table-card th:nth-child(4){width:20%}
+  #pumpSwitch{width:48px;height:27px;min-height:27px;flex:0 0 48px}
+  #pumpSwitch:after{width:21px;height:21px;left:3px;top:3px}
+  #pumpSwitch.on:after{left:24px}
+  #pumpSwitch.pending{box-shadow:0 0 0 2px #e9ad3b;opacity:.9}
+}
+@media(max-width:390px){
+  #page-detail .detail-layout{gap:3px}
+  #page-detail .sensor-grid .card,#page-detail .detail-card{padding:3px}
+  #page-detail .detail-table-card th,#page-detail .detail-table-card td{font-size:5px;padding:2px}
+}
+.switch.pending{background:#a87922!important}
+.switch.pending:after{background:#fff!important}
+.switch:disabled{opacity:.85;cursor:wait}
+
+
+/* Relay 3 switch: checkbox + adjacent slider, following supplied working example */
+.pump-switch{position:relative;display:inline-block;width:50px;height:28px;flex:0 0 50px;cursor:pointer}
+.pump-switch input{position:absolute;opacity:0;width:0;height:0}
+.pump-switch .slider{position:absolute;inset:0;background:#ef4444;border:1px solid #52677f;border-radius:28px;transition:.25s}
+.pump-switch .slider:before{position:absolute;content:"";height:20px;width:20px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.25s}
+.pump-switch input:checked + .slider{background:#22c55e}
+.pump-switch input:checked + .slider:before{transform:translateX(22px)}
+.pump-switch input:focus-visible + .slider{outline:2px solid #60a5fa;outline-offset:3px}
+.pump-switch.pending .slider{background:#a87922!important;opacity:.95}
+.pump-switch input:disabled + .slider{cursor:wait;opacity:.8}
+@media(max-width:760px){
+ #pumpSwitch{width:0;height:0}
+ .pump-switch{width:48px;height:27px;flex-basis:48px}
+ .pump-switch .slider:before{width:21px;height:21px;left:3px;bottom:2px}
+ .pump-switch input:checked + .slider:before{transform:translateX(21px)}
+}
+
 </style></head>
 <body><div class="app">
 <aside class="sidebar"><div class="brand"><img src="https://tse1.mm.bing.net/th/id/OIP.RaVvOpGTXIFf7OC-R95dMwAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Logo Polban" onerror="this.style.display='none'"><div><div class="brand-name">SOLAR-POWERED SMART IRRIGATION</div><div class="brand-sub">WITH MONITORING SYSTEM · POLBAN</div></div></div>
@@ -473,7 +562,7 @@ td{padding:6px 7px;line-height:1.25}
 <div class="card"><div class="card-head">RELAY CONTROL / MODE</div>
 <div class="control-line"><div><b>Relay 1 · Irrigation</b><div class="hint">Automatic · soilAvg hysteresis</div></div><span id="relay1State" class="tag">ON · AUTO</span></div>
 <div class="control-line"><div><b>Relay 2 · RH control</b><div class="hint">Automatic · airRH hysteresis</div></div><span id="relay2State" class="tag off">OFF · AUTO</span></div>
-<div class="control-line"><div><b>Relay 3 · Tank pump</b><div class="hint">Manual · pumpManualOn</div></div><span id="pumpCommandStatus" class="hint" aria-live="polite">Status mengikuti feedback ESP32</span><button class="switch" id="pumpSwitch" type="button" role="switch" aria-checked="false" aria-label="Toggle Relay 3 tank pump"></button></div>
+<div class="control-line"><div><b>Relay 3 · Tank pump</b><div class="hint">Manual · pumpManualOn</div></div><span id="pumpCommandStatus" class="hint" aria-live="polite">Status mengikuti feedback ESP32</span><label class="pump-switch" aria-label="Toggle Relay 3 tank pump"><input type="checkbox" id="pumpSwitch" role="switch" aria-checked="false"><span class="slider"></span></label></div>
 <div class="hint" style="margin-top:12px">R1 ON jika soilAvg &lt; soilSetpoint − soilHyst/2; OFF jika &gt; soilSetpoint + soilHyst/2. R2 menggunakan aturan setara pada airRH. R3 mengikuti pumpManualOn. AUTO toren belum tersedia karena belum ada level switch.</div></div>
 <div class="card"><div class="card-head">DATA LOGGER · LOGGER SCREEN</div>
 <div class="status-row"><span>loggingActive</span><span id="loggerBadge" class="tag">ACTIVE</span></div>
@@ -577,6 +666,9 @@ function applyRoot(root){
    pumpCommandPending=false;
    if(pumpCommandTimer)clearTimeout(pumpCommandTimer);
    $('pumpSwitch').disabled=false;
+   $('pumpSwitch').closest('.pump-switch').classList.remove('pending');
+   $('pumpSwitch').checked=d.pump;
+   $('pumpSwitch').setAttribute('aria-checked',String(d.pump));
    $('pumpCommandStatus').textContent=d.pump?'POMPA ON · FEEDBACK ESP32':'POMPA OFF · FEEDBACK ESP32';
  }
  d.dataNumber=lg.dataNumber??0;d.logFileName=lg.logFileName??'';d.loggingActive=!!lg.loggingActive;d.logOption=lg.logOption??conf.logOption??10;
@@ -585,7 +677,7 @@ function applyRoot(root){
  $('soilSP').value=cfg.soilSP;$('soilH').value=cfg.soilH;$('rhSP').value=cfg.rhSP;$('rhH').value=cfg.rhH;$('logInterval').value=String(LOG_OPTIONS.indexOf(Number(cfg.logOption))>=0?LOG_OPTIONS.indexOf(Number(cfg.logOption)):3);
  $('logFile').textContent=d.logFileName||'--';$('dataNo').textContent=d.dataNumber;$('waitingCmd').textContent=d.waitingCmd;$('commandStatus').textContent=d.commandStatus;
  $('loggerBadge').textContent=d.loggingActive?'ACTIVE':'STOPPED';$('loggerBadge').className='tag '+(d.loggingActive?'':'off');
- $('pumpSwitch').classList.toggle('on',d.pump);
+ $('pumpSwitch').checked=d.pump;
  $('pumpSwitch').setAttribute('aria-checked',String(d.pump));
  if(!pumpCommandPending){$('pumpCommandStatus').textContent=d.pump?'POMPA ON · FEEDBACK ESP32':'POMPA OFF · FEEDBACK ESP32';}
  $('relay1State').textContent=d.relay[0]?'ON · AUTO':'OFF · AUTO';$('relay2State').textContent=d.relay[1]?'ON · AUTO':'OFF · AUTO';
@@ -679,32 +771,44 @@ function firebaseConnect() {
 async function writeDb(path,value){if(!db)throw new Error('Firebase belum terhubung. Isi API Key dan pastikan Rules mengizinkan akses.');await db.ref(path).set(value)}
 function validate(id,min,max){const v=Number($(id).value);if(!Number.isFinite(v)||v<min||v>max)throw Error(id+' harus '+min+'–'+max);return v}
 $('saveSettings').onclick=async()=>{try{const next={soilSetpoint:validate('soilSP',1,99),soilHyst:validate('soilH',1,30),rhSetpoint:validate('rhSP',1,99),rhHyst:validate('rhH',1,30),logOption:LOG_OPTIONS[Number($('logInterval').value)]};await writeDb('configuration',next);toast('Configuration berhasil dikirim ke Realtime Database')}catch(e){toast(e.message)}};
-$('pumpSwitch').onclick=async()=>{
- if(pumpCommandPending)return;
- const manualOn=!d.pump;
+$('pumpSwitch').addEventListener('change',async()=>{
+ const input=$('pumpSwitch');
+ if(pumpCommandPending){input.checked=d.pump;return;}
+ const manualOn=input.checked;
  const requestId=Date.now();
- const btn=$('pumpSwitch'), statusEl=$('pumpCommandStatus');
- pumpCommandPending=true;btn.disabled=true;statusEl.textContent='MENGIRIM PERINTAH...';
+ const wrapper=input.closest('.pump-switch');
+ const statusEl=$('pumpCommandStatus');
+ pumpCommandPending=true;
+ input.disabled=true;
+ wrapper.classList.add('pending');
+ input.setAttribute('aria-checked',String(manualOn));
+ statusEl.textContent=manualOn?'PERINTAH ON TERKIRIM · MENUNGGU FEEDBACK':'PERINTAH OFF TERKIRIM · MENUNGGU FEEDBACK';
  try{
    await writeDb('commands/pump',{manualOn,requestedAt:requestId,requestId});
-   statusEl.textContent=manualOn?'PERINTAH ON TERKIRIM · MENUNGGU ESP32':'PERINTAH OFF TERKIRIM · MENUNGGU ESP32';
-   toast('Perintah Relay 3 berhasil dikirim. Menunggu feedback ESP32.');
+   toast('Perintah Relay 3 terkirim. Menunggu konfirmasi aktual dari ESP32.');
    if(pumpCommandTimer)clearTimeout(pumpCommandTimer);
    pumpCommandTimer=setTimeout(()=>{
-     pumpCommandPending=false;btn.disabled=false;
-     statusEl.textContent='BELUM ADA FEEDBACK ESP32 · PERIKSA FIRMWARE';
+     pumpCommandPending=false;
+     input.disabled=false;
+     wrapper.classList.remove('pending');
+     input.checked=d.pump;
+     input.setAttribute('aria-checked',String(d.pump));
+     statusEl.textContent='TIMEOUT · FEEDBACK ESP32 BELUM DITERIMA';
+     toast('Perintah terkirim, tetapi feedback belum diterima. Periksa handler Firebase pada firmware ESP32.');
    },10000);
  }catch(e){
-   pumpCommandPending=false;btn.disabled=false;
+   pumpCommandPending=false;
+   input.disabled=false;
+   wrapper.classList.remove('pending');
+   input.checked=d.pump;
+   input.setAttribute('aria-checked',String(d.pump));
    statusEl.textContent='GAGAL MENGIRIM PERINTAH';
    const msg=(e&&e.message)?e.message:String(e);
    toast(msg.includes('PERMISSION_DENIED')||msg.toLowerCase().includes('permission denied')
      ?'Firebase menolak penulisan. Periksa Anonymous Authentication dan Realtime Database Rules.'
      :'Gagal mengirim perintah: '+msg);
-   console.error('Pump command write failed:',e);
  }
-};
-async function loggerCommand(active){try{const logOption=LOG_OPTIONS[Number($('logInterval').value)];await writeDb('commands/logger',{loggingActive:active,logOption,requestedAt:Date.now()});toast('Logger command dikirim ke Firebase')}catch(e){toast(e.message)}}
+});
 $('startLog').onclick=()=>loggerCommand(true);$('stopLog').onclick=()=>loggerCommand(false);
 $('resetBtn').onclick=async()=>{const command=Number($('resetTarget').value),label=$('resetTarget').selectedOptions[0].text;if(resetArmed===command&&Date.now()-resetTimer<5000){resetArmed=null;const token=++resetToken;try{await writeDb('commands/reset',{command,token,confirm:true,requestedAt:Date.now()});toast('Reset request dikirim; tunggu ACK dari ESP32/Nano')}catch(e){toast(e.message)}}else{resetArmed=command;resetTimer=Date.now();toast('Target armed: tekan sekali lagi dalam 5 detik untuk konfirmasi '+label)}};
 $('rangeFilters').onclick=e=>{const b=e.target.closest('button[data-range]');if(!b)return;document.querySelectorAll('#rangeFilters button').forEach(x=>x.classList.toggle('active',x===b));range=b.dataset.range;toast('Filter '+b.textContent+' dipilih; data historis perlu node log tersendiri di RTDB')};
