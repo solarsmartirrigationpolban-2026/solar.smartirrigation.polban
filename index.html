@@ -9,7 +9,7 @@
 .app{min-height:100vh;display:grid;grid-template-columns:248px 1fr}.sidebar{background:#081525;border-right:1px solid #1b3048;position:sticky;top:0;height:100vh;padding:22px 15px;display:flex;flex-direction:column;z-index:5}
 .brand{display:flex;align-items:center;gap:12px;padding:4px 8px 24px;border-bottom:1px solid #1a2d44}.brand img{width:48px;height:48px;object-fit:contain;background:#fff;border-radius:9px;padding:4px}.brand-name{font-weight:750;letter-spacing:.07em;font-size:13px}.brand-sub{color:#8298b1;font-size:9px;letter-spacing:.1em;margin-top:3px}
 .nav-label{font-size:10px;color:#60758e;letter-spacing:.15em;margin:23px 10px 9px;font-weight:700}.nav{display:grid;gap:5px}.nav button{border:0;background:transparent;color:#9bb0c7;text-align:left;padding:11px 12px;border-radius:8px;display:flex;align-items:center;gap:12px;font-size:13px}.nav button:hover{background:#12243a;color:#fff}.nav button.active{background:#17314c;color:#fff;box-shadow:inset 3px 0 var(--green)}.ico{width:18px;text-align:center;font-size:16px}
-.side-foot{margin-top:auto;border-top:1px solid #1a2d44;padding:15px 8px 0;color:#8298b1;font-size:11px}.main{min-width:0}.topbar{height:62px;border-bottom:1px solid #1b3048;display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:#09182a;position:sticky;top:0;z-index:4}.crumb{font-size:12px;color:#93a9c2}.crumb b{color:#e6eef8}.top-right{display:flex;align-items:center;gap:15px;font-size:11px;color:#91a6be}.pill{border:1px solid #29435d;border-radius:30px;padding:5px 9px;color:#a9bfd5}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-right:6px;box-shadow:0 0 9px #39c982}
+.side-foot{margin-top:auto;border-top:1px solid #1a2d44;padding:15px 8px 0;color:#8298b1;font-size:11px}.main{min-width:0}.topbar{height:62px;border-bottom:1px solid #1b3048;display:flex;align-items:center;justify-content:space-between;padding:0 28px;background:#09182a;position:sticky;top:0;z-index:4}.crumb{font-size:12px;color:#93a9c2}.crumb b{color:#e6eef8}.clock{font-size:12px;color:#9fb4ca;font-variant-numeric:tabular-nums;white-space:nowrap;letter-spacing:.02em}.top-right{display:none;display:flex;align-items:center;gap:15px;font-size:11px;color:#91a6be}.pill{border:1px solid #29435d;border-radius:30px;padding:5px 9px;color:#a9bfd5}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-right:6px;box-shadow:0 0 9px #39c982}
 .content{padding:25px 28px 36px;max-width:1800px;margin:auto}.page-head{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:19px;gap:16px}.eyebrow{font-size:10px;letter-spacing:.16em;color:var(--green);font-weight:800}.page-head h1{font-size:23px;margin:4px 0 0}.sub{color:var(--muted);font-size:12px;margin-top:4px}.actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .btn{border:1px solid #2a405a;background:#142941;color:#dbe7f4;padding:8px 12px;border-radius:7px;font-size:12px}.btn:hover{border-color:#4b7196}.btn.primary{background:#16734f;border-color:#23875f;color:white}.btn.danger{background:#48202a;border-color:#7b3440;color:#ffc8ce}
 .grid{display:grid;gap:14px}.kpis{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:14px}.card{background:linear-gradient(145deg,#102139,#0c1b2e);border:1px solid #1d3450;border-radius:11px;padding:16px;min-width:0;box-shadow:0 5px 18px #02091430}.card-head{display:flex;align-items:center;justify-content:space-between;gap:8px;color:#8fa6bf;font-size:10px;letter-spacing:.1em;font-weight:800;text-transform:uppercase}.metric{font-size:27px;font-weight:750;letter-spacing:-.04em;margin:9px 0 3px}.unit{font-size:12px;color:#9bb0c7;font-weight:500}.hint{font-size:10px;color:#7890aa}.wide{grid-column:span 2}.hero{display:grid;grid-template-columns:1.55fr 1fr;gap:14px;margin-bottom:14px}.hero-main{min-height:154px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(110deg,#102a40,#102039 65%,#0d1b2e)}.hero-main .big{font-size:44px;font-weight:800;color:#56d18e}.hero-main p{color:#9bb0c7;font-size:11px;max-width:530px;margin:5px 0 0}.hero-side{display:grid;grid-template-columns:1fr 1fr;gap:10px}.mini{background:#132943;border:1px solid #263e59;border-radius:9px;padding:13px}.mini .metric{font-size:23px}
@@ -53,7 +53,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
  .nav .ico{display:inline;width:auto;font-size:13px}
  .main{width:100%}
  .topbar{position:relative;height:auto;min-height:44px;padding:8px 14px;gap:8px;flex-wrap:wrap}
- .crumb{font-size:11px}.top-right{gap:7px;font-size:10px;flex-wrap:wrap;justify-content:flex-end}
+ .crumb{font-size:11px}.clock{font-size:10px}.top-right{display:none;gap:7px;font-size:10px;flex-wrap:wrap;justify-content:flex-end}
  .top-right .pill{padding:4px 7px}.top-right .pill:nth-child(2){display:inline-flex}
  .content{padding:16px 12px calc(28px + env(safe-area-inset-bottom));}
  .page-head{align-items:flex-start;flex-direction:column;gap:9px;margin-bottom:14px}
@@ -188,7 +188,7 @@ td{padding:6px 7px;line-height:1.25}
  .nav .ico{font-size:11px}
  .main{height:calc(100dvh - 75px);height:calc(100dvh - 75px);flex:1 1 auto}
  .topbar{position:relative;flex:0 0 38px;height:38px;min-height:38px;padding:5px 10px;flex-wrap:nowrap}
- .crumb{font-size:9px}.top-right{font-size:8px;gap:5px;flex-wrap:nowrap}
+ .crumb{font-size:9px}.clock{font-size:9px}.top-right{display:none;font-size:8px;gap:5px;flex-wrap:nowrap}
  .top-right .pill{padding:3px 5px}.top-right .pill:last-child{display:none}
  .content{height:calc(100% - 38px);padding:7px 8px 5px;overflow:hidden}
  .page-head{margin-bottom:6px;gap:4px;flex-direction:row;align-items:center}
@@ -538,45 +538,151 @@ td{padding:6px 7px;line-height:1.25}
 @media(max-width:1100px){#page-overview .hero{grid-template-columns:1fr}#page-overview .hero-side{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:1fr}#page-overview .soil-group-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){#page-overview .soil-group-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#page-overview .hero-side{grid-template-columns:1fr 1fr}}
 
+
+
+/* v5.0 responsive layout repair: prevent zoom-based clipping and keep every section in normal flow. */
+.content{overflow-y:auto;overflow-x:hidden;min-height:0;scrollbar-gutter:stable}
+.page{height:auto;min-height:100%;overflow:visible;zoom:1!important}
+.page.hidden{display:none!important}
+#page-overview{gap:0}
+#page-overview .hero{align-items:stretch}
+#page-overview .soil-group{padding:9px;}
+#page-overview .soil-group-head{margin-bottom:7px;padding-bottom:6px}
+#page-overview .soil-group-grid{gap:6px}
+#page-overview .soil-group-grid .hero-main{min-height:82px;padding:9px}
+#page-overview .grid.two{flex:0 0 auto}
+#page-overview .charts{flex:0 0 auto;min-height:0;margin-top:8px}
+#page-overview .chartbox{min-height:150px}
+#page-overview .chart{height:105px}
+#page-alarm{gap:9px}
+#page-alarm>.notice{flex:0 0 auto}
+#page-alarm>.kpis{flex:0 0 auto}
+#page-alarm>.card{flex:0 0 auto;min-height:0;margin-top:0!important}
+#page-alarm .metric#cmdStatus{font-size:clamp(11px,1.15vw,16px)!important;line-height:1.25;overflow-wrap:anywhere;word-break:break-word;letter-spacing:-.025em}
+#page-alarm .table-wrap{overflow-x:auto;overflow-y:visible}
+#page-alarm #diagnosticTable td,#page-alarm #processAlarmTable td{white-space:normal}
+#page-system>.notice{font-size:10px;line-height:1.45;margin-bottom:8px}
+#page-trend .chartbox{min-width:0;min-height:0;overflow:hidden}
+#page-trend .chartbox>.card-head{font-size:9px;letter-spacing:.07em;line-height:1.3;align-items:flex-start;flex-wrap:wrap}
+#page-trend .chart-head-tools{font-size:8px;white-space:nowrap}
+#page-trend .chart{display:block;width:100%;height:140px;min-height:110px;margin-top:5px}
+#page-trend .charts{min-height:0;align-content:start}
+#page-trend .trend-toolbar{flex:0 0 auto}
+#page-trend .trend-point-card,#page-trend .trend-export-note{flex:0 0 auto}
+@media(min-width:761px){
+ .content{height:calc(100dvh - 54px);overflow-y:auto}
+ #page-overview .chartbox{min-height:145px}
+ #page-overview .chart{height:95px}
+ #page-alarm .card .table-wrap{max-height:220px;overflow:auto}
+ #page-alarm>.card:last-child{margin-bottom:8px}
+}
+@media(max-width:760px){
+ html,body{height:auto;min-height:100%;overflow-x:hidden;overflow-y:auto}
+ .app{height:auto;min-height:100dvh;overflow:visible}
+ .sidebar{position:sticky;top:0}
+ .main{height:auto;min-height:calc(100dvh - 75px);overflow:visible;display:flex;flex-direction:column}
+ .topbar{position:relative;flex:0 0 auto}
+ .content{height:auto;min-height:calc(100dvh - 113px);flex:1 0 auto;overflow:visible;padding:10px 9px 20px}
+ .page{height:auto;min-height:0;overflow:visible;zoom:1!important}
+ #page-overview .hero{grid-template-columns:1fr;gap:7px}
+ #page-overview .soil-group{padding:9px}
+ #page-overview .soil-group-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+ #page-overview .soil-group-grid .hero-main{min-height:76px;padding:8px}
+ #page-overview .hero-side{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:auto;gap:6px}
+ #page-overview .grid.kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+ #page-overview .grid.two{grid-template-columns:1fr;gap:6px}
+ #page-overview .charts{grid-template-columns:1fr;gap:7px;margin-top:7px}
+ #page-overview .chartbox{min-height:150px;padding:9px}
+ #page-overview .chart{height:105px;min-height:95px}
+ #page-overview .legend{font-size:8px;gap:8px}
+ #page-alarm{gap:8px}
+ #page-alarm .notice{font-size:9px;line-height:1.45;padding:8px}
+ #page-alarm .kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:6px}
+ #page-alarm .kpis>.card{min-height:80px;padding:8px}
+ #page-alarm .metric#cmdStatus{font-size:clamp(10px,3.1vw,13px)!important;line-height:1.25;overflow-wrap:anywhere;word-break:break-word}
+ #page-alarm>.card{margin:0!important;padding:9px}
+ #page-alarm .table-wrap{overflow-x:auto;overflow-y:visible}
+ #page-alarm table{min-width:560px;font-size:9px}
+ #page-alarm th,#page-alarm td{padding:6px 5px}
+ #page-alarm>.card:last-child{margin-top:0!important}
+ #page-trend .page-head{align-items:flex-start;gap:8px}
+ #page-trend .page-head .actions{width:100%;display:grid;grid-template-columns:1fr 1fr}
+ #page-trend .trend-toolbar{padding:9px;gap:8px}
+ #page-trend .filters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
+ #page-trend .filters button{min-width:0;padding:6px 4px;font-size:9px;min-height:34px}
+ #page-trend .trend-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:5px}
+ #page-trend .trend-nav .btn{min-width:0;padding:5px 3px;font-size:9px}
+ #page-trend .trend-dates{display:grid;grid-template-columns:1fr;gap:6px}
+ #page-trend .trend-dates label{min-width:0;width:100%}
+ #page-trend .trend-dates input{width:100%;font-size:12px}
+ #page-trend .charts{grid-template-columns:1fr;gap:8px}
+ #page-trend .chartbox{padding:9px 10px;min-height:0}
+ #page-trend .chartbox>.card-head{font-size:9px;letter-spacing:.045em;line-height:1.25;display:flex;justify-content:space-between;gap:5px}
+ #page-trend .chart-head-tools{font-size:8px;letter-spacing:0}
+ #page-trend .chart{height:150px;min-height:130px;width:100%;margin-top:5px}
+ #page-trend .legend{font-size:8px;gap:8px}
+ #page-trend .trend-point-card{min-height:70px}
+ #page-system>.notice{font-size:9px;line-height:1.45;padding:8px}
+ #page-system .controls{grid-template-columns:1fr;gap:8px}
+ #page-system .controls>.card{overflow:visible;padding:9px}
+}
+
+
+/* v6.2: alarm diagnostics table is fully visible; never create an inner scroll area. */
+#page-alarm .table-wrap{max-height:none!important;height:auto!important;overflow:visible!important;overscroll-behavior:initial}
+#page-alarm .card{min-height:0}
+#page-alarm #diagnosticTable,#page-alarm #processAlarmTable{width:100%;table-layout:fixed}
+#page-alarm #diagnosticTable th,#page-alarm #diagnosticTable td,
+#page-alarm #processAlarmTable th,#page-alarm #processAlarmTable td{white-space:normal;overflow-wrap:anywhere;word-break:normal}
+@media(min-width:761px){#page-alarm .card .table-wrap{max-height:none!important;overflow:visible!important}}
+@media(max-width:760px){
+ #page-alarm .table-wrap{overflow:visible!important}
+ #page-alarm table{min-width:0!important;width:100%;table-layout:fixed;font-size:8px}
+ #page-alarm th,#page-alarm td{padding:5px 3px!important;white-space:normal!important;overflow-wrap:anywhere;line-height:1.25}
+ #page-alarm #diagnosticTable th:nth-child(1){width:20%}
+ #page-alarm #diagnosticTable th:nth-child(2){width:29%}
+ #page-alarm #diagnosticTable th:nth-child(3){width:29%}
+ #page-alarm #diagnosticTable th:nth-child(4){width:22%}
+}
 </style></head>
 <body><div class="app">
 <aside class="sidebar"><div class="brand"><img src="https://tse1.mm.bing.net/th/id/OIP.RaVvOpGTXIFf7OC-R95dMwAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Logo Polban" onerror="this.style.display='none'"><div><div class="brand-name">SOLAR-POWERED SMART IRRIGATION</div><div class="brand-sub">WITH MONITORING SYSTEM · POLBAN</div></div></div>
 <div class="nav-label">MONITORING</div><nav class="nav" id="nav"><button class="active" data-page="overview"><span class="ico">▦</span>Overview</button><button data-page="detail"><span class="ico">◈</span>Detail</button><button data-page="trend"><span class="ico">⌁</span>Trend</button><button data-page="alarm"><span class="ico">⚑</span>Alarm <span id="navAlarm" class="tag warn">0</span></button><button data-page="system"><span class="ico">⚙</span>System</button></nav>
-<div class="side-foot"><div><span class="dot"></span><b id="sideState">FIREBASE READY</b></div><div style="margin-top:8px">ESP32 Classic · Arduino Nano I2C</div><div>Prototype v4.0 · one-screen HMI · responsive</div></div></aside>
-<main class="main"><header class="topbar"><div class="crumb">POLBAN <span class="muted">/</span> <b id="crumb">Overview</b></div><div class="top-right"><span id="clock">--:--:--</span><span class="pill"><span class="dot"></span><span id="conn">FIREBASE LINK</span></span><span class="pill">ESP32 + NANO 0x12</span></div></header>
+<div class="side-foot"><div><span class="dot"></span><b id="sideState">WAITING FOR DEVICE</b></div></div></aside>
+<main class="main"><header class="topbar"><div class="crumb">POLBAN <span class="muted">/</span> <b id="crumb">Overview</b></div><time class="clock" id="clock" aria-label="Tanggal dan waktu"></time></header>
 <div class="content" id="content">
-<section id="page-overview" class="page"><div class="page-head"><div><div class="eyebrow">SYSTEM OPERATIONS</div><h1>Overview</h1><div class="sub">Ringkasan variabel yang benar-benar tersedia pada firmware.</div></div><span class="tag warn" id="deviceDataBadge">WAITING FOR DEVICE DATA</span></div>
+<section id="page-overview" class="page"><div class="page-head"><div><div class="eyebrow">SYSTEM OPERATIONS</div><h1>Overview</h1></div><span class="tag warn" id="deviceDataBadge">WAITING FOR DEVICE DATA</span></div>
 <div class="hero">
 <div class="soil-group">
   <div class="soil-group-head"><div><div class="card-head">SOIL MOISTURE</div><div class="soil-group-sub">Pemantauan kelembapan tanah · 3 channel dan nilai rata-rata</div></div><span class="soil-group-unit">%</span></div>
   <div class="soil-group-grid">
-    <div class="card hero-main soil-channel"><div class="card-head">SOIL SENSOR 1</div><div class="big" id="soil1Hero">--<span class="unit"> %</span></div><div class="hint">soilPct[0] · Channel 1</div></div>
-    <div class="card hero-main soil-channel"><div class="card-head">SOIL SENSOR 2</div><div class="big" id="soil2Hero">--<span class="unit"> %</span></div><div class="hint">soilPct[1] · Channel 2</div></div>
-    <div class="card hero-main soil-channel"><div class="card-head">SOIL SENSOR 3</div><div class="big" id="soil3Hero">--<span class="unit"> %</span></div><div class="hint">soilPct[2] · Channel 3</div></div>
-    <div class="card hero-main soil-average"><div class="card-head">SOIL AVERAGE</div><div class="big" id="soilHero">--<span class="unit"> %</span></div><div class="hint">Rata-rata tiga sensor</div></div>
+    <div class="card hero-main soil-channel"><div class="card-head">SOIL SENSOR 1</div><div class="big" id="soil1Hero">--<span class="unit"> %</span></div></div>
+    <div class="card hero-main soil-channel"><div class="card-head">SOIL SENSOR 2</div><div class="big" id="soil2Hero">--<span class="unit"> %</span></div></div>
+    <div class="card hero-main soil-channel"><div class="card-head">SOIL SENSOR 3</div><div class="big" id="soil3Hero">--<span class="unit"> %</span></div></div>
+    <div class="card hero-main soil-average"><div class="card-head">SOIL AVERAGE</div><div class="big" id="soilHero">--<span class="unit"> %</span></div></div>
   </div>
 </div>
-<div class="hero-side"><div class="mini"><div class="card-head">☀ PV POWER · PZEM 1</div><div class="metric" id="pvHero">-- <span class="unit">W</span></div><div class="hint">PV sebelum SCC</div></div><div class="mini"><div class="card-head">⚡ LOAD POWER · PZEM 2</div><div class="metric" id="loadHero">-- <span class="unit">W</span></div><div class="hint">DC load</div></div></div>
+<div class="hero-side"><div class="mini"><div class="card-head">☀ PV POWER · PZEM 1</div><div class="metric" id="pvHero">-- <span class="unit">W</span></div></div><div class="mini"><div class="card-head">⚡ LOAD POWER · PZEM 2</div><div class="metric" id="loadHero">-- <span class="unit">W</span></div></div></div>
 </div>
 <div class="grid kpis">
-<div class="card"><div class="card-head">AIR TEMPERATURE · DHT22</div><div class="metric" id="tempKpi">29.4 <span class="unit">°C</span></div><div class="hint">airTemp · NaN jika gagal baca</div></div>
-<div class="card"><div class="card-head">AIR RELATIVE HUMIDITY</div><div class="metric" id="rhKpi">68.0 <span class="unit">%</span></div><div class="hint">airRH · NaN jika gagal baca</div></div>
-<div class="card"><div class="card-head">WATER FLOW RATE · NANO</div><div class="metric" id="flowKpi">2.40 <span class="unit">L/min</span></div><div class="hint">flow.rateLmin</div></div>
-<div class="card"><div class="card-head">WATER TOTAL · NANO</div><div class="metric" id="waterTotalKpi">125.0 <span class="unit">L</span></div><div class="hint">flow.totalML / 1000</div></div></div>
+<div class="card"><div class="card-head">AIR TEMPERATURE · DHT22</div><div class="metric" id="tempKpi">29.4 <span class="unit">°C</span></div></div>
+<div class="card"><div class="card-head">AIR RELATIVE HUMIDITY</div><div class="metric" id="rhKpi">68.0 <span class="unit">%</span></div></div>
+<div class="card"><div class="card-head">WATER FLOW RATE · NANO</div><div class="metric" id="flowKpi">2.40 <span class="unit">L/min</span></div></div>
+<div class="card"><div class="card-head">WATER TOTAL · NANO</div><div class="metric" id="waterTotalKpi">125.0 <span class="unit">L</span></div></div></div>
 <div class="grid kpis">
-<div class="card"><div class="card-head">PV DAILY ENERGY</div><div class="metric" id="pvDayKpi">1.250 <span class="unit">kWh</span></div><div class="hint">dailyWh[0] / 1000</div></div>
-<div class="card"><div class="card-head">LOAD DAILY ENERGY</div><div class="metric" id="loadDayKpi">0.860 <span class="unit">kWh</span></div><div class="hint">dailyWh[1] / 1000</div></div>
-<div class="card"><div class="card-head">WATER DAILY TOTAL</div><div class="metric" id="waterDayKpi">38.5 <span class="unit">L</span></div><div class="hint">dailyWaterML / 1000</div></div>
-<div class="card"><div class="card-head">LOGGER DATA NUMBER</div><div class="metric" id="dataNoKpi">128</div><div class="hint">dataNumber · current CSV file</div></div></div>
-<div class="grid two"><div class="card"><div class="card-head">RELAY STATUS <span class="tag">FIRMWARE FEEDBACK</span></div><div class="status-row"><span>Relay 1 · Irrigation (AUTO)</span><span id="r1" class="tag">ON</span></div><div class="status-row"><span>Relay 2 · RH control (AUTO)</span><span id="r2" class="tag">OFF</span></div><div class="status-row"><span>Relay 3 · Tank pump (MANUAL)</span><span id="r3" class="tag off">OFF</span></div><div class="hint">R1: soil hysteresis · R2: RH hysteresis · R3: pumpManualOn</div></div>
+<div class="card"><div class="card-head">PV DAILY ENERGY</div><div class="metric" id="pvDayKpi">1.250 <span class="unit">kWh</span></div></div>
+<div class="card"><div class="card-head">LOAD DAILY ENERGY</div><div class="metric" id="loadDayKpi">0.860 <span class="unit">kWh</span></div></div>
+<div class="card"><div class="card-head">WATER DAILY TOTAL</div><div class="metric" id="waterDayKpi">38.5 <span class="unit">L</span></div></div>
+<div class="card"><div class="card-head">LOGGER DATA NUMBER</div><div class="metric" id="dataNoKpi">128</div></div></div>
+<div class="grid two"><div class="card"><div class="card-head">RELAY STATUS <span class="tag">FIRMWARE FEEDBACK</span></div><div class="status-row"><span>Relay 1 · Irrigation (AUTO)</span><span id="r1" class="tag">ON</span></div><div class="status-row"><span>Relay 2 · RH control (AUTO)</span><span id="r2" class="tag">OFF</span></div><div class="status-row"><span>Relay 3 · Tank pump (MANUAL)</span><span id="r3" class="tag off">OFF</span></div></div>
 <div class="card"><div class="card-head">DEVICE & LINK HEALTH</div><div class="status-row"><span>RTC DS3231</span><span id="rtcStatus" class="tag">READY</span></div><div class="status-row"><span>SD Card</span><span id="sdStatus" class="tag">READY</span></div><div class="status-row"><span>PZEM 1 · PV</span><span id="pz1Status" class="tag">VALID</span></div><div class="status-row"><span>PZEM 2 · Load</span><span id="pz2Status" class="tag">VALID</span></div><div class="status-row"><span>Flow · Nano I2C</span><span id="flowStatus" class="tag">VALID</span></div></div></div>
 <div class="grid charts"><div class="card chartbox"><div class="card-head">SOIL MOISTURE · LIVE SESSION <span>%</span></div><svg id="overviewSoil" class="chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#39c982"></i>Soil 1</span><span><i class="key" style="background:#45a8e8"></i>Soil 2</span><span><i class="key" style="background:#e9ad3b"></i>Soil 3</span></div></div><div class="card chartbox"><div class="card-head">POWER · LIVE SESSION <span>W</span></div><svg id="overviewEnergy" class="chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#e9ad3b"></i>PV PZEM 1</span><span><i class="key" style="background:#45a8e8"></i>Load PZEM 2</span></div></div></div>
-<div class="footer-note">Daily totals berasal dari telemetry.daily. Nilai akan tampil setelah ESP32 mengirim data ke Realtime Database.</div></section>
+</section>
 
 <section id="page-detail" class="page hidden">
 <div class="page-head detail-head">
- <div><div class="eyebrow">INSTRUMENTATION</div><h1>Detail Monitoring</h1><div class="sub">Tag dan satuan mengikuti struktur data firmware ESP32 dan paket I2C Nano.</div></div>
- <span class="pill">NANO I2C ADDRESS: 0x12</span>
+ <div><div class="eyebrow">INSTRUMENTATION</div><h1>Detail Monitoring</h1></div>
+ 
 </div>
 <div class="detail-layout">
  <div class="detail-left">
@@ -635,7 +741,7 @@ td{padding:6px 7px;line-height:1.25}
    <div class="grid three detail-daily">
     <div class="card detail-card"><div class="card-head">DAILY DATE</div><div class="metric" id="dailyDate">2026-11-13</div><div class="hint">dailyDate · YYYYMMDD</div></div>
     <div class="card detail-card"><div class="card-head">PV / LOAD DAILY</div><div class="metric" id="dailyEnergy">1.250 / 0.860 <span class="unit">kWh</span></div><div class="hint">dailyWh[0] / dailyWh[1]</div></div>
-    <div class="card detail-card"><div class="card-head">WATER DAILY</div><div class="metric" id="dailyWater">38.500 <span class="unit">L</span></div><div class="hint">dailyWaterML / 1000</div></div>
+    <div class="card detail-card"><div class="card-head">WATER DAILY</div><div class="metric" id="dailyWater">38.500 <span class="unit">L</span></div></div>
    </div>
   </div>
   <div class="card detail-table-card">
@@ -652,7 +758,7 @@ td{padding:6px 7px;line-height:1.25}
  <div class="filters" id="rangeFilters"><button data-range="5m">5 Menit</button><button data-range="30m">30 Menit</button><button class="active" data-range="1h">1 Jam</button><button data-range="6h">6 Jam</button><button data-range="24h">24 Jam</button><button data-range="7d">7 Hari</button></div>
  <div class="trend-nav"><button class="btn" id="trendPrev">← Sebelumnya</button><button class="btn" id="trendNext">Berikutnya →</button><button class="btn primary" id="trendLive">Kembali ke Live</button></div>
  <div class="trend-dates"><label>Mulai <input type="datetime-local" id="trendFrom"></label><label>Sampai <input type="datetime-local" id="trendTo"></label><button class="btn" id="applyTrendDates">Terapkan waktu</button></div>
- <div class="hint" id="trendRangeLabel">Rentang data: --</div><div class="hint">Klik grafik sekali untuk memperbesar skala Y dan memilih titik data. Klik dua kali pada grafik untuk kembali ke skala default. Data historis tersedia selama sesi browser aktif.</div>
+ <div class="hint" id="trendRangeLabel">Rentang data: --</div>
 </div>
 <div class="grid charts">
  <div class="card chartbox"><div class="card-head">SOIL MOISTURE TREND <span class="chart-head-tools"><span>Y: % · X: waktu</span></span></div><svg id="trendSoil" class="chart interactive-chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#39c982"></i>Soil 1</span><span><i class="key" style="background:#45a8e8"></i>Soil 2</span><span><i class="key" style="background:#e9ad3b"></i>Soil 3</span></div></div>
@@ -661,17 +767,17 @@ td{padding:6px 7px;line-height:1.25}
  <div class="card chartbox"><div class="card-head">FLOW RATE TREND <span class="chart-head-tools"><span>Y: L/min · X: waktu</span></span></div><svg id="trendWater" class="chart interactive-chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#39c982"></i>flow.rateLmin</span></div></div>
 </div>
 <div class="card trend-point-card"><div class="card-head">DETAIL TITIK DATA <span id="selectedPointSource">Belum dipilih</span></div><div class="hint" id="selectedPointPrompt">Klik salah satu titik pada grafik untuk melihat timestamp dan nilai parameter.</div><div class="trend-point-values" id="selectedPointValues"></div></div>
-<div class="card trend-export-note"><div class="card-head">EXPORT DATA</div><div class="hint">CSV dapat dibuka di Excel. Export Excel menghasilkan file .xlsx. Kedua format mengikuti rentang waktu yang sedang dipilih.</div></div>
+<div class="card trend-export-note"><div class="card-head">EXPORT DATA</div></div>
 </section>
 
-<section id="page-alarm" class="page hidden"><div class="page-head"><div><div class="eyebrow">DEVICE HEALTH & EVENTS</div><h1>Alarm / Diagnostics</h1><div class="sub">Process alarm dipisahkan dari permintaan kontrol Set Point dan diagnostic perangkat.</div></div><span class="tag warn">DIAGNOSTIC RULES</span></div>
-<div class="notice">Set Point mengatur aksi kontrol, bukan batas alarm. Nilai di bawah Soil Set Point memunculkan status kebutuhan irigasi (bukan alarm). Alarm proses memakai batas terpisah: Soil Low 20%, Soil High 85%, RH Low 40%, RH High 90%. Batas ini adalah nilai awal dan harus divalidasi sesuai tanaman. Diagnostic perangkat tetap dipantau terpisah.</div>
+<section id="page-alarm" class="page hidden"><div class="page-head"><div><div class="eyebrow">DEVICE HEALTH & EVENTS</div><h1>Alarm / Diagnostics</h1></div><span class="tag warn">DIAGNOSTIC RULES</span></div>
+
 <div class="grid kpis"><div class="card"><div class="card-head">FAULT / INVALID</div><div class="metric red" id="faultCount">0</div><div class="hint">Current invalid diagnostics</div></div><div class="card"><div class="card-head">WARNING</div><div class="metric amber" id="warningCount">0</div><div class="hint">Device not ready / no data</div></div><div class="card"><div class="card-head">COMMAND STATUS</div><div class="metric" style="font-size:19px" id="cmdStatus">READY</div><div class="hint">commandStatus from Nano reset handshake</div></div><div class="card"><div class="card-head">LOGGER</div><div class="metric" style="font-size:19px" id="alarmLogger">ACTIVE</div><div class="hint">loggingActive</div></div></div>
 <div class="card"><div class="card-head">PROCESS ALARM & CONTROL DEMAND</div><div class="table-wrap"><table><thead><tr><th>Parameter</th><th>Reading</th><th>Rule</th><th>State</th></tr></thead><tbody id="processAlarmTable"></tbody></table></div></div><div class="card"><div class="card-head">DEVICE DIAGNOSTIC STATUS</div><div class="table-wrap"><table><thead><tr><th>Subsystem</th><th>Source variable</th><th>Condition</th><th>State</th></tr></thead><tbody id="diagnosticTable"></tbody></table></div></div>
-<div class="card" style="margin-top:14px"><div class="card-head">RESET COMMAND EVENT LOG</div><div class="hint" style="margin:7px 0">Firmware menulis reset event ke /EVENTS.CSV dengan DateTime, Action, Result. Reset memerlukan double-confirm dalam 5 detik dan respons Nano.</div><div class="table-wrap"><table><thead><tr><th>Time</th><th>Action</th><th>Result</th></tr></thead><tbody id="eventTable"><tr><td colspan="3" class="muted">Belum ada event pada demo ini.</td></tr></tbody></table></div></div></section>
+<div class="card" style="margin-top:14px"><div class="card-head">RESET COMMAND EVENT LOG</div><div class="table-wrap"><table><thead><tr><th>Time</th><th>Action</th><th>Result</th></tr></thead><tbody id="eventTable"><tr><td colspan="3" class="muted">Belum ada event pada demo ini.</td></tr></tbody></table></div></div></section>
 
-<section id="page-system" class="page hidden"><div class="page-head"><div><div class="eyebrow">CONFIGURATION & CONTROL</div><h1>System Settings</h1><div class="sub">Hanya konfigurasi dan perintah yang tersedia pada firmware sumber.</div></div><span class="tag warn">FIREBASE INTEGRATION</span></div>
-<div class="notice">Dashboard menggunakan Firebase Anonymous Authentication. Jika muncul PERMISSION_DENIED, aktifkan Authentication → Sign-in method → Anonymous dan sesuaikan Realtime Database Rules agar pengguna terautentikasi memiliki izin. Tombol Relay 3 mengirim commands/pump; status ON/OFF hanya berubah setelah ESP32 memperbarui actuators/pumpManualOn. ESP32 juga harus menjalankan handler untuk membaca command tersebut.</div>
+<section id="page-system" class="page hidden"><div class="page-head"><div><div class="eyebrow">CONFIGURATION & CONTROL</div><h1>System Settings</h1></div><span class="tag warn">FIREBASE INTEGRATION</span></div>
+
 <div class="controls"><div class="card"><div class="card-head">CONTROL SETPOINT · SETTINGS SCREEN</div>
 <div class="field"><label>Soil Setpoint (%) · soilSetpoint</label><input id="soilSP" type="number" min="1" max="99" step=".5" value="40"><small>Valid range 1.0–99.0 · default 40.0</small></div>
 <div class="field"><label>Soil Hysteresis (%) · soilHyst</label><input id="soilH" type="number" min="1" max="30" step=".5" value="5"><small>Valid range 1.0–30.0 · default 5.0</small></div>
@@ -692,7 +798,7 @@ td{padding:6px 7px;line-height:1.25}
 <button class="btn danger" id="resetBtn">Arm Reset Request</button>
 <div class="status-row"><span>waitingCmd</span><b id="waitingCmd">0</b></div><div class="status-row"><span>commandStatus</span><b id="commandStatus">READY</b></div><div class="hint">Firmware meminta konfirmasi kedua dalam 5 detik, memakai command token, menunggu ACK Nano maksimal 8 detik. Daily totals tidak di-zero-kan oleh reset counter ini.</div></div>
 </div></section>
-<div class="footer-note">Smart Farm IoT · Firebase RTDB integration-ready UI · ESP32 Classic + Arduino Nano I2C 0x12 · no simulated telemetry.</div>
+
 </div></main></div><div class="toast" id="toast"></div>
 <!-- Excel export library -->
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
@@ -736,7 +842,7 @@ function finite(v){return typeof v==='number' && Number.isFinite(v)}
 function fmt(v,n=1){return finite(v)?v.toFixed(n):'--'}
 function status(id,ok,yes='VALID',no='NO DATA'){const e=$(id);if(!e)return;e.textContent=ok?yes:no;e.className='tag '+(ok?'':'bad')}
 function tag(id,on){const e=$(id);if(!e)return;e.textContent=on?'ON':'OFF';e.className='tag '+(on?'':'off')}
-function fitCurrentPage(){document.querySelectorAll('.page').forEach(el=>el.style.zoom='1');const el=$('page-'+page),box=$('content')||document.querySelector('.content');if(!el||!box)return;const scale=Math.min(1,box.clientHeight/Math.max(el.scrollHeight,1));if(scale<1)el.style.zoom=String(Math.max(.28,scale))}
+function fitCurrentPage(){document.querySelectorAll('.page').forEach(el=>el.style.zoom='1')}
 function navTo(p){page=p;document.querySelectorAll('.page').forEach(e=>e.classList.add('hidden'));$('page-'+p).classList.remove('hidden');document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===p));$('crumb').textContent=p[0].toUpperCase()+p.slice(1);if(p==='detail')renderDetail();if(p==='trend')drawCharts();if(p==='alarm')renderDiagnostics();requestAnimationFrame(fitCurrentPage)}
 $('nav').onclick=e=>{const b=e.target.closest('button[data-page]');if(b)navTo(b.dataset.page)};
 function rangeMs(){return ({'5m':300000,'30m':1800000,'1h':3600000,'6h':21600000,'24h':86400000,'7d':604800000})[range]||3600000}
@@ -949,13 +1055,13 @@ function applyRoot(root){
  $('pumpSwitch').setAttribute('aria-checked',String(pumpCommandPending?$('pumpSwitch').checked:d.pump));
  if(!pumpCommandPending){$('pumpCommandStatus').textContent=d.pump?'POMPA ON · FEEDBACK ESP32':'POMPA OFF · FEEDBACK ESP32';}
  $('relay1State').textContent=d.relay[0]?'ON · AUTO':'OFF · AUTO';$('relay2State').textContent=d.relay[1]?'ON · AUTO':'OFF · AUTO';
- $('conn').textContent='FIREBASE · '+(d.connectionStatus||'ONLINE').toString().toUpperCase();$('sideState').textContent=d.wifiConnected?'DEVICE ONLINE':'FIREBASE LINKED';
+ if($('conn'))if($('conn'))$('conn').textContent='FIREBASE · '+(d.connectionStatus||'ONLINE').toString().toUpperCase();$('sideState').textContent=d.wifiConnected?'DEVICE ONLINE':'WAITING FOR DEVICE';
  recordHistory();renderOverview();renderDetail();renderDiagnostics();drawCharts();requestAnimationFrame(fitCurrentPage);
 }
 function firebaseConnect() {
   if (!firebaseConfig.apiKey || firebaseConfig.apiKey.includes('PASTE_')) {
-    $('conn').textContent = 'CONFIG REQUIRED';
-    $('sideState').textContent = 'SET FIREBASE API KEY';
+    if($('conn'))$('conn').textContent= 'CONFIG REQUIRED';
+    $('sideState').textContent = 'WAITING FOR DEVICE';
     return;
   }
 
@@ -977,15 +1083,15 @@ function firebaseConnect() {
 
       // Belum login: lakukan Anonymous Sign-in
       if (!user) {
-        $('conn').textContent = 'AUTHENTICATING...';
-        $('sideState').textContent = 'ANONYMOUS SIGN-IN';
+        if($('conn'))$('conn').textContent= 'AUTHENTICATING...';
+        $('sideState').textContent = 'WAITING FOR DEVICE';
 
         try {
           await auth.signInAnonymously();
         } catch (error) {
           console.error('Firebase authentication error:', error);
-          $('conn').textContent = 'AUTH ERROR';
-          $('sideState').textContent = error.message;
+          if($('conn'))$('conn').textContent= 'AUTH ERROR';
+          $('sideState').textContent = 'WAITING FOR DEVICE';
           toast('Authentication error: ' + error.message);
         }
 
@@ -997,8 +1103,8 @@ function firebaseConnect() {
         db = firebase.database();
         rootRef = db.ref('/');
 
-        $('conn').textContent = 'AUTHENTICATED';
-        $('sideState').textContent = 'FIREBASE AUTHENTICATED';
+        if($('conn'))$('conn').textContent= 'AUTHENTICATED';
+        $('sideState').textContent = 'WAITING FOR DEVICE';
 
         // Listener seluruh struktur database
         rootRef.on(
@@ -1006,7 +1112,7 @@ function firebaseConnect() {
           (snap) => applyRoot(snap.val()),
           (error) => {
             console.error('Firebase read error:', error);
-            $('conn').textContent = 'DATABASE ERROR';
+            if($('conn'))$('conn').textContent= 'DATABASE ERROR';
             toast('Firebase read error: ' + error.message);
           }
         );
@@ -1015,7 +1121,7 @@ function firebaseConnect() {
         db.ref('.info/connected').on('value', (snap) => {
           const online = snap.val() === true;
 
-          $('conn').textContent = online
+          if($('conn'))$('conn').textContent= online
             ? 'FIREBASE CONNECTED'
             : 'FIREBASE OFFLINE';
 
@@ -1026,14 +1132,14 @@ function firebaseConnect() {
 
       } catch (error) {
         console.error('Firebase database initialization error:', error);
-        $('conn').textContent = 'DATABASE ERROR';
+        if($('conn'))$('conn').textContent= 'DATABASE ERROR';
         toast('Database initialization error: ' + error.message);
       }
     });
 
   } catch (error) {
     console.error('Firebase initialization error:', error);
-    $('conn').textContent = 'INIT ERROR';
+    if($('conn'))$('conn').textContent= 'INIT ERROR';
     toast('Firebase initialization error: ' + error.message);
   }
 }
@@ -1100,12 +1206,12 @@ function exportMatrix(){return exportRows().map(x=>[new Date(x.ts).toLocaleStrin
 function exportFileBase(){return 'smartfarm_'+localDateInput(viewStart).replace(/[:T]/g,'-')+'_to_'+localDateInput(viewEnd).replace(/[:T]/g,'-')}
 $('exportCsv').onclick=()=>{if(!exportRows().length){toast('Tidak ada data pada rentang waktu yang dipilih.');return;}const matrix=[exportHeaders(),...exportMatrix()];const csv='\\uFEFF'+matrix.map(r=>r.map(v=>v===null||v===undefined?'':String(v)).map(v=>/[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v).join(',')).join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=exportFileBase()+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
 $('exportExcel').onclick=()=>{if(!exportRows().length){toast('Tidak ada data pada rentang waktu yang dipilih.');return;}if(typeof XLSX==='undefined'){toast('Library Excel belum termuat. Periksa koneksi internet atau gunakan CSV.');return;}const ws=XLSX.utils.aoa_to_sheet([exportHeaders(),...exportMatrix()]);ws['!cols']=[{wch:24},{wch:14},{wch:14},{wch:14},{wch:20},{wch:14},{wch:14},{wch:14},{wch:18}];const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Telemetry');XLSX.writeFile(wb,exportFileBase()+'.xlsx');};
-function clock(){$('clock').textContent=new Date().toLocaleString('id-ID',{hour:'2-digit',minute:'2-digit',second:'2-digit',day:'2-digit',month:'short',year:'numeric'})}
+function clock(){const el=$('clock');if(!el)return;const now=new Date();const date=now.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});const time=now.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});el.textContent=date+', '+time}
 function init(){
  viewEnd=Date.now();viewStart=viewEnd-rangeMs();
  $('soilSP').value=cfg.soilSP;$('soilH').value=cfg.soilH;$('rhSP').value=cfg.rhSP;$('rhH').value=cfg.rhH;$('logInterval').value='3';
- $('logFile').textContent='--';$('dataNo').textContent='0';$('conn').textContent='FIREBASE NOT CONFIGURED';$('sideState').textContent='AWAITING DEVICE';
- renderOverview();renderDetail();drawCharts();renderDiagnostics();clock();setInterval(clock,1000);firebaseConnect();
+ $('logFile').textContent='--';$('dataNo').textContent='0';if($('conn'))if($('conn'))$('conn').textContent='FIREBASE NOT CONFIGURED';$('sideState').textContent='WAITING FOR DEVICE';
+ renderOverview();renderDetail();drawCharts();renderDiagnostics();firebaseConnect();
 }
-init();window.addEventListener('resize',()=>requestAnimationFrame(fitCurrentPage));window.addEventListener('orientationchange',()=>setTimeout(fitCurrentPage,180));setTimeout(fitCurrentPage,100);
+init();clock();setInterval(clock,1000);window.addEventListener('resize',()=>requestAnimationFrame(fitCurrentPage));window.addEventListener('orientationchange',()=>setTimeout(fitCurrentPage,180));setTimeout(fitCurrentPage,100);
 </script></body></html>
