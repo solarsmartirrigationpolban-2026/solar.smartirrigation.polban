@@ -476,7 +476,12 @@ td{padding:6px 7px;line-height:1.25}
  #page-detail .detail-daily .detail-card{min-height:64px}
 }
 
-</style></head>
+.trend-toolbar{display:grid;gap:9px;margin-bottom:9px}.trend-nav,.trend-dates{display:flex;align-items:end;gap:8px;flex-wrap:wrap}
+.trend-dates label{display:grid;gap:4px;color:var(--muted);font-size:10px}.trend-dates input{background:#09182a;border:1px solid #2b435e;color:#e8f0f8;border-radius:7px;padding:7px 9px;min-height:34px}
+#trendRangeLabel{color:#c2d2e2;font-weight:650}.interactive-chart{cursor:crosshair}.interactive-chart circle[data-point-index]{cursor:pointer;stroke:#071323;stroke-width:1.5}
+.trend-point-card{margin-top:9px;min-height:68px}.trend-point-values{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.trend-point-value{background:#132943;border:1px solid #29435d;border-radius:7px;padding:7px 10px;font-size:11px}.trend-point-value b{color:#fff;margin-left:5px}
+.trend-export-note{margin-top:9px}@media(max-width:760px){.trend-nav,.trend-dates{gap:5px}.trend-dates label{flex:1 1 42%}.trend-dates input{width:100%;min-width:0;font-size:12px}.trend-nav .btn{flex:1}.trend-point-value{font-size:9px;padding:5px 7px}}</style></head>
 <body><div class="app">
 <aside class="sidebar"><div class="brand"><img src="https://tse1.mm.bing.net/th/id/OIP.RaVvOpGTXIFf7OC-R95dMwAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Logo Polban" onerror="this.style.display='none'"><div><div class="brand-name">SOLAR-POWERED SMART IRRIGATION</div><div class="brand-sub">WITH MONITORING SYSTEM · POLBAN</div></div></div>
 <div class="nav-label">MONITORING</div><nav class="nav" id="nav"><button class="active" data-page="overview"><span class="ico">▦</span>Overview</button><button data-page="detail"><span class="ico">◈</span>Detail</button><button data-page="trend"><span class="ico">⌁</span>Trend</button><button data-page="alarm"><span class="ico">⚑</span>Alarm <span id="navAlarm" class="tag warn">0</span></button><button data-page="system"><span class="ico">⚙</span>System</button></nav>
@@ -573,13 +578,23 @@ td{padding:6px 7px;line-height:1.25}
 </div>
 </section>
 
-<section id="page-trend" class="page hidden"><div class="page-head"><div><div class="eyebrow">HISTORICAL ANALYTICS</div><h1>Trend Analysis</h1><div class="sub">Parameter yang tersedia untuk direkam pada LOG CSV firmware.</div></div><button class="btn" id="exportCsv">↓ Export session CSV</button></div>
-<div class="card" style="margin-bottom:14px"><div class="filters" id="rangeFilters"><button class="active" data-range="1h">1 Hour</button><button data-range="6h">6 Hours</button><button data-range="24h">24 Hours</button><button data-range="7d">7 Days</button></div><div class="hint" style="margin-top:9px">Sumbu X = waktu penerimaan data; sumbu Y = nilai parameter beserta satuannya. Data yang tersedia saat ini berasal dari sesi browser. Histori lintas sesi memerlukan node histori terpisah di Firebase.</div></div>
-<div class="grid charts"><div class="card chartbox"><div class="card-head">SOIL MOISTURE TREND <span>Y: % · X: waktu</span></div><svg id="trendSoil" class="chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#39c982"></i>Soil 1</span><span><i class="key" style="background:#45a8e8"></i>Soil 2</span><span><i class="key" style="background:#e9ad3b"></i>Soil 3</span></div></div>
-<div class="card chartbox"><div class="card-head">DHT22 TREND <span>°C / %RH · skala terpisah</span></div><svg id="trendClimate" class="chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#39c982"></i>airTemp</span><span><i class="key" style="background:#45a8e8"></i>airRH</span></div></div>
-<div class="card chartbox"><div class="card-head">PZEM POWER TREND <span>Y: W · X: waktu</span></div><svg id="trendPower" class="chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#e9ad3b"></i>PZEM 1 PV</span><span><i class="key" style="background:#45a8e8"></i>PZEM 2 Load</span></div></div>
-<div class="card chartbox"><div class="card-head">FLOW RATE TREND <span>Y: L/min · X: waktu</span></div><svg id="trendWater" class="chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#39c982"></i>flow.rateLmin</span></div></div></div>
-<div class="card" style="margin-top:14px"><div class="card-head">LOGGING CONFIGURATION REFERENCE</div><div class="hint" style="margin-top:8px">LOG_OPTIONS = 1, 2, 5, 10, 15, 30, 60, 120, 300 seconds. CSV log includes soil RAW/PCT, soilAvg/soilValid, DHT, PZEM V/A/W/Wh/kWh + validity, flow rate/total/pulses + validity, relay states, setpoints/hysteresis, daily date and daily totals.</div></div></section>
+<section id="page-trend" class="page hidden">
+<div class="page-head"><div><div class="eyebrow">HISTORICAL ANALYTICS</div><h1>Trend Analysis</h1><div class="sub">Pilih rentang waktu, geser periode, lalu klik titik grafik untuk melihat detail pengukuran.</div></div><div class="actions"><button class="btn" id="exportCsv">↓ Export CSV</button><button class="btn primary" id="exportExcel">↓ Export Excel</button></div></div>
+<div class="card trend-toolbar">
+ <div class="filters" id="rangeFilters"><button class="active" data-range="1h">1 Jam</button><button data-range="6h">6 Jam</button><button data-range="24h">24 Jam</button><button data-range="7d">7 Hari</button></div>
+ <div class="trend-nav"><button class="btn" id="trendPrev">← Sebelumnya</button><button class="btn" id="trendNext">Berikutnya →</button><button class="btn primary" id="trendLive">Kembali ke Live</button></div>
+ <div class="trend-dates"><label>Mulai <input type="datetime-local" id="trendFrom"></label><label>Sampai <input type="datetime-local" id="trendTo"></label><button class="btn" id="applyTrendDates">Terapkan waktu</button></div>
+ <div class="hint" id="trendRangeLabel">Rentang data: --</div><div class="hint">Klik titik pada grafik untuk menampilkan waktu dan nilai. Tidak ada tooltip bergerak saat kursor hanya diarahkan. Data historis tersedia selama sesi browser aktif.</div>
+</div>
+<div class="grid charts">
+ <div class="card chartbox"><div class="card-head">SOIL MOISTURE TREND <span>Y: % · X: waktu</span></div><svg id="trendSoil" class="chart interactive-chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#39c982"></i>Soil 1</span><span><i class="key" style="background:#45a8e8"></i>Soil 2</span><span><i class="key" style="background:#e9ad3b"></i>Soil 3</span></div></div>
+ <div class="card chartbox"><div class="card-head">DHT22 TREND <span>°C / %RH · skala terpisah</span></div><svg id="trendClimate" class="chart interactive-chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#39c982"></i>airTemp</span><span><i class="key" style="background:#45a8e8"></i>airRH</span></div></div>
+ <div class="card chartbox"><div class="card-head">PZEM POWER TREND <span>Y: W · X: waktu</span></div><svg id="trendPower" class="chart interactive-chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#e9ad3b"></i>PZEM 1 PV</span><span><i class="key" style="background:#45a8e8"></i>PZEM 2 Load</span></div></div>
+ <div class="card chartbox"><div class="card-head">FLOW RATE TREND <span>Y: L/min · X: waktu</span></div><svg id="trendWater" class="chart interactive-chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#39c982"></i>flow.rateLmin</span></div></div>
+</div>
+<div class="card trend-point-card"><div class="card-head">DETAIL TITIK DATA <span id="selectedPointSource">Belum dipilih</span></div><div class="hint" id="selectedPointPrompt">Klik salah satu titik pada grafik untuk melihat timestamp dan nilai parameter.</div><div class="trend-point-values" id="selectedPointValues"></div></div>
+<div class="card trend-export-note"><div class="card-head">EXPORT DATA</div><div class="hint">CSV dapat dibuka di Excel. Export Excel menghasilkan file .xlsx. Kedua format mengikuti rentang waktu yang sedang dipilih.</div></div>
+</section>
 
 <section id="page-alarm" class="page hidden"><div class="page-head"><div><div class="eyebrow">DEVICE HEALTH & EVENTS</div><h1>Alarm / Diagnostics</h1><div class="sub">Process alarm dipisahkan dari permintaan kontrol Set Point dan diagnostic perangkat.</div></div><span class="tag warn">DIAGNOSTIC RULES</span></div>
 <div class="notice">Set Point mengatur aksi kontrol, bukan batas alarm. Nilai di bawah Soil Set Point memunculkan status kebutuhan irigasi (bukan alarm). Alarm proses memakai batas terpisah: Soil Low 20%, Soil High 85%, RH Low 40%, RH High 90%. Batas ini adalah nilai awal dan harus divalidasi sesuai tanaman. Diagnostic perangkat tetap dipantau terpisah.</div>
@@ -611,6 +626,8 @@ td{padding:6px 7px;line-height:1.25}
 </div></section>
 <div class="footer-note">Smart Farm IoT · Firebase RTDB integration-ready UI · ESP32 Classic + Arduino Nano I2C 0x12 · no simulated telemetry.</div>
 </div></main></div><div class="toast" id="toast"></div>
+<!-- Excel export library -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <!-- Firebase compat SDK: CDN integration -->
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.14.1/firebase-auth-compat.js"></script>
@@ -618,6 +635,7 @@ td{padding:6px 7px;line-height:1.25}
 <script>
 const $ = id => document.getElementById(id);
 let page='overview', range='1h', resetArmed=null, resetTimer=null;
+let viewEnd=Date.now(), viewStart=viewEnd-3600000;
 let cfg={soilSP:40,soilH:5,rhSP:70,rhH:5,logOption:10};
 let history=[], events=[], db=null, rootRef=null, latestRoot=null, resetToken=0;
 let authObserverStarted=false, pumpCommandPending=false, pumpCommandTimer=null;
@@ -654,7 +672,9 @@ function fitCurrentPage(){document.querySelectorAll('.page').forEach(el=>el.styl
 function navTo(p){page=p;document.querySelectorAll('.page').forEach(e=>e.classList.add('hidden'));$('page-'+p).classList.remove('hidden');document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===p));$('crumb').textContent=p[0].toUpperCase()+p.slice(1);if(p==='detail')renderDetail();if(p==='trend')drawCharts();if(p==='alarm')renderDiagnostics();requestAnimationFrame(fitCurrentPage)}
 $('nav').onclick=e=>{const b=e.target.closest('button[data-page]');if(b)navTo(b.dataset.page)};
 function rangeMs(){return ({'1h':3600000,'6h':21600000,'24h':86400000,'7d':604800000})[range]||3600000}
-function selectedHistory(){const cutoff=Date.now()-rangeMs();return history.filter(x=>x.ts>=cutoff)}
+function selectedHistory(){return history.filter(x=>x.ts>=viewStart&&x.ts<=viewEnd)}
+function localDateInput(ts){const d=new Date(ts),p=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`}
+function updateTrendRangeUI(){if($('trendFrom'))$('trendFrom').value=localDateInput(viewStart);if($('trendTo'))$('trendTo').value=localDateInput(viewEnd);if($('trendRangeLabel'))$('trendRangeLabel').textContent=`Rentang: ${new Date(viewStart).toLocaleString('id-ID')} — ${new Date(viewEnd).toLocaleString('id-ID')} · ${selectedHistory().length} sampel`;if($('trendNext'))$('trendNext').disabled=viewEnd>=Date.now()}
 function svgChart(id,series,rows=selectedHistory(),dual=false,unit=''){
  const svg=$(id);if(!svg)return;const w=600,h=180,L=dual?48:48,R=dual?48:14,T=14,B=34,iw=w-L-R,ih=h-T-B;
  const usable=series.map(s=>({...s,pts:rows.map(x=>x[s.k]).filter(finite)})).filter(s=>s.pts.length);
@@ -672,13 +692,25 @@ function svgChart(id,series,rows=selectedHistory(),dual=false,unit=''){
  usable.forEach(s=>{
   const pts=rows.map((r,i)=>finite(r[s.k])?`${x(i)},${dual?s.axisY(r[s.k]):y(r[s.k])}`:null).filter(Boolean).join(' ');
   if(pts){out+=`<polyline points="${pts}" fill="none" stroke="${s.c}" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>`;}
-  rows.forEach((r,i)=>{if(finite(r[s.k]))out+=`<circle cx="${x(i)}" cy="${dual?s.axisY(r[s.k]):y(r[s.k])}" r="2.4" fill="${s.c}"><title>${s.k}: ${r[s.k]} · ${new Date(r.ts).toLocaleString('id-ID')}</title></circle>`});
+  rows.forEach((r,i)=>{if(finite(r[s.k]))out+=`<circle data-point-index="${i}" data-series-key="${s.k}" cx="${x(i)}" cy="${dual?s.axisY(r[s.k]):y(r[s.k])}" r="3.8" fill="${s.c}"/>`});
  });
  out+=`<text x="${L+iw/2}" y="${h-2}" text-anchor="middle" fill="#a9bfd5" font-size="9">Sumbu X: Waktu (HH:MM)</text><text transform="translate(10 ${T+ih/2}) rotate(-90)" text-anchor="middle" fill="#a9bfd5" font-size="9">Sumbu Y: ${unit||'Nilai'}</text>`;
  svg.innerHTML=out;
+
+ if(id.startsWith('trend'))svg.onclick=(ev)=>{
+  const point=ev.target.closest('circle[data-point-index]');if(!point)return;
+  const row=rows[Number(point.dataset.pointIndex)];if(!row)return;
+  const defs={trendSoil:['Soil Moisture',[['Soil 1','s1','%'],['Soil 2','s2','%'],['Soil 3','s3','%']]],trendClimate:['DHT22',[['Air temperature','temp','°C'],['Relative humidity','rh','%']]],trendPower:['PZEM Power',[['PV PZEM 1','pv','W'],['Load PZEM 2','load','W']]],trendWater:['Water Flow',[['Flow rate','flow','L/min']]]};
+  const meta=defs[id];if(!meta)return;
+  $('selectedPointSource').textContent=meta[0];
+  $('selectedPointPrompt').textContent=new Date(row.ts).toLocaleString('id-ID',{dateStyle:'full',timeStyle:'medium'});
+  $('selectedPointValues').innerHTML=meta[1].filter(k=>finite(row[k[1]])).map(k=>`<span class="trend-point-value">${k[0]} <b>${row[k[1]].toFixed(2)} ${k[2]}</b></span>`).join('')||'<span class="hint">Tidak ada nilai valid pada titik ini.</span>';
+ };
+
 }
 function drawCharts(){
  const a=selectedHistory(),g=k=>a.map(x=>x[k]);
+ updateTrendRangeUI();
  svgChart('overviewSoil',[{k:'s1',c:'#39c982'},{k:'s2',c:'#45a8e8'},{k:'s3',c:'#e9ad3b'}],a.slice(-40),false,'%');
  svgChart('trendSoil',[{k:'s1',c:'#39c982'},{k:'s2',c:'#45a8e8'},{k:'s3',c:'#e9ad3b'}],a,false,'%');
  svgChart('trendClimate',[{k:'temp',c:'#39c982'},{k:'rh',c:'#45a8e8'}],a,true,'°C / %RH');
@@ -919,10 +951,20 @@ $('pumpSwitch').addEventListener('change',async()=>{
 });
 $('startLog').onclick=()=>loggerCommand(true);$('stopLog').onclick=()=>loggerCommand(false);
 $('resetBtn').onclick=async()=>{const command=Number($('resetTarget').value),label=$('resetTarget').selectedOptions[0].text;if(resetArmed===command&&Date.now()-resetTimer<5000){resetArmed=null;const token=++resetToken;try{await writeDb('commands/reset',{command,token,confirm:true,requestedAt:Date.now()});toast('Reset request dikirim; tunggu ACK dari ESP32/Nano')}catch(e){toast(e.message)}}else{resetArmed=command;resetTimer=Date.now();toast('Target armed: tekan sekali lagi dalam 5 detik untuk konfirmasi '+label)}};
-$('rangeFilters').onclick=e=>{const b=e.target.closest('button[data-range]');if(!b)return;document.querySelectorAll('#rangeFilters button').forEach(x=>x.classList.toggle('active',x===b));range=b.dataset.range;drawCharts();toast('Rentang grafik: '+b.textContent)};
-$('exportCsv').onclick=()=>{if(!history.length){toast('Belum ada telemetry untuk diekspor');return}const rows=['timestamp,soil1_pct,soil2_pct,soil3_pct,airTemp_C,airRH_pct,pv_power_W,load_power_W,flow_Lmin',...history.map((x,i)=>[i,x.s1,x.s2,x.s3,x.temp,x.rh,x.pv,x.load,x.flow].join(','))];const blob=new Blob([rows.join('\n')],{type:'text/csv'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='smartfarm-telemetry-session.csv';a.click();URL.revokeObjectURL(a.href)};
+$('rangeFilters').onclick=e=>{const b=e.target.closest('button[data-range]');if(!b)return;document.querySelectorAll('#rangeFilters button').forEach(x=>x.classList.toggle('active',x===b));range=b.dataset.range;viewEnd=Date.now();viewStart=viewEnd-rangeMs();drawCharts();};
+$('trendPrev').onclick=()=>{const w=viewEnd-viewStart;viewEnd=viewStart-1;viewStart=viewEnd-w;drawCharts();};
+$('trendNext').onclick=()=>{const w=viewEnd-viewStart,now=Date.now();viewStart=Math.min(now-w,viewStart+w);viewEnd=Math.min(now,viewEnd+w);drawCharts();};
+$('trendLive').onclick=()=>{viewEnd=Date.now();viewStart=viewEnd-rangeMs();drawCharts();};
+$('applyTrendDates').onclick=()=>{const a=new Date($('trendFrom').value).getTime(),b=new Date($('trendTo').value).getTime();if(!Number.isFinite(a)||!Number.isFinite(b)||a>=b){toast('Rentang tanggal tidak valid. Waktu mulai harus lebih awal dari waktu akhir.');return;}viewStart=a;viewEnd=b;document.querySelectorAll('#rangeFilters button').forEach(x=>x.classList.remove('active'));drawCharts();};
+function exportRows(){return selectedHistory().slice().sort((a,b)=>a.ts-b.ts)}
+function exportHeaders(){return ['Timestamp','Soil 1 (%)','Soil 2 (%)','Soil 3 (%)','Air Temperature (°C)','Air RH (%)','PV Power (W)','Load Power (W)','Flow Rate (L/min)']}
+function exportMatrix(){return exportRows().map(x=>[new Date(x.ts).toLocaleString('id-ID'),x.s1,x.s2,x.s3,x.temp,x.rh,x.pv,x.load,x.flow])}
+function exportFileBase(){return 'smartfarm_'+localDateInput(viewStart).replace(/[:T]/g,'-')+'_to_'+localDateInput(viewEnd).replace(/[:T]/g,'-')}
+$('exportCsv').onclick=()=>{if(!exportRows().length){toast('Tidak ada data pada rentang waktu yang dipilih.');return;}const matrix=[exportHeaders(),...exportMatrix()];const csv='\\uFEFF'+matrix.map(r=>r.map(v=>v===null||v===undefined?'':String(v)).map(v=>/[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v).join(',')).join('\r\n');const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=exportFileBase()+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
+$('exportExcel').onclick=()=>{if(!exportRows().length){toast('Tidak ada data pada rentang waktu yang dipilih.');return;}if(typeof XLSX==='undefined'){toast('Library Excel belum termuat. Periksa koneksi internet atau gunakan CSV.');return;}const ws=XLSX.utils.aoa_to_sheet([exportHeaders(),...exportMatrix()]);ws['!cols']=[{wch:24},{wch:14},{wch:14},{wch:14},{wch:20},{wch:14},{wch:14},{wch:14},{wch:18}];const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,ws,'Telemetry');XLSX.writeFile(wb,exportFileBase()+'.xlsx');};
 function clock(){$('clock').textContent=new Date().toLocaleString('id-ID',{hour:'2-digit',minute:'2-digit',second:'2-digit',day:'2-digit',month:'short',year:'numeric'})}
 function init(){
+ viewEnd=Date.now();viewStart=viewEnd-rangeMs();
  $('soilSP').value=cfg.soilSP;$('soilH').value=cfg.soilH;$('rhSP').value=cfg.rhSP;$('rhH').value=cfg.rhH;$('logInterval').value='3';
  $('logFile').textContent='--';$('dataNo').textContent='0';$('conn').textContent='FIREBASE NOT CONFIGURED';$('sideState').textContent='AWAITING DEVICE';
  renderOverview();renderDetail();drawCharts();renderDiagnostics();clock();setInterval(clock,1000);firebaseConnect();
