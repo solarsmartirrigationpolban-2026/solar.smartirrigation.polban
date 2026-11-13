@@ -655,28 +655,36 @@ function navTo(p){page=p;document.querySelectorAll('.page').forEach(e=>e.classLi
 $('nav').onclick=e=>{const b=e.target.closest('button[data-page]');if(b)navTo(b.dataset.page)};
 function rangeMs(){return ({'1h':3600000,'6h':21600000,'24h':86400000,'7d':604800000})[range]||3600000}
 function selectedHistory(){const cutoff=Date.now()-rangeMs();return history.filter(x=>x.ts>=cutoff)}
-function svgChart(id,series,rows=selectedHistory(),dual=false){
- const svg=$(id);if(!svg)return;const w=600,h=180,L=48,R=dual?48:14,T=12,B=30,iw=w-L-R,ih=h-T-B;
+function svgChart(id,series,rows=selectedHistory(),dual=false,unit=''){
+ const svg=$(id);if(!svg)return;const w=600,h=180,L=dual?48:48,R=dual?48:14,T=14,B=34,iw=w-L-R,ih=h-T-B;
  const usable=series.map(s=>({...s,pts:rows.map(x=>x[s.k]).filter(finite)})).filter(s=>s.pts.length);
- if(!usable.length){svg.innerHTML='<text x="300" y="82" text-anchor="middle" fill="#7890aa" font-size="13">Menunggu data Firebase</text>';return}
+ if(!usable.length){svg.innerHTML='<text x="300" y="78" text-anchor="middle" fill="#9bb0c7" font-size="13">Menunggu data Firebase</text><text x="300" y="98" text-anchor="middle" fill="#7188a2" font-size="10">Sumbu X: waktu · Sumbu Y: nilai '+unit+'</text>';return}
  const all=usable.flatMap(s=>s.pts),min=Math.min(0,...all),max=Math.max(...all),span=max-min||1;
  usable.forEach(s=>{s.min=dual?Math.min(0,...s.pts):min;s.max=dual?Math.max(...s.pts,1):max;s.span=s.max-s.min||1;s.axisY=v=>T+ih-(v-s.min)/s.span*ih});
- const y=v=>T+ih-(v-min)/span*ih, x=i=>L+(rows.length<=1?iw: i/(rows.length-1)*iw);
+ const y=v=>T+ih-(v-min)/span*ih, x=i=>L+(rows.length<=1?iw/2:i/(rows.length-1)*iw);
  let out='';
- for(let j=0;j<=4;j++){const yy=T+j*ih/4,val=max-j*span/4;out+=`<line x1="${L}" y1="${yy}" x2="${L+iw}" y2="${yy}" stroke="#29415b" stroke-dasharray="3 5"/><text x="${L-7}" y="${yy+3}" text-anchor="end" fill="#8ea3bc" font-size="10">${val.toFixed(val<10?1:0)}</text>${dual?`<text x="${L+iw+7}" y="${yy+3}" fill="#8ea3bc" font-size="10">${(usable[1].max-j*usable[1].span/4).toFixed(0)}</text>`:''}` }
- const ticks=[0,.25,.5,.75,1];ticks.forEach(t=>{const idx=Math.min(rows.length-1,Math.round(t*(rows.length-1)));if(idx>=0){const label=new Date(rows[idx].ts).toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});out+=`<text x="${L+t*iw}" y="${h-10}" text-anchor="middle" fill="#8ea3bc" font-size="10">${label}</text>`}});
- usable.forEach(s=>{const pts=rows.map((r,i)=>finite(r[s.k])?`${x(i)},${dual?s.axisY(r[s.k]):y(r[s.k])}`:null).filter(Boolean).join(' ');if(pts)out+=`<polyline points="${pts}" fill="none" stroke="${s.c}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>`});
- out+=`<text x="${L+iw/2}" y="${h-1}" text-anchor="middle" fill="#8ea3bc" font-size="9">Waktu</text>`;
+ for(let j=0;j<=4;j++){
+  const yy=T+j*ih/4,val=max-j*span/4;
+  out+=`<line x1="${L}" y1="${yy}" x2="${L+iw}" y2="${yy}" stroke="#29415b" stroke-dasharray="3 5"/><text x="${L-7}" y="${yy+3}" text-anchor="end" fill="#a9bfd5" font-size="10">${val.toFixed(Math.abs(val)<10?1:0)}</text>`;
+  if(dual&&usable[1])out+=`<text x="${L+iw+7}" y="${yy+3}" fill="#a9bfd5" font-size="10">${(usable[1].max-j*usable[1].span/4).toFixed(0)}</text>`;
+ }
+ const ticks=[0,.25,.5,.75,1];ticks.forEach(t=>{if(!rows.length)return;const idx=Math.min(rows.length-1,Math.round(t*(rows.length-1)));const label=new Date(rows[idx].ts).toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});out+=`<line x1="${L+t*iw}" y1="${T+ih}" x2="${L+t*iw}" y2="${T+ih+3}" stroke="#8ea3bc"/><text x="${L+t*iw}" y="${h-15}" text-anchor="middle" fill="#a9bfd5" font-size="10">${label}</text>`});
+ usable.forEach(s=>{
+  const pts=rows.map((r,i)=>finite(r[s.k])?`${x(i)},${dual?s.axisY(r[s.k]):y(r[s.k])}`:null).filter(Boolean).join(' ');
+  if(pts){out+=`<polyline points="${pts}" fill="none" stroke="${s.c}" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>`;}
+  rows.forEach((r,i)=>{if(finite(r[s.k]))out+=`<circle cx="${x(i)}" cy="${dual?s.axisY(r[s.k]):y(r[s.k])}" r="2.4" fill="${s.c}"><title>${s.k}: ${r[s.k]} · ${new Date(r.ts).toLocaleString('id-ID')}</title></circle>`});
+ });
+ out+=`<text x="${L+iw/2}" y="${h-2}" text-anchor="middle" fill="#a9bfd5" font-size="9">Sumbu X: Waktu (HH:MM)</text><text transform="translate(10 ${T+ih/2}) rotate(-90)" text-anchor="middle" fill="#a9bfd5" font-size="9">Sumbu Y: ${unit||'Nilai'}</text>`;
  svg.innerHTML=out;
 }
 function drawCharts(){
  const a=selectedHistory(),g=k=>a.map(x=>x[k]);
- svgChart('overviewSoil',[{k:'s1',c:'#39c982'},{k:'s2',c:'#45a8e8'},{k:'s3',c:'#e9ad3b'}],history.slice(-40));
- svgChart('trendSoil',[{k:'s1',c:'#39c982'},{k:'s2',c:'#45a8e8'},{k:'s3',c:'#e9ad3b'}],a);
- svgChart('trendClimate',[{k:'temp',c:'#39c982'},{k:'rh',c:'#45a8e8'}],a,true);
- svgChart('trendPower',[{k:'pv',c:'#e9ad3b'},{k:'load',c:'#45a8e8'}],a);
- svgChart('trendWater',[{k:'flow',c:'#39c982'}],a);
- svgChart('overviewEnergy',[{k:'pv',c:'#e9ad3b'},{k:'load',c:'#45a8e8'}],history.slice(-40));
+ svgChart('overviewSoil',[{k:'s1',c:'#39c982'},{k:'s2',c:'#45a8e8'},{k:'s3',c:'#e9ad3b'}],history.slice(-40),false,'%');
+ svgChart('trendSoil',[{k:'s1',c:'#39c982'},{k:'s2',c:'#45a8e8'},{k:'s3',c:'#e9ad3b'}],a,false,'%');
+ svgChart('trendClimate',[{k:'temp',c:'#39c982'},{k:'rh',c:'#45a8e8'}],a,true,'°C / %RH');
+ svgChart('trendPower',[{k:'pv',c:'#e9ad3b'},{k:'load',c:'#45a8e8'}],a,false,'W');
+ svgChart('trendWater',[{k:'flow',c:'#39c982'}],a,false,'L/min');
+ svgChart('overviewEnergy',[{k:'pv',c:'#e9ad3b'},{k:'load',c:'#45a8e8'}],history.slice(-40),false,'W');
 }
 function recordHistory(){const x={ts:Date.now(),s1:d.soil[0],s2:d.soil[1],s3:d.soil[2],temp:d.temp,rh:d.rh,pv:d.pz[0].power,load:d.pz[1].power,flow:d.flow.rateLmin};if(Object.values(x).some(finite)){history.push(x);if(history.length>500)history.shift()}}
 function renderOverview(){
@@ -712,12 +720,26 @@ function renderDiagnostics(){
  $('eventTable').innerHTML=events.length?events.slice().reverse().map(e=>`<tr><td>${e.time}</td><td>${e.action}</td><td>${e.result}</td></tr>`).join(''):'<tr><td colspan="3" class="muted">Belum ada event dari Firebase.</td></tr>';
 }
 function applyRoot(root){
- latestRoot=root||{};const t=latestRoot.telemetry||{},s=t.soil||{},c=t.climate||{},p1=t.pzem1||{},p2=t.pzem2||{},f=t.flow||{},day=t.daily||{},dev=t.device||{},a=latestRoot.actuators||{},conf=latestRoot.configuration||{},lg=latestRoot.logger||{},sys=latestRoot.system||{};
- d.soil=Array.isArray(s.soilPct)?s.soilPct:[null,null,null];d.raw=Array.isArray(s.soilRaw)?s.soilRaw:[null,null,null];d.soilChannelOK=Array.isArray(s.soilChannelOK)?s.soilChannelOK:[false,false,false];d.soilValid=!!s.soilValid;d.soilAvg=s.soilAvg??null;
- d.temp=c.airTemp??null;d.rh=c.airRH??null;d.pz=[p1,p2].map(p=>({voltage:p.voltage??null,current:p.current??null,power:p.power??null,energyWh:p.energyWh??null,valid:!!p.valid,lastOK:p.lastOK??null}));
- d.flow={rateLmin:f.rateLmin??null,totalML:f.totalML??0,pulses:f.pulses??0,valid:!!f.valid,lastOK:f.lastOK??null};
- d.dailyWh=Array.isArray(day.dailyWh)?day.dailyWh:[0,0];d.dailyWaterML=day.dailyWaterML??0;d.dailyDate=day.dailyDate??null;
- d.rtcReady=!!dev.rtcReady;d.sdReady=!!dev.sdReady;d.wifiConnected=!!dev.wifiConnected;d.relay=Array.isArray(a.relayOn)?a.relayOn:[false,false,false];d.pump=!!a.pumpManualOn;
+ latestRoot=root||{};
+ // Mendukung dua skema: versi firmware lama (node di root) dan skema telemetry/*.
+ const t=latestRoot.telemetry||latestRoot;
+ const s=t.soil||latestRoot.soil||{},c=t.climate||latestRoot.climate||latestRoot.dht22||latestRoot.dht||{};
+ const p1=t.pzem1||latestRoot.pzem1||{},p2=t.pzem2||latestRoot.pzem2||{};
+ const f=t.flow||latestRoot.flow||{},day=t.daily||latestRoot.daily||{};
+ const dev=t.device||latestRoot.device||{},a=latestRoot.actuators||latestRoot;
+ const conf=latestRoot.configuration||{},lg=latestRoot.logger||latestRoot,sys=latestRoot.system||{};
+ const pick=(...v)=>v.find(x=>x!==undefined&&x!==null);
+ const arr=(v,n=3)=>Array.isArray(v)?v:(v&&typeof v==='object'?Array.from({length:n},(_,i)=>pick(v[i],v[String(i)],null)):Array(n).fill(null));
+ d.soil=arr(pick(s.soilPct,s.soilPCT,s.soilPercent,s.soil));
+ d.raw=arr(pick(s.soilRaw,s.raw));
+ d.soilChannelOK=arr(pick(s.soilChannelOK,s.channelOK),3).map(Boolean);
+ d.soilValid=!!pick(s.soilValid,s.valid,d.soilChannelOK.some(Boolean));
+ d.soilAvg=pick(s.soilAvg,s.avg,null);
+ d.temp=pick(c.airTemp,c.temp,c.temperature,latestRoot.airTemp,latestRoot.temperature,null);d.rh=pick(c.airRH,c.rh,c.humidity,latestRoot.airRH,latestRoot.humidity,null);
+ d.pz=[p1,p2].map(p=>({voltage:pick(p.voltage,p.volt,null),current:pick(p.current,p.amp,null),power:pick(p.power,null),energyWh:pick(p.energyWh,p.energy,p.wh,null),valid:pick(p.valid,true)===true,lastOK:pick(p.lastOK,null)}));
+ d.flow={rateLmin:pick(f.rateLmin,f.flowRate,f.rate,null),totalML:pick(f.totalML,f.totalMl,f.totalVolumeML,0),pulses:pick(f.pulses,f.pulseCount,0),valid:pick(f.valid,true)===true,lastOK:pick(f.lastOK,null)};
+ d.dailyWh=arr(pick(day.dailyWh,latestRoot.dailyWh),2);d.dailyWaterML=pick(day.dailyWaterML,latestRoot.dailyWaterML,0);d.dailyDate=pick(day.dailyDate,latestRoot.dailyDate,null);
+ d.rtcReady=!!pick(dev.rtcReady,latestRoot.rtcReady,false);d.sdReady=!!pick(dev.sdReady,latestRoot.sdReady,false);d.wifiConnected=!!pick(dev.wifiConnected,latestRoot.wifiConnected,true);d.relay=arr(pick(a.relayOn,latestRoot.relayOn),3).map(Boolean);d.pump=!!pick(a.pumpManualOn,latestRoot.pumpManualOn,d.relay[2]);
  if(pumpCommandPending && latestRoot.commands && latestRoot.commands.pump &&
     typeof latestRoot.commands.pump.manualOn==='boolean' &&
     latestRoot.commands.pump.manualOn===d.pump){
