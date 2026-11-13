@@ -481,14 +481,19 @@ td{padding:6px 7px;line-height:1.25}
 #trendRangeLabel{color:#c2d2e2;font-weight:650}.interactive-chart{cursor:crosshair}.interactive-chart circle[data-point-index]{cursor:pointer;stroke:#071323;stroke-width:1.5}
 .trend-point-card{margin-top:9px;min-height:68px}.trend-point-values{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
 .trend-point-value{background:#132943;border:1px solid #29435d;border-radius:7px;padding:7px 10px;font-size:11px}.trend-point-value b{color:#fff;margin-left:5px}
-.trend-export-note{margin-top:9px}@media(max-width:760px){.trend-nav,.trend-dates{gap:5px}.trend-dates label{flex:1 1 42%}.trend-dates input{width:100%;min-width:0;font-size:12px}.trend-nav .btn{flex:1}.trend-point-value{font-size:9px;padding:5px 7px}}</style></head>
+.trend-export-note{margin-top:9px}@media(max-width:760px){.trend-nav,.trend-dates{gap:5px}.trend-dates label{flex:1 1 42%}.trend-dates input{width:100%;min-width:0;font-size:12px}.trend-nav .btn{flex:1}.trend-point-value{font-size:9px;padding:5px 7px}}
+.chart{overflow:visible}.chartbox{background:linear-gradient(145deg,rgba(19,42,67,.96),rgba(10,27,46,.98));border:1px solid rgba(80,119,157,.24);box-shadow:0 8px 24px rgba(0,0,0,.14)}
+.chartbox .card-head{letter-spacing:.11em}.chartbox svg path{filter:drop-shadow(0 1px 3px rgba(30,170,220,.16))}
+.chartbox svg circle{transition:r .16s ease,filter .16s ease}.chartbox svg circle:hover{r:5.5;filter:drop-shadow(0 0 5px currentColor)}
+.tag.good{background:rgba(40,201,130,.15);color:#43d99a;border-color:rgba(40,201,130,.3)}
+</style></head>
 <body><div class="app">
 <aside class="sidebar"><div class="brand"><img src="https://tse1.mm.bing.net/th/id/OIP.RaVvOpGTXIFf7OC-R95dMwAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Logo Polban" onerror="this.style.display='none'"><div><div class="brand-name">SOLAR-POWERED SMART IRRIGATION</div><div class="brand-sub">WITH MONITORING SYSTEM · POLBAN</div></div></div>
 <div class="nav-label">MONITORING</div><nav class="nav" id="nav"><button class="active" data-page="overview"><span class="ico">▦</span>Overview</button><button data-page="detail"><span class="ico">◈</span>Detail</button><button data-page="trend"><span class="ico">⌁</span>Trend</button><button data-page="alarm"><span class="ico">⚑</span>Alarm <span id="navAlarm" class="tag warn">0</span></button><button data-page="system"><span class="ico">⚙</span>System</button></nav>
 <div class="side-foot"><div><span class="dot"></span><b id="sideState">FIREBASE READY</b></div><div style="margin-top:8px">ESP32 Classic · Arduino Nano I2C</div><div>Prototype v4.0 · one-screen HMI · responsive</div></div></aside>
 <main class="main"><header class="topbar"><div class="crumb">POLBAN <span class="muted">/</span> <b id="crumb">Overview</b></div><div class="top-right"><span id="clock">--:--:--</span><span class="pill"><span class="dot"></span><span id="conn">FIREBASE LINK</span></span><span class="pill">ESP32 + NANO 0x12</span></div></header>
 <div class="content" id="content">
-<section id="page-overview" class="page"><div class="page-head"><div><div class="eyebrow">SYSTEM OPERATIONS</div><h1>Overview</h1><div class="sub">Ringkasan variabel yang benar-benar tersedia pada firmware.</div></div><span class="tag warn">WAITING FOR DEVICE DATA</span></div>
+<section id="page-overview" class="page"><div class="page-head"><div><div class="eyebrow">SYSTEM OPERATIONS</div><h1>Overview</h1><div class="sub">Ringkasan variabel yang benar-benar tersedia pada firmware.</div></div><span class="tag warn" id="deviceDataBadge">WAITING FOR DEVICE DATA</span></div>
 <div class="hero"><div class="card hero-main"><div><div class="card-head">● SOIL MOISTURE AVERAGE · soilAvg</div><div class="big" id="soilHero">42.3<span class="unit"> %</span></div><p>Rata-rata tiga channel soil sensor. Relay 1 dikendalikan otomatis menggunakan soilSetpoint dan soilHyst.</p></div></div><div class="hero-side"><div class="mini"><div class="card-head">☀ PV POWER · PZEM 1</div><div class="metric" id="pvHero">220 <span class="unit">W</span></div><div class="hint">PV sebelum SCC</div></div><div class="mini"><div class="card-head">⚡ LOAD POWER · PZEM 2</div><div class="metric" id="loadHero">145 <span class="unit">W</span></div><div class="hint">DC load</div></div></div></div>
 <div class="grid kpis">
 <div class="card"><div class="card-head">AIR TEMPERATURE · DHT22</div><div class="metric" id="tempKpi">29.4 <span class="unit">°C</span></div><div class="hint">airTemp · NaN jika gagal baca</div></div>
@@ -676,37 +681,60 @@ function selectedHistory(){return history.filter(x=>x.ts>=viewStart&&x.ts<=viewE
 function localDateInput(ts){const d=new Date(ts),p=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`}
 function updateTrendRangeUI(){if($('trendFrom'))$('trendFrom').value=localDateInput(viewStart);if($('trendTo'))$('trendTo').value=localDateInput(viewEnd);if($('trendRangeLabel'))$('trendRangeLabel').textContent=`Rentang: ${new Date(viewStart).toLocaleString('id-ID')} — ${new Date(viewEnd).toLocaleString('id-ID')} · ${selectedHistory().length} sampel`;if($('trendNext'))$('trendNext').disabled=viewEnd>=Date.now()}
 function svgChart(id,series,rows=selectedHistory(),dual=false,unit=''){
- const svg=$(id);if(!svg)return;const w=600,h=180,L=dual?48:48,R=dual?48:14,T=14,B=34,iw=w-L-R,ih=h-T-B;
- const usable=series.map(s=>({...s,pts:rows.map(x=>x[s.k]).filter(finite)})).filter(s=>s.pts.length);
- if(!usable.length){svg.innerHTML='<text x="300" y="78" text-anchor="middle" fill="#9bb0c7" font-size="13">Menunggu data Firebase</text><text x="300" y="98" text-anchor="middle" fill="#7188a2" font-size="10">Sumbu X: waktu · Sumbu Y: nilai '+unit+'</text>';return}
- const all=usable.flatMap(s=>s.pts),min=Math.min(0,...all),max=Math.max(...all),span=max-min||1;
- usable.forEach(s=>{s.min=dual?Math.min(0,...s.pts):min;s.max=dual?Math.max(...s.pts,1):max;s.span=s.max-s.min||1;s.axisY=v=>T+ih-(v-s.min)/s.span*ih});
- const y=v=>T+ih-(v-min)/span*ih, x=i=>L+(rows.length<=1?iw/2:i/(rows.length-1)*iw);
- let out='';
- for(let j=0;j<=4;j++){
-  const yy=T+j*ih/4,val=max-j*span/4;
-  out+=`<line x1="${L}" y1="${yy}" x2="${L+iw}" y2="${yy}" stroke="#29415b" stroke-dasharray="3 5"/><text x="${L-7}" y="${yy+3}" text-anchor="end" fill="#a9bfd5" font-size="10">${val.toFixed(Math.abs(val)<10?1:0)}</text>`;
-  if(dual&&usable[1])out+=`<text x="${L+iw+7}" y="${yy+3}" fill="#a9bfd5" font-size="10">${(usable[1].max-j*usable[1].span/4).toFixed(0)}</text>`;
- }
- const ticks=[0,.25,.5,.75,1];ticks.forEach(t=>{if(!rows.length)return;const idx=Math.min(rows.length-1,Math.round(t*(rows.length-1)));const label=new Date(rows[idx].ts).toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});out+=`<line x1="${L+t*iw}" y1="${T+ih}" x2="${L+t*iw}" y2="${T+ih+3}" stroke="#8ea3bc"/><text x="${L+t*iw}" y="${h-15}" text-anchor="middle" fill="#a9bfd5" font-size="10">${label}</text>`});
- usable.forEach(s=>{
-  const pts=rows.map((r,i)=>finite(r[s.k])?`${x(i)},${dual?s.axisY(r[s.k]):y(r[s.k])}`:null).filter(Boolean).join(' ');
-  if(pts){out+=`<polyline points="${pts}" fill="none" stroke="${s.c}" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>`;}
-  rows.forEach((r,i)=>{if(finite(r[s.k]))out+=`<circle data-point-index="${i}" data-series-key="${s.k}" cx="${x(i)}" cy="${dual?s.axisY(r[s.k]):y(r[s.k])}" r="3.8" fill="${s.c}"/>`});
- });
- out+=`<text x="${L+iw/2}" y="${h-2}" text-anchor="middle" fill="#a9bfd5" font-size="9">Sumbu X: Waktu (HH:MM)</text><text transform="translate(10 ${T+ih/2}) rotate(-90)" text-anchor="middle" fill="#a9bfd5" font-size="9">Sumbu Y: ${unit||'Nilai'}</text>`;
- svg.innerHTML=out;
-
- if(id.startsWith('trend'))svg.onclick=(ev)=>{
-  const point=ev.target.closest('circle[data-point-index]');if(!point)return;
-  const row=rows[Number(point.dataset.pointIndex)];if(!row)return;
-  const defs={trendSoil:['Soil Moisture',[['Soil 1','s1','%'],['Soil 2','s2','%'],['Soil 3','s3','%']]],trendClimate:['DHT22',[['Air temperature','temp','°C'],['Relative humidity','rh','%']]],trendPower:['PZEM Power',[['PV PZEM 1','pv','W'],['Load PZEM 2','load','W']]],trendWater:['Water Flow',[['Flow rate','flow','L/min']]]};
-  const meta=defs[id];if(!meta)return;
-  $('selectedPointSource').textContent=meta[0];
-  $('selectedPointPrompt').textContent=new Date(row.ts).toLocaleString('id-ID',{dateStyle:'full',timeStyle:'medium'});
-  $('selectedPointValues').innerHTML=meta[1].filter(k=>finite(row[k[1]])).map(k=>`<span class="trend-point-value">${k[0]} <b>${row[k[1]].toFixed(2)} ${k[2]}</b></span>`).join('')||'<span class="hint">Tidak ada nilai valid pada titik ini.</span>';
+ const svg=$(id);if(!svg)return;
+ const w=600,h=180,L=48,R=dual?48:18,T=16,B=34,iw=w-L-R,ih=h-T-B;
+ const fixed={
+  overviewSoil:[0,100],trendSoil:[0,100],
+  trendClimate:[[0,60],[0,100]],
+  trendPower:[0,1000],overviewEnergy:[0,1000],
+  trendWater:[0,10]
  };
-
+ const limits=fixed[id]||[0,100];
+ const usable=series.map(s=>({...s,pts:rows.map(x=>x[s.k]).filter(finite)})).filter(s=>s.pts.length);
+ if(!usable.length){svg.innerHTML='<text x="300" y="78" text-anchor="middle" fill="#9bb0c7" font-size="13">Menunggu data Firebase</text><text x="300" y="98" text-anchor="middle" fill="#7188a2" font-size="10">Belum ada sampel pada rentang ini</text>';return}
+ const auto=!!svg.dataset.autoScale;
+ const scaleFor=(s,i)=>{
+  const fixedRange=dual?limits[i]:(limits);
+  if(auto){const vals=s.pts,lo=Math.min(...vals),hi=Math.max(...vals),pad=(hi-lo||Math.max(Math.abs(hi)*.08,1))*.12;return [Math.max(0,lo-pad),hi+pad||1]}
+  return fixedRange;
+ };
+ usable.forEach((s,i)=>{[s.min,s.max]=scaleFor(s,i);s.span=s.max-s.min||1;s.py=v=>T+ih-(v-s.min)/s.span*ih});
+ const x=i=>L+(rows.length<=1?iw/2:i/(rows.length-1)*iw);
+ let out='';
+ const yTicks=5;
+ for(let j=0;j<yTicks;j++){
+  const f=j/(yTicks-1),yy=T+f*ih,val=usable[0].max-f*usable[0].span;
+  out+=`<line x1="${L}" y1="${yy}" x2="${L+iw}" y2="${yy}" stroke="#29415b" stroke-opacity=".72" stroke-dasharray="2 6"/><text x="${L-8}" y="${yy+3}" text-anchor="end" fill="#91a9c2" font-size="10">${val.toFixed(0)}</text>`;
+  if(dual&&usable[1]){const v=usable[1].max-f*usable[1].span;out+=`<text x="${L+iw+8}" y="${yy+3}" fill="#91a9c2" font-size="10">${v.toFixed(0)}</text>`}
+ }
+ [0,.25,.5,.75,1].forEach(f=>{if(!rows.length)return;const idx=Math.min(rows.length-1,Math.round(f*(rows.length-1))),label=new Date(rows[idx].ts).toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});out+=`<text x="${L+f*iw}" y="${h-15}" text-anchor="middle" fill="#91a9c2" font-size="10">${label}</text>`});
+ usable.forEach(s=>{
+  const coords=rows.map((r,i)=>finite(r[s.k])?[x(i),s.py(r[s.k])]:null).filter(Boolean);
+  if(coords.length){
+   let path=`M ${coords[0][0]} ${coords[0][1]}`;
+   for(let i=1;i<coords.length;i++){const [x0,y0]=coords[i-1],[x1,y1]=coords[i],cx=(x0+x1)/2;path+=` C ${cx} ${y0}, ${cx} ${y1}, ${x1} ${y1}`}
+   out+=`<path d="${path}" fill="none" stroke="${s.c}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".96"/>`;
+  }
+  rows.forEach((r,i)=>{if(finite(r[s.k]))out+=`<circle data-point-index="${i}" data-series-key="${s.k}" cx="${x(i)}" cy="${s.py(r[s.k])}" r="3.2" fill="${s.c}" stroke="#0b192b" stroke-width="1.5"/>`});
+ });
+ out+=`<text x="${L+iw/2}" y="${h-2}" text-anchor="middle" fill="#91a9c2" font-size="9">Waktu (HH:MM)</text><text transform="translate(10 ${T+ih/2}) rotate(-90)" text-anchor="middle" fill="#91a9c2" font-size="9">${unit||'Nilai'}</text>`;
+ svg.innerHTML=out;
+ if(id.startsWith('trend'))svg.onclick=(ev)=>{
+  const point=ev.target.closest('circle[data-point-index]');
+  if(point){
+   const row=rows[Number(point.dataset.pointIndex)];if(!row)return;
+   const defs={trendSoil:['Soil Moisture',[['Soil 1','s1','%'],['Soil 2','s2','%'],['Soil 3','s3','%']]],trendClimate:['DHT22',[['Air temperature','temp','°C'],['Relative humidity','rh','%']]],trendPower:['PZEM Power',[['PV PZEM 1','pv','W'],['Load PZEM 2','load','W']]],trendWater:['Water Flow',[['Flow rate','flow','L/min']]]};
+   const meta=defs[id];if(!meta)return;
+   $('selectedPointSource').textContent=meta[0];
+   $('selectedPointPrompt').textContent=new Date(row.ts).toLocaleString('id-ID',{dateStyle:'full',timeStyle:'medium'});
+   $('selectedPointValues').innerHTML=meta[1].filter(k=>finite(row[k[1]])).map(k=>`<span class="trend-point-value">${k[0]} <b>${row[k[1]].toFixed(2)} ${k[2]}</b></span>`).join('')||'<span class="hint">Tidak ada nilai valid pada titik ini.</span>';
+   return;
+  }
+  // Klik area plot kosong: toggle autoscale Y untuk grafik terpilih; X tetap.
+  svg.dataset.autoScale=svg.dataset.autoScale==='true'?'false':'true';
+  drawCharts();
+ };
+ if(id.startsWith('trend'))svg.ondblclick=()=>{svg.dataset.autoScale='false';drawCharts()};
 }
 function drawCharts(){
  const a=selectedHistory(),g=k=>a.map(x=>x[k]);
@@ -735,6 +763,9 @@ function renderOverview(){
  d.relay.forEach((v,i)=>tag('r'+(i+1),!!v));
  status('rtcStatus',d.rtcReady,'READY','NOT READY');status('sdStatus',d.sdReady,'READY','NOT READY');
  status('pz1Status',d.pz[0].valid);status('pz2Status',d.pz[1].valid);status('flowStatus',d.flow.valid);
+ const hasDeviceData=[...d.soil,d.temp,d.rh,d.pz[0].power,d.pz[1].power,d.flow.rateLmin].some(finite);
+ const badge=$('deviceDataBadge');
+ if(badge){badge.textContent=hasDeviceData?'DEVICE DATA RECEIVED':'WAITING FOR DEVICE DATA';badge.className='tag '+(hasDeviceData?'good':'warn')}
 }
 function renderDetail(){
  $('soilCards').innerHTML=d.soil.map((v,i)=>`<div class="card"><div class="card-head">SOIL SENSOR ${i+1}<span class="tag ${d.soilChannelOK[i]?'':'bad'}">${d.soilChannelOK[i]?'VALID':'NO DATA'}</span></div><div class="sensor-value">${fmt(v,1)} <span class="unit">%</span></div><div class="hint">soilRaw[${i}]: ${d.raw[i]??'--'} · soilPct[${i}]</div><div class="bar"><span style="width:${finite(v)?Math.max(0,Math.min(100,v)):0}%"></span></div></div>`).join('');
