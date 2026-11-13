@@ -486,6 +486,18 @@ td{padding:6px 7px;line-height:1.25}
 .chartbox .card-head{letter-spacing:.11em}.chartbox svg path{filter:drop-shadow(0 1px 3px rgba(30,170,220,.16))}
 .chartbox svg circle{transition:r .16s ease,filter .16s ease}.chartbox svg circle:hover{r:5.5;filter:drop-shadow(0 0 5px currentColor)}
 .tag.good{background:rgba(40,201,130,.15);color:#43d99a;border-color:rgba(40,201,130,.3)}
+
+.chart-head-tools{display:flex;align-items:center;gap:8px}
+.chart-scale-btn{font:600 9px/1.2 inherit;letter-spacing:.04em;color:#a9c4dc;background:#132b43;border:1px solid #31506d;border-radius:6px;padding:5px 8px;cursor:pointer;white-space:nowrap}
+.chart-scale-btn:hover{background:#1b3b59;color:#eaf5ff;border-color:#4a789e}
+.chart-scale-btn.is-auto{color:#9be7c1;border-color:#287b5c;background:#10352f}
+.chartbox svg{overflow:visible}
+.chartbox svg path.chart-line{stroke-linecap:round;stroke-linejoin:round;transition:opacity .2s ease}
+.chartbox svg circle[data-point-index]{opacity:.42;stroke-width:1;transition:opacity .18s ease,r .18s ease}
+.chartbox svg circle[data-point-index]:hover{opacity:1;r:5.5}
+.chartbox svg .chart-grid{stroke:#35506a;stroke-opacity:.38;stroke-dasharray:2 7}
+.chartbox svg .chart-axis-label{fill:#9bb0c7;font-size:9px}
+
 </style></head>
 <body><div class="app">
 <aside class="sidebar"><div class="brand"><img src="https://tse1.mm.bing.net/th/id/OIP.RaVvOpGTXIFf7OC-R95dMwAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Logo Polban" onerror="this.style.display='none'"><div><div class="brand-name">SOLAR-POWERED SMART IRRIGATION</div><div class="brand-sub">WITH MONITORING SYSTEM · POLBAN</div></div></div>
@@ -592,10 +604,10 @@ td{padding:6px 7px;line-height:1.25}
  <div class="hint" id="trendRangeLabel">Rentang data: --</div><div class="hint">Klik titik pada grafik untuk menampilkan waktu dan nilai. Tidak ada tooltip bergerak saat kursor hanya diarahkan. Data historis tersedia selama sesi browser aktif.</div>
 </div>
 <div class="grid charts">
- <div class="card chartbox"><div class="card-head">SOIL MOISTURE TREND <span>Y: % · X: waktu</span></div><svg id="trendSoil" class="chart interactive-chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#39c982"></i>Soil 1</span><span><i class="key" style="background:#45a8e8"></i>Soil 2</span><span><i class="key" style="background:#e9ad3b"></i>Soil 3</span></div></div>
- <div class="card chartbox"><div class="card-head">DHT22 TREND <span>°C / %RH · skala terpisah</span></div><svg id="trendClimate" class="chart interactive-chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#39c982"></i>airTemp</span><span><i class="key" style="background:#45a8e8"></i>airRH</span></div></div>
- <div class="card chartbox"><div class="card-head">PZEM POWER TREND <span>Y: W · X: waktu</span></div><svg id="trendPower" class="chart interactive-chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#e9ad3b"></i>PZEM 1 PV</span><span><i class="key" style="background:#45a8e8"></i>PZEM 2 Load</span></div></div>
- <div class="card chartbox"><div class="card-head">FLOW RATE TREND <span>Y: L/min · X: waktu</span></div><svg id="trendWater" class="chart interactive-chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#39c982"></i>flow.rateLmin</span></div></div>
+ <div class="card chartbox"><div class="card-head">SOIL MOISTURE TREND <span class="chart-head-tools"><span>Y: % · X: waktu</span> <button type="button" class="chart-scale-btn" data-chart-scale="trendSoil" aria-label="Ubah skala sumbu Y">Y: TETAP</button></span></div><svg id="trendSoil class="chart interactive-chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#39c982"></i>Soil 1</span><span><i class="key" style="background:#45a8e8"></i>Soil 2</span><span><i class="key" style="background:#e9ad3b"></i>Soil 3</span></div></div>
+ <div class="card chartbox"><div class="card-head">DHT22 TREND <span class="chart-head-tools"><span>°C / %RH · skala terpisah</span> <button type="button" class="chart-scale-btn" data-chart-scale="trendClimate" aria-label="Ubah skala sumbu Y">Y: TETAP</button></span></div><svg id="trendClimate class="chart interactive-chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#39c982"></i>airTemp</span><span><i class="key" style="background:#45a8e8"></i>airRH</span></div></div>
+ <div class="card chartbox"><div class="card-head">PZEM POWER TREND <span class="chart-head-tools"><span>Y: W · X: waktu</span> <button type="button" class="chart-scale-btn" data-chart-scale="trendPower" aria-label="Ubah skala sumbu Y">Y: TETAP</button></span></div><svg id="trendPower class="chart interactive-chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#e9ad3b"></i>PZEM 1 PV</span><span><i class="key" style="background:#45a8e8"></i>PZEM 2 Load</span></div></div>
+ <div class="card chartbox"><div class="card-head">FLOW RATE TREND <span class="chart-head-tools"><span>Y: L/min · X: waktu</span> <button type="button" class="chart-scale-btn" data-chart-scale="trendWater" aria-label="Ubah skala sumbu Y">Y: TETAP</button></span></div><svg id="trendWater class="chart interactive-chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#39c982"></i>flow.rateLmin</span></div></div>
 </div>
 <div class="card trend-point-card"><div class="card-head">DETAIL TITIK DATA <span id="selectedPointSource">Belum dipilih</span></div><div class="hint" id="selectedPointPrompt">Klik salah satu titik pada grafik untuk melihat timestamp dan nilai parameter.</div><div class="trend-point-values" id="selectedPointValues"></div></div>
 <div class="card trend-export-note"><div class="card-head">EXPORT DATA</div><div class="hint">CSV dapat dibuka di Excel. Export Excel menghasilkan file .xlsx. Kedua format mengikuti rentang waktu yang sedang dipilih.</div></div>
@@ -676,6 +688,15 @@ function tag(id,on){const e=$(id);if(!e)return;e.textContent=on?'ON':'OFF';e.cla
 function fitCurrentPage(){document.querySelectorAll('.page').forEach(el=>el.style.zoom='1');const el=$('page-'+page),box=$('content')||document.querySelector('.content');if(!el||!box)return;const scale=Math.min(1,box.clientHeight/Math.max(el.scrollHeight,1));if(scale<1)el.style.zoom=String(Math.max(.28,scale))}
 function navTo(p){page=p;document.querySelectorAll('.page').forEach(e=>e.classList.add('hidden'));$('page-'+p).classList.remove('hidden');document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===p));$('crumb').textContent=p[0].toUpperCase()+p.slice(1);if(p==='detail')renderDetail();if(p==='trend')drawCharts();if(p==='alarm')renderDiagnostics();requestAnimationFrame(fitCurrentPage)}
 $('nav').onclick=e=>{const b=e.target.closest('button[data-page]');if(b)navTo(b.dataset.page)};
+document.querySelectorAll('[data-chart-scale]').forEach(btn=>{
+ btn.addEventListener('click',()=>{
+  const svg=$(btn.dataset.chartScale);
+  if(!svg)return;
+  svg.dataset.autoScale=svg.dataset.autoScale==='true'?'false':'true';
+  drawCharts();
+ });
+});
+
 function rangeMs(){return ({'1h':3600000,'6h':21600000,'24h':86400000,'7d':604800000})[range]||3600000}
 function selectedHistory(){return history.filter(x=>x.ts>=viewStart&&x.ts<=viewEnd)}
 function localDateInput(ts){const d=new Date(ts),p=n=>String(n).padStart(2,'0');return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`}
@@ -691,50 +712,84 @@ function svgChart(id,series,rows=selectedHistory(),dual=false,unit=''){
  };
  const limits=fixed[id]||[0,100];
  const usable=series.map(s=>({...s,pts:rows.map(x=>x[s.k]).filter(finite)})).filter(s=>s.pts.length);
- if(!usable.length){svg.innerHTML='<text x="300" y="78" text-anchor="middle" fill="#9bb0c7" font-size="13">Menunggu data Firebase</text><text x="300" y="98" text-anchor="middle" fill="#7188a2" font-size="10">Belum ada sampel pada rentang ini</text>';return}
- const auto=!!svg.dataset.autoScale;
+ if(!usable.length){
+  svg.innerHTML='<text x="300" y="78" text-anchor="middle" fill="#9bb0c7" font-size="13">Menunggu data Firebase</text><text x="300" y="98" text-anchor="middle" fill="#7188a2" font-size="10">Belum ada sampel pada rentang ini</text>';
+  return;
+ }
+ const auto=svg.dataset.autoScale==='true';
  const scaleFor=(s,i)=>{
-  const fixedRange=dual?limits[i]:(limits);
-  if(auto){const vals=s.pts,lo=Math.min(...vals),hi=Math.max(...vals),pad=(hi-lo||Math.max(Math.abs(hi)*.08,1))*.12;return [Math.max(0,lo-pad),hi+pad||1]}
+  const fixedRange=dual?limits[i]:limits;
+  if(auto){
+   const vals=s.pts,lo=Math.min(...vals),hi=Math.max(...vals);
+   const pad=(hi-lo||Math.max(Math.abs(hi)*.08,1))*.12;
+   return [Math.max(0,lo-pad),hi+pad||1];
+  }
   return fixedRange;
  };
- usable.forEach((s,i)=>{[s.min,s.max]=scaleFor(s,i);s.span=s.max-s.min||1;s.py=v=>T+ih-(v-s.min)/s.span*ih});
+ usable.forEach((s,i)=>{
+  [s.min,s.max]=scaleFor(s,i);s.span=s.max-s.min||1;
+  s.py=v=>T+ih-(v-s.min)/s.span*ih;
+ });
  const x=i=>L+(rows.length<=1?iw/2:i/(rows.length-1)*iw);
  let out='';
  const yTicks=5;
  for(let j=0;j<yTicks;j++){
   const f=j/(yTicks-1),yy=T+f*ih,val=usable[0].max-f*usable[0].span;
-  out+=`<line x1="${L}" y1="${yy}" x2="${L+iw}" y2="${yy}" stroke="#29415b" stroke-opacity=".72" stroke-dasharray="2 6"/><text x="${L-8}" y="${yy+3}" text-anchor="end" fill="#91a9c2" font-size="10">${val.toFixed(0)}</text>`;
-  if(dual&&usable[1]){const v=usable[1].max-f*usable[1].span;out+=`<text x="${L+iw+8}" y="${yy+3}" fill="#91a9c2" font-size="10">${v.toFixed(0)}</text>`}
- }
- [0,.25,.5,.75,1].forEach(f=>{if(!rows.length)return;const idx=Math.min(rows.length-1,Math.round(f*(rows.length-1))),label=new Date(rows[idx].ts).toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});out+=`<text x="${L+f*iw}" y="${h-15}" text-anchor="middle" fill="#91a9c2" font-size="10">${label}</text>`});
- usable.forEach(s=>{
-  const coords=rows.map((r,i)=>finite(r[s.k])?[x(i),s.py(r[s.k])]:null).filter(Boolean);
-  if(coords.length){
-   let path=`M ${coords[0][0]} ${coords[0][1]}`;
-   for(let i=1;i<coords.length;i++){const [x0,y0]=coords[i-1],[x1,y1]=coords[i],cx=(x0+x1)/2;path+=` C ${cx} ${y0}, ${cx} ${y1}, ${x1} ${y1}`}
-   out+=`<path d="${path}" fill="none" stroke="${s.c}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" opacity=".96"/>`;
+  out+=`<line class="chart-grid" x1="${L}" y1="${yy}" x2="${L+iw}" y2="${yy}"/><text x="${L-8}" y="${yy+3}" text-anchor="end" fill="#91a9c2" font-size="10">${val.toFixed(0)}</text>`;
+  if(dual&&usable[1]){
+   const v=usable[1].max-f*usable[1].span;
+   out+=`<text x="${L+iw+8}" y="${yy+3}" fill="#91a9c2" font-size="10">${v.toFixed(0)}</text>`;
   }
-  rows.forEach((r,i)=>{if(finite(r[s.k]))out+=`<circle data-point-index="${i}" data-series-key="${s.k}" cx="${x(i)}" cy="${s.py(r[s.k])}" r="3.2" fill="${s.c}" stroke="#0b192b" stroke-width="1.5"/>`});
+ }
+ [0,.25,.5,.75,1].forEach(f=>{
+  if(!rows.length)return;
+  const idx=Math.min(rows.length-1,Math.round(f*(rows.length-1)));
+  const label=new Date(rows[idx].ts).toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
+  out+=`<text x="${L+f*iw}" y="${h-15}" text-anchor="middle" fill="#91a9c2" font-size="10">${label}</text>`;
+ });
+ usable.forEach(s=>{
+  const indexed=rows.map((r,i)=>finite(r[s.k])?{x:x(i),y:s.py(r[s.k]),i}:null).filter(Boolean);
+  if(indexed.length){
+   // Catmull-Rom to cubic Bezier: continuous and rounded without the stepped look.
+   let path=`M ${indexed[0].x} ${indexed[0].y}`;
+   for(let i=0;i<indexed.length-1;i++){
+    const p0=indexed[Math.max(0,i-1)],p1=indexed[i],p2=indexed[i+1],p3=indexed[Math.min(indexed.length-1,i+2)];
+    const tension=.72;
+    const c1x=p1.x+(p2.x-p0.x)/6*tension, c1y=p1.y+(p2.y-p0.y)/6*tension;
+    const c2x=p2.x-(p3.x-p1.x)/6*tension, c2y=p2.y-(p3.y-p1.y)/6*tension;
+    path+=` C ${c1x} ${c1y}, ${c2x} ${c2y}, ${p2.x} ${p2.y}`;
+   }
+   out+=`<path class="chart-line" d="${path}" fill="none" stroke="${s.c}" stroke-width="2.6" opacity=".96"/>`;
+  }
+  rows.forEach((r,i)=>{
+   if(finite(r[s.k]))out+=`<circle data-point-index="${i}" data-series-key="${s.k}" cx="${x(i)}" cy="${s.py(r[s.k])}" r="2.4" fill="${s.c}" stroke="#0b192b" stroke-width="1"/>`;
+  });
  });
  out+=`<text x="${L+iw/2}" y="${h-2}" text-anchor="middle" fill="#91a9c2" font-size="9">Waktu (HH:MM)</text><text transform="translate(10 ${T+ih/2}) rotate(-90)" text-anchor="middle" fill="#91a9c2" font-size="9">${unit||'Nilai'}</text>`;
  svg.innerHTML=out;
+
+ // Keep the scale button state explicit so the user can always return to the fixed range.
+ const scaleBtn=document.querySelector(`[data-chart-scale="${id}"]`);
+ if(scaleBtn){
+  scaleBtn.textContent=auto?'Y: OTOMATIS':'Y: TETAP';
+  scaleBtn.classList.toggle('is-auto',auto);
+  scaleBtn.title=auto?'Klik untuk kembali ke skala Y tetap':'Klik untuk menyesuaikan skala Y dengan data';
+ }
  if(id.startsWith('trend'))svg.onclick=(ev)=>{
   const point=ev.target.closest('circle[data-point-index]');
-  if(point){
-   const row=rows[Number(point.dataset.pointIndex)];if(!row)return;
-   const defs={trendSoil:['Soil Moisture',[['Soil 1','s1','%'],['Soil 2','s2','%'],['Soil 3','s3','%']]],trendClimate:['DHT22',[['Air temperature','temp','°C'],['Relative humidity','rh','%']]],trendPower:['PZEM Power',[['PV PZEM 1','pv','W'],['Load PZEM 2','load','W']]],trendWater:['Water Flow',[['Flow rate','flow','L/min']]]};
-   const meta=defs[id];if(!meta)return;
-   $('selectedPointSource').textContent=meta[0];
-   $('selectedPointPrompt').textContent=new Date(row.ts).toLocaleString('id-ID',{dateStyle:'full',timeStyle:'medium'});
-   $('selectedPointValues').innerHTML=meta[1].filter(k=>finite(row[k[1]])).map(k=>`<span class="trend-point-value">${k[0]} <b>${row[k[1]].toFixed(2)} ${k[2]}</b></span>`).join('')||'<span class="hint">Tidak ada nilai valid pada titik ini.</span>';
-   return;
-  }
-  // Klik area plot kosong: toggle autoscale Y untuk grafik terpilih; X tetap.
-  svg.dataset.autoScale=svg.dataset.autoScale==='true'?'false':'true';
-  drawCharts();
+  if(!point)return;
+  const row=rows[Number(point.dataset.pointIndex)];if(!row)return;
+  const defs={
+   trendSoil:['Soil Moisture',[['Soil 1','s1','%'],['Soil 2','s2','%'],['Soil 3','s3','%']]],
+   trendClimate:['DHT22',[['Air temperature','temp','°C'],['Relative humidity','rh','%']]],
+   trendPower:['PZEM Power',[['PV PZEM 1','pv','W'],['Load PZEM 2','load','W']]],
+   trendWater:['Water Flow',[['Flow rate','flow','L/min']]]
+  };
+  const meta=defs[id];if(!meta)return;
+  $('selectedPointSource').textContent=meta[0];
+  $('selectedPointPrompt').textContent=new Date(row.ts).toLocaleString('id-ID',{dateStyle:'full',timeStyle:'medium'});
+  $('selectedPointValues').innerHTML=meta[1].filter(k=>finite(row[k[1]])).map(k=>`<span class="trend-point-value">${k[0]} <b>${row[k[1]].toFixed(2)} ${k[2]}</b></span>`).join('')||'<span class="hint">Tidak ada nilai valid pada titik ini.</span>';
  };
- if(id.startsWith('trend'))svg.ondblclick=()=>{svg.dataset.autoScale='false';drawCharts()};
 }
 function drawCharts(){
  const a=selectedHistory(),g=k=>a.map(x=>x[k]);
