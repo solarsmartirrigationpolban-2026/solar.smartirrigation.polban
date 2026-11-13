@@ -521,6 +521,23 @@ td{padding:6px 7px;line-height:1.25}
 #page-trend .chartbox svg path.chart-line{stroke-width:2.6;filter:drop-shadow(0 1px 3px rgba(55,170,220,.18))}
 #page-trend .chartbox svg text{font-family:Inter,system-ui,sans-serif}
 
+
+/* Overview: visually group all soil measurements into one clear section. */
+#page-overview .hero{display:grid;grid-template-columns:minmax(0,2.25fr) minmax(220px,.8fr);gap:12px;align-items:stretch}
+#page-overview .soil-group{min-width:0;padding:12px;border:1px solid rgba(75,145,190,.30);border-radius:11px;background:linear-gradient(145deg,rgba(15,39,62,.92),rgba(9,27,45,.98));box-shadow:inset 0 1px 0 rgba(255,255,255,.025)}
+#page-overview .soil-group-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;padding:0 2px 8px;border-bottom:1px solid rgba(116,157,190,.18)}
+#page-overview .soil-group-head .card-head{font-size:11px;letter-spacing:1.15px;color:#d7e7f5}
+#page-overview .soil-group-sub{font-size:9px;color:#7f9bb5;margin-top:3px}
+#page-overview .soil-group-unit{font-size:10px;font-weight:700;color:#8ba8c1}
+#page-overview .soil-group-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+#page-overview .soil-group-grid .hero-main{min-height:96px;padding:11px 12px;background:linear-gradient(145deg,rgba(22,48,73,.95),rgba(12,31,51,.98))}
+#page-overview .soil-group-grid .hero-main .big{font-size:clamp(20px,1.8vw,27px);margin-top:7px}
+#page-overview .soil-group-grid .soil-average{border-color:rgba(57,201,130,.42);background:linear-gradient(145deg,rgba(19,53,57,.9),rgba(10,31,48,.98))}
+#page-overview .hero-side{display:grid;grid-template-columns:1fr;grid-template-rows:1fr 1fr;gap:9px;min-width:0}
+#page-overview .hero-side .mini{display:flex;flex-direction:column;justify-content:center;border:1px solid rgba(75,145,190,.25);border-radius:9px;background:linear-gradient(145deg,rgba(20,43,67,.96),rgba(10,28,47,.98));padding:13px 15px}
+@media(max-width:1100px){#page-overview .hero{grid-template-columns:1fr}#page-overview .hero-side{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:1fr}#page-overview .soil-group-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:620px){#page-overview .soil-group-grid{grid-template-columns:repeat(2,minmax(0,1fr))}#page-overview .hero-side{grid-template-columns:1fr 1fr}}
+
 </style></head>
 <body><div class="app">
 <aside class="sidebar"><div class="brand"><img src="https://tse1.mm.bing.net/th/id/OIP.RaVvOpGTXIFf7OC-R95dMwAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Logo Polban" onerror="this.style.display='none'"><div><div class="brand-name">SOLAR-POWERED SMART IRRIGATION</div><div class="brand-sub">WITH MONITORING SYSTEM · POLBAN</div></div></div>
@@ -529,7 +546,18 @@ td{padding:6px 7px;line-height:1.25}
 <main class="main"><header class="topbar"><div class="crumb">POLBAN <span class="muted">/</span> <b id="crumb">Overview</b></div><div class="top-right"><span id="clock">--:--:--</span><span class="pill"><span class="dot"></span><span id="conn">FIREBASE LINK</span></span><span class="pill">ESP32 + NANO 0x12</span></div></header>
 <div class="content" id="content">
 <section id="page-overview" class="page"><div class="page-head"><div><div class="eyebrow">SYSTEM OPERATIONS</div><h1>Overview</h1><div class="sub">Ringkasan variabel yang benar-benar tersedia pada firmware.</div></div><span class="tag warn" id="deviceDataBadge">WAITING FOR DEVICE DATA</span></div>
-<div class="hero"><div class="card hero-main soil-channel"><div class="card-head">SOIL SENSOR 1 · soilPct[0]</div><div class="big" id="soil1Hero">--<span class="unit"> %</span></div><div class="hint">Kelembapan tanah channel 1</div></div><div class="card hero-main soil-channel"><div class="card-head">SOIL SENSOR 2 · soilPct[1]</div><div class="big" id="soil2Hero">--<span class="unit"> %</span></div><div class="hint">Kelembapan tanah channel 2</div></div><div class="card hero-main soil-channel"><div class="card-head">SOIL SENSOR 3 · soilPct[2]</div><div class="big" id="soil3Hero">--<span class="unit"> %</span></div><div class="hint">Kelembapan tanah channel 3</div></div><div class="card hero-main soil-average"><div class="card-head">● SOIL AVERAGE · soilAvg</div><div class="big" id="soilHero">--<span class="unit"> %</span></div><div class="hint">Rata-rata tiga sensor</div></div><div class="hero-side"><div class="mini"><div class="card-head">☀ PV POWER · PZEM 1</div><div class="metric" id="pvHero">-- <span class="unit">W</span></div><div class="hint">PV sebelum SCC</div></div><div class="mini"><div class="card-head">⚡ LOAD POWER · PZEM 2</div><div class="metric" id="loadHero">-- <span class="unit">W</span></div><div class="hint">DC load</div></div></div></div>
+<div class="hero">
+<div class="soil-group">
+  <div class="soil-group-head"><div><div class="card-head">SOIL MOISTURE</div><div class="soil-group-sub">Pemantauan kelembapan tanah · 3 channel dan nilai rata-rata</div></div><span class="soil-group-unit">%</span></div>
+  <div class="soil-group-grid">
+    <div class="card hero-main soil-channel"><div class="card-head">SOIL SENSOR 1</div><div class="big" id="soil1Hero">--<span class="unit"> %</span></div><div class="hint">soilPct[0] · Channel 1</div></div>
+    <div class="card hero-main soil-channel"><div class="card-head">SOIL SENSOR 2</div><div class="big" id="soil2Hero">--<span class="unit"> %</span></div><div class="hint">soilPct[1] · Channel 2</div></div>
+    <div class="card hero-main soil-channel"><div class="card-head">SOIL SENSOR 3</div><div class="big" id="soil3Hero">--<span class="unit"> %</span></div><div class="hint">soilPct[2] · Channel 3</div></div>
+    <div class="card hero-main soil-average"><div class="card-head">SOIL AVERAGE</div><div class="big" id="soilHero">--<span class="unit"> %</span></div><div class="hint">Rata-rata tiga sensor</div></div>
+  </div>
+</div>
+<div class="hero-side"><div class="mini"><div class="card-head">☀ PV POWER · PZEM 1</div><div class="metric" id="pvHero">-- <span class="unit">W</span></div><div class="hint">PV sebelum SCC</div></div><div class="mini"><div class="card-head">⚡ LOAD POWER · PZEM 2</div><div class="metric" id="loadHero">-- <span class="unit">W</span></div><div class="hint">DC load</div></div></div>
+</div>
 <div class="grid kpis">
 <div class="card"><div class="card-head">AIR TEMPERATURE · DHT22</div><div class="metric" id="tempKpi">29.4 <span class="unit">°C</span></div><div class="hint">airTemp · NaN jika gagal baca</div></div>
 <div class="card"><div class="card-head">AIR RELATIVE HUMIDITY</div><div class="metric" id="rhKpi">68.0 <span class="unit">%</span></div><div class="hint">airRH · NaN jika gagal baca</div></div>
