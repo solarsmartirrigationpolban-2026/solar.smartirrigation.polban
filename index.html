@@ -678,7 +678,7 @@ body.logged-out .app{visibility:hidden;pointer-events:none}
 </div>
 <div class="app">
 <aside class="sidebar"><div class="brand"><img src="https://tse1.mm.bing.net/th/id/OIP.RaVvOpGTXIFf7OC-R95dMwAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Logo Polban" onerror="this.style.display='none'"><div><div class="brand-name">SOLAR-POWERED SMART IRRIGATION</div><div class="brand-sub">WITH MONITORING SYSTEM · POLBAN</div></div></div>
-<div class="nav-label">MONITORING</div><nav class="nav" id="nav"><button class="active" data-page="overview"><span class="ico">▦</span>Overview</button><button data-page="detail"><span class="ico">◈</span>Detail</button><button data-page="trend"><span class="ico">⌁</span>Trend</button><button data-page="alarm"><span class="ico">⚑</span>Alarm <span id="navAlarm" class="tag warn">0</span></button><button data-page="system"><span class="ico">⚙</span>System</button></nav>
+<div class="nav-label">MONITORING</div><nav class="nav" id="nav"><button class="active" data-page="overview"><span class="ico">▦</span>Overview</button><button data-page="detail"><span class="ico">◈</span>Detail</button><button data-page="trend"><span class="ico">⌁</span>Trend</button><button data-page="alarm"><span class="ico">⚑</span>Alarm <span id="navAlarm" class="tag warn">--</span></button><button data-page="system"><span class="ico">⚙</span>System</button></nav>
 <div class="side-foot"><div><span class="dot"></span><b id="sideState">WAITING FOR DEVICE</b></div></div></aside>
 <main class="main"><header class="topbar"><div class="crumb">POLBAN <span class="muted">/</span> <b id="crumb">Overview</b></div><div class="topbar-actions"><time class="clock" id="clock" aria-label="Tanggal dan waktu"></time><button class="login-btn" id="logoutBtn" type="button">Logout</button></div></header>
 <div class="content" id="content">
@@ -696,17 +696,17 @@ body.logged-out .app{visibility:hidden;pointer-events:none}
 <div class="hero-side"><div class="mini"><div class="card-head">☀ PV POWER · PZEM 1</div><div class="metric" id="pvHero">-- <span class="unit">W</span></div></div><div class="mini"><div class="card-head">⚡ LOAD POWER · PZEM 2</div><div class="metric" id="loadHero">-- <span class="unit">W</span></div></div></div>
 </div>
 <div class="grid kpis">
-<div class="card"><div class="card-head">AIR TEMPERATURE · DHT22</div><div class="metric" id="tempKpi">29.4 <span class="unit">°C</span></div></div>
-<div class="card"><div class="card-head">AIR RELATIVE HUMIDITY</div><div class="metric" id="rhKpi">68.0 <span class="unit">%</span></div></div>
-<div class="card"><div class="card-head">WATER FLOW RATE · NANO</div><div class="metric" id="flowKpi">2.40 <span class="unit">L/min</span></div></div>
-<div class="card"><div class="card-head">WATER TOTAL · NANO</div><div class="metric" id="waterTotalKpi">125.0 <span class="unit">L</span></div></div></div>
+<div class="card"><div class="card-head">AIR TEMPERATURE · DHT22</div><div class="metric" id="tempKpi">-- <span class="unit">°C</span></div></div>
+<div class="card"><div class="card-head">AIR RELATIVE HUMIDITY</div><div class="metric" id="rhKpi">-- <span class="unit">%</span></div></div>
+<div class="card"><div class="card-head">WATER FLOW RATE · NANO</div><div class="metric" id="flowKpi">-- <span class="unit">L/min</span></div></div>
+<div class="card"><div class="card-head">WATER TOTAL · NANO</div><div class="metric" id="waterTotalKpi">-- <span class="unit">L</span></div></div></div>
 <div class="grid kpis">
-<div class="card"><div class="card-head">PV DAILY ENERGY</div><div class="metric" id="pvDayKpi">1.250 <span class="unit">kWh</span></div></div>
-<div class="card"><div class="card-head">LOAD DAILY ENERGY</div><div class="metric" id="loadDayKpi">0.860 <span class="unit">kWh</span></div></div>
-<div class="card"><div class="card-head">WATER DAILY TOTAL</div><div class="metric" id="waterDayKpi">38.5 <span class="unit">L</span></div></div>
-<div class="card"><div class="card-head">LOGGER DATA NUMBER</div><div class="metric" id="dataNoKpi">128</div></div></div>
-<div class="grid two"><div class="card"><div class="card-head">RELAY STATUS <span class="tag">FIRMWARE FEEDBACK</span></div><div class="status-row"><span>Relay 1 · Irrigation (AUTO)</span><span id="r1" class="tag">ON</span></div><div class="status-row"><span>Relay 2 · RH control (AUTO)</span><span id="r2" class="tag">OFF</span></div><div class="status-row"><span>Relay 3 · Tank pump (MANUAL)</span><span id="r3" class="tag off">OFF</span></div></div>
-<div class="card"><div class="card-head">DEVICE & LINK HEALTH</div><div class="status-row"><span>RTC DS3231</span><span id="rtcStatus" class="tag">READY</span></div><div class="status-row"><span>SD Card</span><span id="sdStatus" class="tag">READY</span></div><div class="status-row"><span>PZEM 1 · PV</span><span id="pz1Status" class="tag">VALID</span></div><div class="status-row"><span>PZEM 2 · Load</span><span id="pz2Status" class="tag">VALID</span></div><div class="status-row"><span>Flow · Nano I2C</span><span id="flowStatus" class="tag">VALID</span></div></div></div>
+<div class="card"><div class="card-head">PV DAILY ENERGY</div><div class="metric" id="pvDayKpi">-- <span class="unit">kWh</span></div></div>
+<div class="card"><div class="card-head">LOAD DAILY ENERGY</div><div class="metric" id="loadDayKpi">-- <span class="unit">kWh</span></div></div>
+<div class="card"><div class="card-head">WATER DAILY TOTAL</div><div class="metric" id="waterDayKpi">-- <span class="unit">L</span></div></div>
+<div class="card"><div class="card-head">LOGGER DATA NUMBER</div><div class="metric" id="dataNoKpi">--</div></div></div>
+<div class="grid two"><div class="card"><div class="card-head">RELAY STATUS <span class="tag">FIRMWARE FEEDBACK</span></div><div class="status-row"><span>Relay 1 · Irrigation (AUTO)</span><span id="r1" class="tag off">--</span></div><div class="status-row"><span>Relay 2 · RH control (AUTO)</span><span id="r2" class="tag off">--</span></div><div class="status-row"><span>Relay 3 · Tank pump (MANUAL)</span><span id="r3" class="tag off">--</span></div></div>
+<div class="card"><div class="card-head">DEVICE & LINK HEALTH</div><div class="status-row"><span>RTC DS3231</span><span id="rtcStatus" class="tag off">--</span></div><div class="status-row"><span>SD Card</span><span id="sdStatus" class="tag off">--</span></div><div class="status-row"><span>PZEM 1 · PV</span><span id="pz1Status" class="tag off">--</span></div><div class="status-row"><span>PZEM 2 · Load</span><span id="pz2Status" class="tag off">--</span></div><div class="status-row"><span>Flow · Nano I2C</span><span id="flowStatus" class="tag off">--</span></div></div></div>
 <div class="grid charts"><div class="card chartbox"><div class="card-head">SOIL MOISTURE · LIVE SESSION <span>%</span></div><svg id="overviewSoil" class="chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#39c982"></i>Soil 1</span><span><i class="key" style="background:#45a8e8"></i>Soil 2</span><span><i class="key" style="background:#e9ad3b"></i>Soil 3</span></div></div><div class="card chartbox"><div class="card-head">POWER · LIVE SESSION <span>W</span></div><svg id="overviewEnergy" class="chart" viewBox="0 0 600 180" preserveAspectRatio="none"></svg><div class="legend"><span><i class="key" style="background:#e9ad3b"></i>PV PZEM 1</span><span><i class="key" style="background:#45a8e8"></i>Load PZEM 2</span></div></div></div>
 </section>
 
@@ -725,19 +725,19 @@ body.logged-out .app{visibility:hidden;pointer-events:none}
    <div class="card detail-card">
     <div class="card-head">CLIMATE · DHT22</div>
     <div class="grid two">
-     <div><div class="hint">Air temperature</div><div class="sensor-value" id="dTemp">29.4 °C</div></div>
-     <div><div class="hint">Relative humidity</div><div class="sensor-value" id="dRh">68.0 %</div></div>
+     <div><div class="hint">Air temperature</div><div class="sensor-value" id="dTemp">-- °C</div></div>
+     <div><div class="hint">Relative humidity</div><div class="sensor-value" id="dRh">-- %</div></div>
     </div>
-    <div class="status-row"><span>Read validity</span><span id="dhtValidity" class="tag">VALID</span></div>
+    <div class="status-row"><span>Read validity</span><span id="dhtValidity" class="tag off">--</span></div>
    </div>
    <div class="card detail-card">
     <div class="card-head">WATER FLOW · NANO D2</div>
     <div class="grid two">
-     <div><div class="hint">Flow rate</div><div class="sensor-value" id="dFlow">2.40 <span class="unit">L/min</span></div></div>
-     <div><div class="hint">Cumulative volume</div><div class="sensor-value" id="dWater">125.0 <span class="unit">L</span></div></div>
+     <div><div class="hint">Flow rate</div><div class="sensor-value" id="dFlow">-- <span class="unit">L/min</span></div></div>
+     <div><div class="hint">Cumulative volume</div><div class="sensor-value" id="dWater">-- <span class="unit">L</span></div></div>
     </div>
-    <div class="status-row"><span>Flow pulses</span><b id="pulses">1834</b></div>
-    <div class="status-row"><span>I2C last valid</span><span id="flowValidity" class="tag">VALID</span></div>
+    <div class="status-row"><span>Flow pulses</span><b id="pulses">--</b></div>
+    <div class="status-row"><span>I2C last valid</span><span id="flowValidity" class="tag off">--</span></div>
    </div>
   </div>
  </div>
@@ -746,23 +746,23 @@ body.logged-out .app{visibility:hidden;pointer-events:none}
    <h3 class="section-title">Energy Metering · PZEM-004T</h3>
    <div class="grid two detail-energy">
     <div class="card detail-card">
-     <div class="card-head">PV → SCC · PZEM[0] <span id="pz1Tag" class="tag">VALID</span></div>
+     <div class="card-head">PV → SCC · PZEM[0] <span id="pz1Tag" class="tag off">--</span></div>
      <div class="grid three">
-      <div><div class="hint">Voltage</div><div class="sensor-value" id="pvV">24.10 V</div></div>
-      <div><div class="hint">Current</div><div class="sensor-value" id="pvA">9.13 A</div></div>
-      <div><div class="hint">Power</div><div class="sensor-value" id="pvW">220 W</div></div>
+      <div><div class="hint">Voltage</div><div class="sensor-value" id="pvV">-- V</div></div>
+      <div><div class="hint">Current</div><div class="sensor-value" id="pvA">-- A</div></div>
+      <div><div class="hint">Power</div><div class="sensor-value" id="pvW">-- W</div></div>
      </div>
-     <div class="status-row"><span>Cumulative energy</span><b id="pvWh">4.280 kWh</b></div>
+     <div class="status-row"><span>Cumulative energy</span><b id="pvWh">-- kWh</b></div>
      <div class="hint">pzem[0].voltage / current / power / energyWh</div>
     </div>
     <div class="card detail-card">
-     <div class="card-head">DC LOAD · PZEM[1] <span id="pz2Tag" class="tag">VALID</span></div>
+     <div class="card-head">DC LOAD · PZEM[1] <span id="pz2Tag" class="tag off">--</span></div>
      <div class="grid three">
-      <div><div class="hint">Voltage</div><div class="sensor-value" id="loadV">24.00 V</div></div>
-      <div><div class="hint">Current</div><div class="sensor-value" id="loadA">6.04 A</div></div>
-      <div><div class="hint">Power</div><div class="sensor-value" id="loadW">145 W</div></div>
+      <div><div class="hint">Voltage</div><div class="sensor-value" id="loadV">-- V</div></div>
+      <div><div class="hint">Current</div><div class="sensor-value" id="loadA">-- A</div></div>
+      <div><div class="hint">Power</div><div class="sensor-value" id="loadW">-- W</div></div>
      </div>
-     <div class="status-row"><span>Cumulative energy</span><b id="loadWh">2.760 kWh</b></div>
+     <div class="status-row"><span>Cumulative energy</span><b id="loadWh">-- kWh</b></div>
      <div class="hint">pzem[1].voltage / current / power / energyWh</div>
     </div>
    </div>
@@ -770,9 +770,9 @@ body.logged-out .app{visibility:hidden;pointer-events:none}
   <div class="detail-section">
    <h3 class="section-title">Daily Accumulation · RTC Date</h3>
    <div class="grid three detail-daily">
-    <div class="card detail-card"><div class="card-head">DAILY DATE</div><div class="metric" id="dailyDate">2026-11-13</div><div class="hint">dailyDate · YYYYMMDD</div></div>
-    <div class="card detail-card"><div class="card-head">PV / LOAD DAILY</div><div class="metric" id="dailyEnergy">1.250 / 0.860 <span class="unit">kWh</span></div><div class="hint">dailyWh[0] / dailyWh[1]</div></div>
-    <div class="card detail-card"><div class="card-head">WATER DAILY</div><div class="metric" id="dailyWater">38.500 <span class="unit">L</span></div></div>
+    <div class="card detail-card"><div class="card-head">DAILY DATE</div><div class="metric" id="dailyDate">--</div><div class="hint">dailyDate · YYYYMMDD</div></div>
+    <div class="card detail-card"><div class="card-head">PV / LOAD DAILY</div><div class="metric" id="dailyEnergy">-- / -- <span class="unit">kWh</span></div><div class="hint">dailyWh[0] / dailyWh[1]</div></div>
+    <div class="card detail-card"><div class="card-head">WATER DAILY</div><div class="metric" id="dailyWater">-- <span class="unit">L</span></div></div>
    </div>
   </div>
   <div class="card detail-table-card">
@@ -803,31 +803,31 @@ body.logged-out .app{visibility:hidden;pointer-events:none}
 
 <section id="page-alarm" class="page hidden"><div class="page-head"><div><div class="eyebrow">DEVICE HEALTH & EVENTS</div><h1>Alarm / Diagnostics</h1></div><span class="tag warn">DIAGNOSTIC RULES</span></div>
 
-<div class="grid kpis"><div class="card"><div class="card-head">FAULT / INVALID</div><div class="metric red" id="faultCount">0</div><div class="hint">Current invalid diagnostics</div></div><div class="card"><div class="card-head">WARNING</div><div class="metric amber" id="warningCount">0</div><div class="hint">Device not ready / no data</div></div><div class="card"><div class="card-head">COMMAND STATUS</div><div class="metric" style="font-size:19px" id="cmdStatus">READY</div><div class="hint">commandStatus from Nano reset handshake</div></div><div class="card"><div class="card-head">LOGGER</div><div class="metric" style="font-size:19px" id="alarmLogger">ACTIVE</div><div class="hint">loggingActive</div></div></div>
+<div class="grid kpis"><div class="card"><div class="card-head">FAULT / INVALID</div><div class="metric red" id="faultCount">--</div><div class="hint">Current invalid diagnostics</div></div><div class="card"><div class="card-head">WARNING</div><div class="metric amber" id="warningCount">--</div><div class="hint">Device not ready / no data</div></div><div class="card"><div class="card-head">COMMAND STATUS</div><div class="metric" style="font-size:19px" id="cmdStatus">--</div><div class="hint">commandStatus from Nano reset handshake</div></div><div class="card"><div class="card-head">LOGGER</div><div class="metric" style="font-size:19px" id="alarmLogger">--</div><div class="hint">loggingActive</div></div></div>
 <div class="card"><div class="card-head">PROCESS ALARM & CONTROL DEMAND</div><div class="table-wrap"><table><thead><tr><th>Parameter</th><th>Reading</th><th>Rule</th><th>State</th></tr></thead><tbody id="processAlarmTable"></tbody></table></div></div><div class="card"><div class="card-head">DEVICE DIAGNOSTIC STATUS</div><div class="table-wrap"><table><thead><tr><th>Subsystem</th><th>Source variable</th><th>Condition</th><th>State</th></tr></thead><tbody id="diagnosticTable"></tbody></table></div></div>
-<div class="card" style="margin-top:14px"><div class="card-head">RESET COMMAND EVENT LOG</div><div class="table-wrap"><table><thead><tr><th>Time</th><th>Action</th><th>Result</th></tr></thead><tbody id="eventTable"><tr><td colspan="3" class="muted">Belum ada event pada demo ini.</td></tr></tbody></table></div></div></section>
+<div class="card" style="margin-top:14px"><div class="card-head">RESET COMMAND EVENT LOG</div><div class="table-wrap"><table><thead><tr><th>Time</th><th>Action</th><th>Result</th></tr></thead><tbody id="eventTable"><tr><td colspan="3" class="muted">Belum ada event.</td></tr></tbody></table></div></div></section>
 
 <section id="page-system" class="page hidden"><div class="page-head"><div><div class="eyebrow">CONFIGURATION & CONTROL</div><h1>System Settings</h1></div><span class="tag warn">FIREBASE INTEGRATION</span></div>
 
 <div class="controls"><div class="card"><div class="card-head">CONTROL SETPOINT · SETTINGS SCREEN</div>
-<div class="field"><label>Soil Setpoint (%) · soilSetpoint</label><input id="soilSP" type="number" min="1" max="99" step=".5" value="40"><small>Valid range 1.0–99.0 · default 40.0</small></div>
-<div class="field"><label>Soil Hysteresis (%) · soilHyst</label><input id="soilH" type="number" min="1" max="30" step=".5" value="5"><small>Valid range 1.0–30.0 · default 5.0</small></div>
-<div class="field"><label>RH Setpoint (%) · rhSetpoint</label><input id="rhSP" type="number" min="1" max="99" step=".5" value="60"><small>Valid range 1.0–99.0 · default 60.0</small></div>
-<div class="field"><label>RH Hysteresis (%) · rhHyst</label><input id="rhH" type="number" min="1" max="30" step=".5" value="5"><small>Valid range 1.0–30.0 · default 5.0</small></div><button class="btn primary" id="saveSettings">Save Settings to Firebase</button></div>
+<div class="field"><label>Soil Setpoint (%) · soilSetpoint</label><input id="soilSP" type="number" min="1" max="99" step=".5" value=""><small>Valid range 1.0–99.0</small></div>
+<div class="field"><label>Soil Hysteresis (%) · soilHyst</label><input id="soilH" type="number" min="1" max="30" step=".5" value=""><small>Valid range 1.0–30.0</small></div>
+<div class="field"><label>RH Setpoint (%) · rhSetpoint</label><input id="rhSP" type="number" min="1" max="99" step=".5" value=""><small>Valid range 1.0–99.0</small></div>
+<div class="field"><label>RH Hysteresis (%) · rhHyst</label><input id="rhH" type="number" min="1" max="30" step=".5" value=""><small>Valid range 1.0–30.0</small></div><button class="btn primary" id="saveSettings">Save Settings to Firebase</button></div>
 <div class="card"><div class="card-head">RELAY CONTROL / MODE</div>
-<div class="control-line"><div><b>Relay 1 · Irrigation</b><div class="hint">Automatic · soilAvg hysteresis</div></div><span id="relay1State" class="tag">ON · AUTO</span></div>
-<div class="control-line"><div><b>Relay 2 · RH control</b><div class="hint">Automatic · airRH hysteresis</div></div><span id="relay2State" class="tag off">OFF · AUTO</span></div>
+<div class="control-line"><div><b>Relay 1 · Irrigation</b><div class="hint">Automatic · soilAvg hysteresis</div></div><span id="relay1State" class="tag off">--</span></div>
+<div class="control-line"><div><b>Relay 2 · RH control</b><div class="hint">Automatic · airRH hysteresis</div></div><span id="relay2State" class="tag off">--</span></div>
 <div class="control-line"><div><b>Relay 3 · Tank pump</b><div class="hint">Manual · pumpManualOn</div></div><span id="pumpCommandStatus" class="hint" aria-live="polite">Status mengikuti feedback ESP32</span><label class="pump-switch" aria-label="Toggle Relay 3 tank pump"><input type="checkbox" id="pumpSwitch" role="switch" aria-checked="false"><span class="slider"></span></label></div>
 <div class="hint" style="margin-top:12px">R1 ON jika soilAvg &lt; soilSetpoint − soilHyst/2; OFF jika &gt; soilSetpoint + soilHyst/2. R2 menggunakan aturan setara pada airRH. R3 mengikuti pumpManualOn. AUTO toren belum tersedia karena belum ada level switch.</div></div>
 <div class="card"><div class="card-head">DATA LOGGER · LOGGER SCREEN</div>
-<div class="status-row"><span>loggingActive</span><span id="loggerBadge" class="tag">ACTIVE</span></div>
-<div class="field"><label>Logging interval · LOG_OPTIONS</label><select id="logInterval"><option value="0">1 second</option><option value="1">2 seconds</option><option value="2" selected>5 seconds</option><option value="3">10 seconds</option><option value="4">15 seconds</option><option value="5">30 seconds</option><option value="6">60 seconds</option><option value="7">120 seconds</option><option value="8">300 seconds</option></select><small>Default logOption = 2 (5 seconds); persisted in Preferences.</small></div>
+<div class="status-row"><span>loggingActive</span><span id="loggerBadge" class="tag off">--</span></div>
+<div class="field"><label>Logging interval · LOG_OPTIONS</label><select id="logInterval"><option value="" selected disabled>Pilih interval</option><option value="0">1 second</option><option value="1">2 seconds</option><option value="2">5 seconds</option><option value="3">10 seconds</option><option value="4">15 seconds</option><option value="5">30 seconds</option><option value="6">60 seconds</option><option value="7">120 seconds</option><option value="8">300 seconds</option></select><small>Interval yang dipilih akan dikirim ke perangkat.</small></div>
 <div class="actions"><button class="btn primary" id="startLog">Start Logging</button><button class="btn" id="stopLog">Stop Logging</button></div>
-<div class="status-row"><span>logFileName</span><b id="logFile">/20261113_LOG1.CSV</b></div><div class="status-row"><span>dataNumber</span><b id="dataNo">128</b></div><div class="hint">AUTO START ketika boot jika SD ready. Setiap START membuat file CSV baru dengan nama tanggal dan nomor urut.</div></div>
+<div class="status-row"><span>logFileName</span><b id="logFile">--</b></div><div class="status-row"><span>dataNumber</span><b id="dataNo">--</b></div><div class="hint">AUTO START ketika boot jika SD ready. Setiap START membuat file CSV baru dengan nama tanggal dan nomor urut.</div></div>
 <div class="card"><div class="card-head">RESET TOTAL · NANO I2C COMMAND</div>
 <div class="field"><label>Reset target</label><select id="resetTarget"><option value="1">Water Total · command 1</option><option value="2">PV Energy · command 2</option><option value="3">Load Energy · command 3</option></select></div>
 <button class="btn danger" id="resetBtn">Arm Reset Request</button>
-<div class="status-row"><span>waitingCmd</span><b id="waitingCmd">0</b></div><div class="status-row"><span>commandStatus</span><b id="commandStatus">READY</b></div><div class="hint">Firmware meminta konfirmasi kedua dalam 5 detik, memakai command token, menunggu ACK Nano maksimal 8 detik. Daily totals tidak di-zero-kan oleh reset counter ini.</div></div>
+<div class="status-row"><span>waitingCmd</span><b id="waitingCmd">--</b></div><div class="status-row"><span>commandStatus</span><b id="commandStatus">--</b></div><div class="hint">Firmware meminta konfirmasi kedua dalam 5 detik, memakai command token, menunggu ACK Nano maksimal 8 detik. Daily totals tidak di-zero-kan oleh reset counter ini.</div></div>
 </div></section>
 
 </div></main></div><div class="toast" id="toast"></div>
@@ -841,7 +841,7 @@ body.logged-out .app{visibility:hidden;pointer-events:none}
 const $ = id => document.getElementById(id);
 let page='overview', range='1h', resetArmed=null, resetTimer=null;
 let viewEnd=Date.now(), viewStart=viewEnd-3600000;
-let cfg={soilSP:40,soilH:5,rhSP:70,rhH:5,logOption:10};
+let cfg={soilSP:null,soilH:null,rhSP:null,rhH:null,logOption:null};
 let history=[], events=[], db=null, rootRef=null, latestRoot=null, resetToken=0;
 let authObserverStarted=false, pumpCommandPending=false, pumpCommandTimer=null;
 // ESP32 hanya dianggap online setelah heartbeat BERUBAH setelah listener mulai berjalan.
@@ -858,7 +858,7 @@ const firebaseConfig = {
   messagingSenderId: "58124975721",
   appId: "1:58124975721:web:25763f6a7da22d3415ecf8"
 };
-// Values remain null until Firebase sends actual device telemetry. No demo generator.
+// Telemetry dipaparkan hanya setelah diterima dari perangkat melalui Firebase.
 let d={
  soil:[null,null,null],raw:[null,null,null],soilChannelOK:[false,false,false],soilValid:false,soilAvg:null,
  temp:null,rh:null,
@@ -866,17 +866,17 @@ let d={
   {voltage:null,current:null,power:null,energyWh:null,valid:false,lastOK:null},
   {voltage:null,current:null,power:null,energyWh:null,valid:false,lastOK:null}
  ],
- flow:{rateLmin:null,totalML:0,pulses:0,valid:false,lastOK:null},
- dailyWh:[0,0],dailyWaterML:0,dailyDate:null,
+ flow:{rateLmin:null,totalML:null,pulses:null,valid:false,lastOK:null},
+ dailyWh:[null,null],dailyWaterML:null,dailyDate:null,
  rtcReady:false,sdReady:false,wifiConnected:false,relay:[false,false,false],pump:false,
- dataNumber:0,logFileName:'',loggingActive:false,logOption:10,
- commandStatus:'idle',waitingCmd:0,waitingToken:0,lastUpdate:null,connectionStatus:'offline'
+ dataNumber:null,logFileName:'',loggingActive:false,logOption:null,
+ commandStatus:null,waitingCmd:null,waitingToken:null,lastUpdate:null,connectionStatus:'offline'
 };
 function toast(s){const t=$('toast');if(!t)return;t.textContent=s;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000)}
 function finite(v){return typeof v==='number' && Number.isFinite(v)}
 function fmt(v,n=1){return finite(v)?v.toFixed(n):'--'}
-function status(id,ok,yes='VALID',no='NO DATA'){const e=$(id);if(!e)return;e.textContent=ok?yes:no;e.className='tag '+(ok?'':'bad')}
-function tag(id,on){const e=$(id);if(!e)return;e.textContent=on?'ON':'OFF';e.className='tag '+(on?'':'off')}
+function status(id,ok,yes='VALID',no='NO DATA'){const e=$(id);if(!e)return;if(ok===null||ok===undefined){e.textContent='--';e.className='tag off';return;}e.textContent=ok?yes:no;e.className='tag '+(ok?'':'bad')}
+function tag(id,on){const e=$(id);if(!e)return;if(on===null||on===undefined){e.textContent='--';e.className='tag off';return;}e.textContent=on?'ON':'OFF';e.className='tag '+(on?'':'off')}
 function fitCurrentPage(){document.querySelectorAll('.page').forEach(el=>el.style.zoom='1')}
 function navTo(p){page=p;document.querySelectorAll('.page').forEach(e=>e.classList.add('hidden'));$('page-'+p).classList.remove('hidden');document.querySelectorAll('#nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===p));$('crumb').textContent=p[0].toUpperCase()+p.slice(1);if(p==='detail')renderDetail();if(p==='trend')drawCharts();if(p==='alarm')renderDiagnostics();requestAnimationFrame(fitCurrentPage)}
 $('nav').onclick=e=>{const b=e.target.closest('button[data-page]');if(b)navTo(b.dataset.page)};
@@ -998,8 +998,8 @@ function clearDeviceTelemetry(){
  d.pz=[{voltage:null,current:null,power:null,energyWh:null,valid:false,lastOK:null},{voltage:null,current:null,power:null,energyWh:null,valid:false,lastOK:null}];
  d.flow={rateLmin:null,totalML:null,pulses:null,valid:false,lastOK:null};
  d.dailyWh=[null,null];d.dailyWaterML=null;d.dailyDate=null;
- d.rtcReady=false;d.sdReady=false;d.wifiConnected=false;d.relay=[false,false,false];d.pump=false;
- d.dataNumber=0;d.logFileName='';d.loggingActive=false;
+ d.rtcReady=null;d.sdReady=null;d.wifiConnected=false;d.relay=[null,null,null];d.pump=null;
+ d.dataNumber=null;d.logFileName='';d.loggingActive=null;d.commandStatus=null;d.waitingCmd=null;d.waitingToken=null;
 }
 function setDeviceOnline(online){
  const changed=deviceOnline!==online;deviceOnline=online;d.wifiConnected=online;
@@ -1022,12 +1022,12 @@ function renderOverview(){
  $('tempKpi').innerHTML=fmt(d.temp)+' <span class="unit">°C</span>';
  $('rhKpi').innerHTML=fmt(d.rh)+' <span class="unit">%</span>';
  $('flowKpi').innerHTML=fmt(d.flow.rateLmin,2)+' <span class="unit">L/min</span>';
- $('waterTotalKpi').innerHTML=fmt(d.flow.totalML/1000,3)+' <span class="unit">L</span>';
- $('pvDayKpi').innerHTML=fmt(d.dailyWh[0]/1000,3)+' <span class="unit">kWh</span>';
- $('loadDayKpi').innerHTML=fmt(d.dailyWh[1]/1000,3)+' <span class="unit">kWh</span>';
- $('waterDayKpi').innerHTML=fmt(d.dailyWaterML/1000,3)+' <span class="unit">L</span>';
+ $('waterTotalKpi').innerHTML=fmt(finite(d.flow.totalML)?d.flow.totalML/1000:null,3)+' <span class="unit">L</span>';
+ $('pvDayKpi').innerHTML=fmt(finite(d.dailyWh[0])?d.dailyWh[0]/1000:null,3)+' <span class="unit">kWh</span>';
+ $('loadDayKpi').innerHTML=fmt(finite(d.dailyWh[1])?d.dailyWh[1]/1000:null,3)+' <span class="unit">kWh</span>';
+ $('waterDayKpi').innerHTML=fmt(finite(d.dailyWaterML)?d.dailyWaterML/1000:null,3)+' <span class="unit">L</span>';
  $('dataNoKpi').textContent=d.dataNumber??'--';
- d.relay.forEach((v,i)=>tag('r'+(i+1),!!v));
+ d.relay.forEach((v,i)=>tag('r'+(i+1),v));
  status('rtcStatus',d.rtcReady,'READY','NOT READY');status('sdStatus',d.sdReady,'READY','NOT READY');
  status('pz1Status',d.pz[0].valid);status('pz2Status',d.pz[1].valid);status('flowStatus',d.flow.valid);
  const hasDeviceData=deviceOnline && [...d.soil,d.temp,d.rh,d.pz[0].power,d.pz[1].power,d.flow.rateLmin].some(finite);
@@ -1037,10 +1037,10 @@ function renderOverview(){
 function renderDetail(){
  $('soilCards').innerHTML=d.soil.map((v,i)=>`<div class="card"><div class="card-head">SOIL SENSOR ${i+1}<span class="tag ${d.soilChannelOK[i]?'':'bad'}">${d.soilChannelOK[i]?'VALID':'NO DATA'}</span></div><div class="sensor-value">${fmt(v,1)} <span class="unit">%</span></div><div class="hint">soilRaw[${i}]: ${d.raw[i]??'--'} · soilPct[${i}]</div><div class="bar"><span style="width:${finite(v)?Math.max(0,Math.min(100,v)):0}%"></span></div></div>`).join('');
  $('dTemp').textContent=fmt(d.temp)+' °C';$('dRh').textContent=fmt(d.rh)+' %';status('dhtValidity',finite(d.temp)&&finite(d.rh),'VALID','NO DATA');
- $('dFlow').innerHTML=fmt(d.flow.rateLmin,2)+' <span class="unit">L/min</span>';$('dWater').innerHTML=fmt(d.flow.totalML/1000,3)+' <span class="unit">L</span>';$('pulses').textContent=d.flow.pulses??'--';status('flowValidity',d.flow.valid);
+ $('dFlow').innerHTML=fmt(d.flow.rateLmin,2)+' <span class="unit">L/min</span>';$('dWater').innerHTML=fmt(finite(d.flow.totalML)?d.flow.totalML/1000:null,3)+' <span class="unit">L</span>';$('pulses').textContent=d.flow.pulses??'--';status('flowValidity',d.flow.valid);
  ['pv','load'].forEach((k,i)=>{const p=d.pz[i];$(k+'V').textContent=fmt(p.voltage,2)+' V';$(k+'A').textContent=fmt(p.current,2)+' A';$(k+'W').textContent=fmt(p.power,1)+' W';$(k+'Wh').textContent=fmt(p.energyWh/1000,3)+' kWh';status(i?'pz2Tag':'pz1Tag',p.valid)});
- $('dailyDate').textContent=d.dailyDate??'--';$('dailyEnergy').innerHTML=fmt(d.dailyWh[0]/1000,3)+' / '+fmt(d.dailyWh[1]/1000,3)+' <span class="unit">kWh</span>';$('dailyWater').innerHTML=fmt(d.dailyWaterML/1000,3)+' <span class="unit">L</span>';
- $('rawTable').innerHTML=d.soil.map((v,i)=>`<tr><td>soilRaw[${i}] / soilPct[${i}]</td><td>${d.raw[i]??'--'}</td><td>${fmt(v,2)} %</td><td><span class="tag ${d.soilChannelOK[i]?'':'bad'}">${d.soilChannelOK[i]?'VALID':'NO DATA'}</span></td></tr>`).join('')+`<tr><td>airTemp / airRH</td><td>${fmt(d.temp)} / ${fmt(d.rh)}</td><td>°C / %</td><td><span class="tag ${finite(d.temp)&&finite(d.rh)?'':'bad'}">${finite(d.temp)&&finite(d.rh)?'VALID':'NO DATA'}</span></td></tr>`+d.pz.map((p,i)=>`<tr><td>pzem[${i}]</td><td>${fmt(p.voltage,2)} V, ${fmt(p.current,2)} A, ${fmt(p.power,1)} W</td><td>${fmt(p.energyWh,1)} Wh</td><td><span class="tag ${p.valid?'':'bad'}">${p.valid?'VALID':'NO DATA'}</span></td></tr>`).join('')+`<tr><td>flow</td><td>${fmt(d.flow.rateLmin,2)} L/min</td><td>${d.flow.totalML??0} mL · ${d.flow.pulses??0} pulse</td><td><span class="tag ${d.flow.valid?'':'bad'}">${d.flow.valid?'VALID':'NO DATA'}</span></td></tr>`;
+ $('dailyDate').textContent=d.dailyDate??'--';$('dailyEnergy').innerHTML=fmt(finite(d.dailyWh[0])?d.dailyWh[0]/1000:null,3)+' / '+fmt(finite(d.dailyWh[1])?d.dailyWh[1]/1000:null,3)+' <span class="unit">kWh</span>';$('dailyWater').innerHTML=fmt(finite(d.dailyWaterML)?d.dailyWaterML/1000:null,3)+' <span class="unit">L</span>';
+ $('rawTable').innerHTML=d.soil.map((v,i)=>`<tr><td>soilRaw[${i}] / soilPct[${i}]</td><td>${d.raw[i]??'--'}</td><td>${fmt(v,2)} %</td><td><span class="tag ${d.soilChannelOK[i]?'':'bad'}">${d.soilChannelOK[i]?'VALID':'NO DATA'}</span></td></tr>`).join('')+`<tr><td>airTemp / airRH</td><td>${fmt(d.temp)} / ${fmt(d.rh)}</td><td>°C / %</td><td><span class="tag ${finite(d.temp)&&finite(d.rh)?'':'bad'}">${finite(d.temp)&&finite(d.rh)?'VALID':'NO DATA'}</span></td></tr>`+d.pz.map((p,i)=>`<tr><td>pzem[${i}]</td><td>${fmt(p.voltage,2)} V, ${fmt(p.current,2)} A, ${fmt(p.power,1)} W</td><td>${fmt(p.energyWh,1)} Wh</td><td><span class="tag ${p.valid?'':'bad'}">${p.valid?'VALID':'NO DATA'}</span></td></tr>`).join('')+`<tr><td>flow</td><td>${fmt(d.flow.rateLmin,2)} L/min</td><td>${d.flow.totalML??'--'} mL · ${d.flow.pulses??'--'} pulse</td><td><span class="tag ${d.flow.valid?'':'bad'}">${d.flow.valid?'VALID':'NO DATA'}</span></td></tr>`;
 }
 function renderProcessAlarms(){
  const rows=[];
@@ -1063,7 +1063,7 @@ function renderProcessAlarms(){
 function renderDiagnostics(){
  const rows=[['RTC DS3231','telemetry.device.rtcReady','RTC initialization'],['SD Card','telemetry.device.sdReady','SD initialization / file access'],['DHT22','telemetry.climate.valid','Sensor read validity'],['PZEM 1 · PV','telemetry.pzem1.valid / lastOK','Invalid or stale data'],['PZEM 2 · Load','telemetry.pzem2.valid / lastOK','Invalid or stale data'],['Flow · Nano I2C','telemetry.flow.valid / lastOK','Invalid or stale data']];
  const states=[d.rtcReady,d.sdReady,finite(d.temp)&&finite(d.rh),d.pz[0].valid,d.pz[1].valid,d.flow.valid],bad=states.filter(x=>!x).length,processAlarms=renderProcessAlarms();
- $('faultCount').textContent=bad+processAlarms;$('warningCount').textContent=bad;$('cmdStatus').textContent=d.commandStatus??'idle';$('alarmLogger').textContent=d.loggingActive?'ACTIVE':'STOPPED';$('navAlarm').textContent=bad+processAlarms;
+ $('faultCount').textContent=bad+processAlarms;$('warningCount').textContent=bad;$('cmdStatus').textContent=d.commandStatus??'idle';$('alarmLogger').textContent=typeof d.loggingActive==='boolean'?(d.loggingActive?'ACTIVE':'STOPPED'):'--';$('navAlarm').textContent=deviceOnline?bad+processAlarms:'--';
  $('diagnosticTable').innerHTML=rows.map((r,i)=>`<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td><span class="tag ${states[i]?'':'bad'}">${states[i]?'OK':'NO DATA / NOT READY'}</span></td></tr>`).join('');
  $('eventTable').innerHTML=events.length?events.slice().reverse().map(e=>`<tr><td>${e.time}</td><td>${e.action}</td><td>${e.result}</td></tr>`).join(''):'<tr><td colspan="3" class="muted">Belum ada event dari Firebase.</td></tr>';
 }
@@ -1084,10 +1084,10 @@ function applyRoot(root){
  d.soilValid=!!pick(s.soilValid,s.valid,d.soilChannelOK.some(Boolean));
  d.soilAvg=pick(s.soilAvg,s.avg,null);
  d.temp=pick(c.airTemp,c.temp,c.temperature,latestRoot.airTemp,latestRoot.temperature,null);d.rh=pick(c.airRH,c.rh,c.humidity,latestRoot.airRH,latestRoot.humidity,null);
- d.pz=[p1,p2].map(p=>({voltage:pick(p.voltage,p.volt,null),current:pick(p.current,p.amp,null),power:pick(p.power,null),energyWh:pick(p.energyWh,p.energy,p.wh,null),valid:pick(p.valid,true)===true,lastOK:pick(p.lastOK,null)}));
- d.flow={rateLmin:pick(f.rateLmin,f.flowRate,f.rate,null),totalML:pick(f.totalML,f.totalMl,f.totalVolumeML,0),pulses:pick(f.pulses,f.pulseCount,0),valid:pick(f.valid,true)===true,lastOK:pick(f.lastOK,null)};
- d.dailyWh=arr(pick(day.dailyWh,latestRoot.dailyWh),2);d.dailyWaterML=pick(day.dailyWaterML,latestRoot.dailyWaterML,0);d.dailyDate=pick(day.dailyDate,latestRoot.dailyDate,null);
- d.rtcReady=!!pick(dev.rtcReady,latestRoot.rtcReady,false);d.sdReady=!!pick(dev.sdReady,latestRoot.sdReady,false);d.wifiConnected=false;d.relay=arr(pick(a.relayOn,latestRoot.relayOn),3).map(Boolean);d.pump=!!pick(a.pumpManualOn,latestRoot.pumpManualOn,d.relay[2]);
+ d.pz=[p1,p2].map(p=>({voltage:pick(p.voltage,p.volt,null),current:pick(p.current,p.amp,null),power:pick(p.power,null),energyWh:pick(p.energyWh,p.energy,p.wh,null),valid:pick(p.valid,false)===true,lastOK:pick(p.lastOK,null)}));
+ d.flow={rateLmin:pick(f.rateLmin,f.flowRate,f.rate,null),totalML:pick(f.totalML,f.totalMl,f.totalVolumeML,null),pulses:pick(f.pulses,f.pulseCount,null),valid:pick(f.valid,false)===true,lastOK:pick(f.lastOK,null)};
+ d.dailyWh=arr(pick(day.dailyWh,latestRoot.dailyWh),2);d.dailyWaterML=pick(day.dailyWaterML,latestRoot.dailyWaterML,null);d.dailyDate=pick(day.dailyDate,latestRoot.dailyDate,null);
+ d.rtcReady=pick(dev.rtcReady,latestRoot.rtcReady,null);d.sdReady=pick(dev.sdReady,latestRoot.sdReady,null);d.wifiConnected=false;d.relay=arr(pick(a.relayOn,latestRoot.relayOn),3);d.pump=pick(a.pumpManualOn,latestRoot.pumpManualOn,d.relay[2]??null);
  if(pumpCommandPending && latestRoot.commands && latestRoot.commands.pump &&
     typeof latestRoot.commands.pump.manualOn==='boolean' &&
     latestRoot.commands.pump.manualOn===d.pump){
@@ -1099,9 +1099,9 @@ function applyRoot(root){
    $('pumpSwitch').setAttribute('aria-checked',String(d.pump));
    $('pumpCommandStatus').textContent=d.pump?'POMPA ON · FEEDBACK ESP32':'POMPA OFF · FEEDBACK ESP32';
  }
- d.dataNumber=lg.dataNumber??0;d.logFileName=lg.logFileName??'';d.loggingActive=!!lg.loggingActive;d.logOption=lg.logOption??conf.logOption??10;
- cfg={soilSP:conf.soilSetpoint??40,soilH:conf.soilHyst??5,rhSP:conf.rhSetpoint??70,rhH:conf.rhHyst??5,logOption:d.logOption};
- d.commandStatus=sys.commandStatus??'idle';d.waitingCmd=sys.waitingCmd??0;d.waitingToken=sys.waitingToken??0;d.lastUpdate=sys.lastUpdate??dev.lastUpdate??latestRoot.lastUpdate??null;d.connectionStatus=firebaseOnline?'online':'offline';
+ d.dataNumber=lg.dataNumber??null;d.logFileName=lg.logFileName??'';d.loggingActive=pick(lg.loggingActive,null);d.logOption=lg.logOption??conf.logOption??null;
+ cfg={soilSP:conf.soilSetpoint??null,soilH:conf.soilHyst??null,rhSP:conf.rhSetpoint??null,rhH:conf.rhHyst??null,logOption:d.logOption};
+ d.commandStatus=sys.commandStatus??null;d.waitingCmd=sys.waitingCmd??null;d.waitingToken=sys.waitingToken??null;d.lastUpdate=sys.lastUpdate??dev.lastUpdate??latestRoot.lastUpdate??null;d.connectionStatus=firebaseOnline?'online':'offline';
  // Jangan menganggap snapshot awal sebagai heartbeat aktif: snapshot bisa berisi data lama.
  // Baseline pertama hanya disimpan. Status ONLINE baru sah setelah ada perubahan berikutnya.
  const hb=d.lastUpdate;
@@ -1120,13 +1120,13 @@ function applyRoot(root){
  checkDeviceHeartbeat();
  if(!deviceOnline){clearDeviceTelemetry();}
 
- $('soilSP').value=cfg.soilSP;$('soilH').value=cfg.soilH;$('rhSP').value=cfg.rhSP;$('rhH').value=cfg.rhH;$('logInterval').value=String(LOG_OPTIONS.indexOf(Number(cfg.logOption))>=0?LOG_OPTIONS.indexOf(Number(cfg.logOption)):3);
+ $('soilSP').value=cfg.soilSP??'';$('soilH').value=cfg.soilH??'';$('rhSP').value=cfg.rhSP??'';$('rhH').value=cfg.rhH??'';$('logInterval').value=cfg.logOption!=null&&LOG_OPTIONS.includes(Number(cfg.logOption))?String(LOG_OPTIONS.indexOf(Number(cfg.logOption))):'';
  $('logFile').textContent=d.logFileName||'--';$('dataNo').textContent=d.dataNumber;$('waitingCmd').textContent=d.waitingCmd;$('commandStatus').textContent=d.commandStatus;
- $('loggerBadge').textContent=d.loggingActive?'ACTIVE':'STOPPED';$('loggerBadge').className='tag '+(d.loggingActive?'':'off');
- if(!pumpCommandPending){$('pumpSwitch').checked=d.pump;}
- $('pumpSwitch').setAttribute('aria-checked',String(pumpCommandPending?$('pumpSwitch').checked:d.pump));
- if(!pumpCommandPending){$('pumpCommandStatus').textContent=d.pump?'POMPA ON · FEEDBACK ESP32':'POMPA OFF · FEEDBACK ESP32';}
- $('relay1State').textContent=d.relay[0]?'ON · AUTO':'OFF · AUTO';$('relay2State').textContent=d.relay[1]?'ON · AUTO':'OFF · AUTO';
+ $('loggerBadge').textContent=typeof d.loggingActive==='boolean'?(d.loggingActive?'ACTIVE':'STOPPED'):'--';$('loggerBadge').className='tag '+(d.loggingActive===true?'':'off');
+ if(!pumpCommandPending){$('pumpSwitch').checked=d.pump===true;$('pumpSwitch').disabled=typeof d.pump!=='boolean';}
+ $('pumpSwitch').setAttribute('aria-checked',String(pumpCommandPending?$('pumpSwitch').checked:d.pump===true));
+ if(!pumpCommandPending){$('pumpCommandStatus').textContent=typeof d.pump==='boolean'?(d.pump?'POMPA ON · FEEDBACK ESP32':'POMPA OFF · FEEDBACK ESP32'):'MENUNGGU FEEDBACK';}
+ $('relay1State').textContent=d.relay[0]===true?'ON · AUTO':d.relay[0]===false?'OFF · AUTO':'--';$('relay2State').textContent=d.relay[1]===true?'ON · AUTO':d.relay[1]===false?'OFF · AUTO':'--';
  if($('conn'))$('conn').textContent='FIREBASE · '+(firebaseOnline?'ONLINE':'OFFLINE');$('sideState').textContent=deviceOnline?'DEVICE ONLINE':'DEVICE OFFLINE';
  recordHistory();renderOverview();renderDetail();renderDiagnostics();drawCharts();requestAnimationFrame(fitCurrentPage);
 }
@@ -1229,12 +1229,12 @@ function validate(id,min,max){const v=Number($(id).value);if(!Number.isFinite(v)
 async function loggerCommand(active){
  try{
    const requestedAt=Date.now();
-   const seconds=LOG_OPTIONS[Number($('logInterval').value)]||10;
+   const seconds=LOG_OPTIONS[Number($('logInterval').value)];if(!Number.isFinite(seconds))throw new Error('Pilih logging interval terlebih dahulu.');
    await writeDb('commands/logger',{loggingActive:active,logOption:seconds,requestedAt});
    toast(active?'Perintah Start Logger terkirim. Menunggu feedback perangkat.':'Perintah Stop Logger terkirim. Menunggu feedback perangkat.');
  }catch(e){toast('Gagal mengirim perintah logger: '+e.message)}
 }
-$('saveSettings').onclick=async()=>{try{const next={soilSetpoint:validate('soilSP',1,99),soilHyst:validate('soilH',1,30),rhSetpoint:validate('rhSP',1,99),rhHyst:validate('rhH',1,30),logOption:LOG_OPTIONS[Number($('logInterval').value)]};await writeDb('configuration',next);toast('Configuration berhasil dikirim ke Realtime Database')}catch(e){toast(e.message)}};
+$('saveSettings').onclick=async()=>{try{const next={soilSetpoint:validate('soilSP',1,99),soilHyst:validate('soilH',1,30),rhSetpoint:validate('rhSP',1,99),rhHyst:validate('rhH',1,30)};if($('logInterval').value!=='')next.logOption=LOG_OPTIONS[Number($('logInterval').value)];await writeDb('configuration',next);toast('Configuration berhasil dikirim ke Realtime Database')}catch(e){toast(e.message)}};
 $('pumpSwitch').addEventListener('change',async()=>{
  const input=$('pumpSwitch');
  if(pumpCommandPending){input.checked=d.pump;return;}
@@ -1290,8 +1290,8 @@ $('exportExcel').onclick=()=>{if(!exportRows().length){toast('Tidak ada data pad
 function clock(){const el=$('clock');if(!el)return;const now=new Date();const date=now.toLocaleDateString('en-GB',{day:'2-digit',month:'short',year:'numeric'});const time=now.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});el.textContent=date+', '+time}
 function init(){
  viewEnd=Date.now();viewStart=viewEnd-rangeMs();
- $('soilSP').value=cfg.soilSP;$('soilH').value=cfg.soilH;$('rhSP').value=cfg.rhSP;$('rhH').value=cfg.rhH;$('logInterval').value='3';
- $('logFile').textContent='--';$('dataNo').textContent='0';if($('conn'))if($('conn'))$('conn').textContent='FIREBASE NOT CONFIGURED';$('sideState').textContent='WAITING FOR DEVICE';
+ $('soilSP').value='';$('soilH').value='';$('rhSP').value='';$('rhH').value='';$('logInterval').value='';
+ $('logFile').textContent='--';$('dataNo').textContent='--';if($('conn'))if($('conn'))$('conn').textContent='FIREBASE NOT CONFIGURED';$('sideState').textContent='WAITING FOR DEVICE';
  renderOverview();renderDetail();drawCharts();renderDiagnostics();
 // Login lokal dashboard (pengunci tampilan, bukan pengganti Firebase Security Rules).
 const DASHBOARD_PASSWORD='Polban123';
