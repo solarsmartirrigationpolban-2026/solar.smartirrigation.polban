@@ -644,12 +644,43 @@ td{padding:6px 7px;line-height:1.25}
  #page-alarm #diagnosticTable th:nth-child(3){width:29%}
  #page-alarm #diagnosticTable th:nth-child(4){width:22%}
 }
+
+/* v6.4 access gate */
+.topbar-actions{display:flex;align-items:center;gap:10px}
+.login-btn{border:1px solid #2a405a;background:#142941;color:#dbe7f4;padding:7px 12px;border-radius:7px;font-size:11px;min-height:34px}
+.login-gate{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px;background:radial-gradient(ellipse at top,#142b45 0%,#071323 65%)}
+.login-panel{width:min(100%,390px);background:linear-gradient(145deg,#102139,#0c1b2e);border:1px solid #29435d;border-radius:16px;padding:28px;box-shadow:0 24px 80px #0009}
+.login-brand{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+.login-brand img{width:48px;height:48px;object-fit:contain;background:#fff;border-radius:10px;padding:4px}
+.login-panel h1{font-size:20px;margin:0 0 5px}.login-panel p{font-size:12px;color:#91a6be;margin:0 0 20px}
+.login-panel label{display:block;font-size:11px;color:#a9bfd5;margin:0 0 7px}
+.login-panel input{width:100%;background:#09182a;border:1px solid #2b435e;color:#e8f0f8;border-radius:8px;padding:12px;font-size:16px;outline:none}
+.login-panel input:focus{border-color:#45a8e8}
+.login-submit{width:100%;margin-top:14px;border:1px solid #23875f;background:#16734f;color:white;padding:11px;border-radius:8px;font-weight:700;min-height:44px}
+.login-error{min-height:18px;margin-top:10px;color:#ff9ca4;font-size:11px}
+body.logged-out .app{visibility:hidden;pointer-events:none}
+@media(max-width:760px){.topbar-actions{gap:6px}.login-btn{padding:6px 9px;font-size:10px}.login-panel{padding:23px}}
+
 </style></head>
-<body><div class="app">
+<body class="logged-out"><div class="login-gate" id="loginGate">
+  <form class="login-panel" id="loginForm" autocomplete="off">
+    <div class="login-brand">
+      <img src="https://tse1.mm.bing.net/th/id/OIP.RaVvOpGTXIFf7OC-R95dMwAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Logo POLBAN">
+      <div><div class="brand-name">SOLAR-POWERED SMART IRRIGATION</div><div class="brand-sub">POLBAN · MONITORING SYSTEM</div></div>
+    </div>
+    <h1>Login Dashboard</h1>
+    <p>Masukkan password untuk membuka dashboard.</p>
+    <label for="loginPassword">Password</label>
+    <input id="loginPassword" type="password" placeholder="Masukkan password" autocomplete="current-password" required>
+    <button class="login-submit" type="submit">Login</button>
+    <div class="login-error" id="loginError" role="alert"></div>
+  </form>
+</div>
+<div class="app">
 <aside class="sidebar"><div class="brand"><img src="https://tse1.mm.bing.net/th/id/OIP.RaVvOpGTXIFf7OC-R95dMwAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3" alt="Logo Polban" onerror="this.style.display='none'"><div><div class="brand-name">SOLAR-POWERED SMART IRRIGATION</div><div class="brand-sub">WITH MONITORING SYSTEM · POLBAN</div></div></div>
 <div class="nav-label">MONITORING</div><nav class="nav" id="nav"><button class="active" data-page="overview"><span class="ico">▦</span>Overview</button><button data-page="detail"><span class="ico">◈</span>Detail</button><button data-page="trend"><span class="ico">⌁</span>Trend</button><button data-page="alarm"><span class="ico">⚑</span>Alarm <span id="navAlarm" class="tag warn">0</span></button><button data-page="system"><span class="ico">⚙</span>System</button></nav>
 <div class="side-foot"><div><span class="dot"></span><b id="sideState">WAITING FOR DEVICE</b></div></div></aside>
-<main class="main"><header class="topbar"><div class="crumb">POLBAN <span class="muted">/</span> <b id="crumb">Overview</b></div><time class="clock" id="clock" aria-label="Tanggal dan waktu"></time></header>
+<main class="main"><header class="topbar"><div class="crumb">POLBAN <span class="muted">/</span> <b id="crumb">Overview</b></div><div class="topbar-actions"><time class="clock" id="clock" aria-label="Tanggal dan waktu"></time><button class="login-btn" id="logoutBtn" type="button">Logout</button></div></header>
 <div class="content" id="content">
 <section id="page-overview" class="page"><div class="page-head"><div><div class="eyebrow">SYSTEM OPERATIONS</div><h1>Overview</h1></div><span class="tag warn" id="deviceDataBadge">WAITING FOR DEVICE DATA</span></div>
 <div class="hero">
@@ -813,9 +844,10 @@ let viewEnd=Date.now(), viewStart=viewEnd-3600000;
 let cfg={soilSP:40,soilH:5,rhSP:70,rhH:5,logOption:10};
 let history=[], events=[], db=null, rootRef=null, latestRoot=null, resetToken=0;
 let authObserverStarted=false, pumpCommandPending=false, pumpCommandTimer=null;
-// Status ESP32 ditentukan dari heartbeat firmware (system.lastUpdate), bukan dari Firebase saja.
+// ESP32 hanya dianggap online setelah heartbeat BERUBAH setelah listener mulai berjalan.
+// Snapshot pertama Firebase adalah data tersimpan (bisa stale), bukan bukti perangkat masih hidup.
 const DEVICE_TIMEOUT_MS=15000;
-let heartbeatValue=null, heartbeatLastChangedAt=0, heartbeatInitialized=false, deviceOnline=false, firebaseOnline=false;
+let heartbeatValue=null, heartbeatLastChangedAt=0, heartbeatInitialized=false, heartbeatBaselineSet=false, deviceOnline=false, firebaseOnline=false;
 const LOG_OPTIONS=[1,2,5,10,15,30,60,120,300];
 const firebaseConfig = {
   apiKey: "AIzaSyDiL3LvfNNKXze7XPMgRGNiZHmaigrnN24",
@@ -1070,9 +1102,21 @@ function applyRoot(root){
  d.dataNumber=lg.dataNumber??0;d.logFileName=lg.logFileName??'';d.loggingActive=!!lg.loggingActive;d.logOption=lg.logOption??conf.logOption??10;
  cfg={soilSP:conf.soilSetpoint??40,soilH:conf.soilHyst??5,rhSP:conf.rhSetpoint??70,rhH:conf.rhHyst??5,logOption:d.logOption};
  d.commandStatus=sys.commandStatus??'idle';d.waitingCmd=sys.waitingCmd??0;d.waitingToken=sys.waitingToken??0;d.lastUpdate=sys.lastUpdate??dev.lastUpdate??latestRoot.lastUpdate??null;d.connectionStatus=firebaseOnline?'online':'offline';
- // lastUpdate pada firmware adalah counter yang harus berubah setiap siklus publish.
+ // Jangan menganggap snapshot awal sebagai heartbeat aktif: snapshot bisa berisi data lama.
+ // Baseline pertama hanya disimpan. Status ONLINE baru sah setelah ada perubahan berikutnya.
  const hb=d.lastUpdate;
- if(hb!==null && hb!==undefined && hb!==heartbeatValue){heartbeatValue=hb;heartbeatLastChangedAt=Date.now();heartbeatInitialized=true;}
+ if(hb!==null && hb!==undefined && hb!==''){
+   if(!heartbeatBaselineSet){
+     heartbeatValue=hb;
+     heartbeatBaselineSet=true;
+     heartbeatLastChangedAt=0;
+     heartbeatInitialized=false;
+   } else if(hb!==heartbeatValue){
+     heartbeatValue=hb;
+     heartbeatLastChangedAt=Date.now();
+     heartbeatInitialized=true;
+   }
+ }
  checkDeviceHeartbeat();
  if(!deviceOnline){clearDeviceTelemetry();}
 
@@ -1155,8 +1199,16 @@ function firebaseConnect() {
 
           firebaseOnline=online;
           if($('conn'))$('conn').textContent='FIREBASE · '+(online?'ONLINE':'OFFLINE');
-          if(!online){setDeviceOnline(false);}
-          else {checkDeviceHeartbeat();}
+          if(!online){
+            heartbeatLastChangedAt=0;
+            heartbeatInitialized=false;
+            setDeviceOnline(false);
+          } else {
+            // Tunggu perubahan lastUpdate baru setelah koneksi pulih.
+            heartbeatLastChangedAt=0;
+            heartbeatInitialized=false;
+            checkDeviceHeartbeat();
+          }
         });
 
       } catch (error) {
@@ -1240,7 +1292,37 @@ function init(){
  viewEnd=Date.now();viewStart=viewEnd-rangeMs();
  $('soilSP').value=cfg.soilSP;$('soilH').value=cfg.soilH;$('rhSP').value=cfg.rhSP;$('rhH').value=cfg.rhH;$('logInterval').value='3';
  $('logFile').textContent='--';$('dataNo').textContent='0';if($('conn'))if($('conn'))$('conn').textContent='FIREBASE NOT CONFIGURED';$('sideState').textContent='WAITING FOR DEVICE';
- renderOverview();renderDetail();drawCharts();renderDiagnostics();firebaseConnect();
+ renderOverview();renderDetail();drawCharts();renderDiagnostics();
+// Login lokal dashboard (pengunci tampilan, bukan pengganti Firebase Security Rules).
+const DASHBOARD_PASSWORD='Polban123';
+function showDashboard(){
+  document.body.classList.remove('logged-out');
+  $('loginGate').classList.add('hidden');
+  $('loginPassword').value='';
+  $('loginError').textContent='';
+  sessionStorage.setItem('solarDashboardUnlocked','1');
+}
+function lockDashboard(){
+  document.body.classList.add('logged-out');
+  $('loginGate').classList.remove('hidden');
+  $('loginPassword').value='';
+  $('loginError').textContent='';
+  sessionStorage.removeItem('solarDashboardUnlocked');
+  $('loginPassword').focus();
+}
+$('loginForm').addEventListener('submit',e=>{
+  e.preventDefault();
+  if($('loginPassword').value===DASHBOARD_PASSWORD){
+    showDashboard();
+  }else{
+    $('loginError').textContent='Password tidak sesuai.';
+    $('loginPassword').select();
+  }
+});
+$('logoutBtn').addEventListener('click',lockDashboard);
+if(sessionStorage.getItem('solarDashboardUnlocked')==='1')showDashboard();
+
+firebaseConnect();
 }
 init();clock();setInterval(clock,1000);setInterval(checkDeviceHeartbeat,3000);window.addEventListener('resize',()=>requestAnimationFrame(fitCurrentPage));window.addEventListener('orientationchange',()=>setTimeout(fitCurrentPage,180));setTimeout(fitCurrentPage,100);
 </script></body></html>
