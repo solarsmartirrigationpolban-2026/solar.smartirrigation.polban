@@ -813,6 +813,9 @@ let viewEnd=Date.now(), viewStart=viewEnd-3600000;
 let cfg={soilSP:40,soilH:5,rhSP:70,rhH:5,logOption:10};
 let history=[], events=[], db=null, rootRef=null, latestRoot=null, resetToken=0;
 let authObserverStarted=false, pumpCommandPending=false, pumpCommandTimer=null;
+// Status ESP32 ditentukan dari heartbeat firmware (system.lastUpdate), bukan dari Firebase saja.
+const DEVICE_TIMEOUT_MS=15000;
+let heartbeatValue=null, heartbeatLastChangedAt=0, heartbeatInitialized=false, deviceOnline=false, firebaseOnline=false;
 const LOG_OPTIONS=[1,2,5,10,15,30,60,120,300];
 const firebaseConfig = {
   apiKey: "AIzaSyDiL3LvfNNKXze7XPMgRGNiZHmaigrnN24",
@@ -957,6 +960,25 @@ function drawCharts(){
  svgChart('overviewEnergy',[{k:'pv',c:'#e9ad3b'},{k:'load',c:'#45a8e8'}],a.slice(-40),false,'W');
 }
 function recordHistory(){const x={ts:Date.now(),s1:d.soil[0],s2:d.soil[1],s3:d.soil[2],temp:d.temp,rh:d.rh,pv:d.pz[0].power,load:d.pz[1].power,flow:d.flow.rateLmin};if(Object.values(x).some(finite)){history.push(x);if(history.length>500)history.shift()}}
+function clearDeviceTelemetry(){
+ d.soil=[null,null,null];d.raw=[null,null,null];d.soilChannelOK=[false,false,false];d.soilValid=false;d.soilAvg=null;
+ d.temp=null;d.rh=null;
+ d.pz=[{voltage:null,current:null,power:null,energyWh:null,valid:false,lastOK:null},{voltage:null,current:null,power:null,energyWh:null,valid:false,lastOK:null}];
+ d.flow={rateLmin:null,totalML:null,pulses:null,valid:false,lastOK:null};
+ d.dailyWh=[null,null];d.dailyWaterML=null;d.dailyDate=null;
+ d.rtcReady=false;d.sdReady=false;d.wifiConnected=false;d.relay=[false,false,false];d.pump=false;
+ d.dataNumber=0;d.logFileName='';d.loggingActive=false;
+}
+function setDeviceOnline(online){
+ const changed=deviceOnline!==online;deviceOnline=online;d.wifiConnected=online;
+ if(!online){clearDeviceTelemetry();}
+ if($('sideState'))$('sideState').textContent=online?'DEVICE ONLINE':'DEVICE OFFLINE';
+ if(changed || !online){renderOverview();renderDetail();renderDiagnostics();drawCharts();}
+}
+function checkDeviceHeartbeat(){
+ const fresh=heartbeatInitialized && heartbeatLastChangedAt>0 && (Date.now()-heartbeatLastChangedAt)<=DEVICE_TIMEOUT_MS;
+ setDeviceOnline(!!fresh);
+}
 function renderOverview(){
  const avg=finite(d.soilAvg)?d.soilAvg:(d.soil.every(finite)?d.soil.reduce((a,b)=>a+b,0)/3:null);
  $('soil1Hero').innerHTML=fmt(d.soil[0])+ '<span class="unit"> %</span>';
@@ -976,7 +998,7 @@ function renderOverview(){
  d.relay.forEach((v,i)=>tag('r'+(i+1),!!v));
  status('rtcStatus',d.rtcReady,'READY','NOT READY');status('sdStatus',d.sdReady,'READY','NOT READY');
  status('pz1Status',d.pz[0].valid);status('pz2Status',d.pz[1].valid);status('flowStatus',d.flow.valid);
- const hasDeviceData=[...d.soil,d.temp,d.rh,d.pz[0].power,d.pz[1].power,d.flow.rateLmin].some(finite);
+ const hasDeviceData=deviceOnline && [...d.soil,d.temp,d.rh,d.pz[0].power,d.pz[1].power,d.flow.rateLmin].some(finite);
  const badge=$('deviceDataBadge');
  if(badge){badge.textContent=hasDeviceData?'DEVICE DATA RECEIVED':'WAITING FOR DEVICE DATA';badge.className='tag '+(hasDeviceData?'good':'warn')}
 }
@@ -1033,7 +1055,7 @@ function applyRoot(root){
  d.pz=[p1,p2].map(p=>({voltage:pick(p.voltage,p.volt,null),current:pick(p.current,p.amp,null),power:pick(p.power,null),energyWh:pick(p.energyWh,p.energy,p.wh,null),valid:pick(p.valid,true)===true,lastOK:pick(p.lastOK,null)}));
  d.flow={rateLmin:pick(f.rateLmin,f.flowRate,f.rate,null),totalML:pick(f.totalML,f.totalMl,f.totalVolumeML,0),pulses:pick(f.pulses,f.pulseCount,0),valid:pick(f.valid,true)===true,lastOK:pick(f.lastOK,null)};
  d.dailyWh=arr(pick(day.dailyWh,latestRoot.dailyWh),2);d.dailyWaterML=pick(day.dailyWaterML,latestRoot.dailyWaterML,0);d.dailyDate=pick(day.dailyDate,latestRoot.dailyDate,null);
- d.rtcReady=!!pick(dev.rtcReady,latestRoot.rtcReady,false);d.sdReady=!!pick(dev.sdReady,latestRoot.sdReady,false);d.wifiConnected=!!pick(dev.wifiConnected,latestRoot.wifiConnected,true);d.relay=arr(pick(a.relayOn,latestRoot.relayOn),3).map(Boolean);d.pump=!!pick(a.pumpManualOn,latestRoot.pumpManualOn,d.relay[2]);
+ d.rtcReady=!!pick(dev.rtcReady,latestRoot.rtcReady,false);d.sdReady=!!pick(dev.sdReady,latestRoot.sdReady,false);d.wifiConnected=false;d.relay=arr(pick(a.relayOn,latestRoot.relayOn),3).map(Boolean);d.pump=!!pick(a.pumpManualOn,latestRoot.pumpManualOn,d.relay[2]);
  if(pumpCommandPending && latestRoot.commands && latestRoot.commands.pump &&
     typeof latestRoot.commands.pump.manualOn==='boolean' &&
     latestRoot.commands.pump.manualOn===d.pump){
@@ -1047,7 +1069,13 @@ function applyRoot(root){
  }
  d.dataNumber=lg.dataNumber??0;d.logFileName=lg.logFileName??'';d.loggingActive=!!lg.loggingActive;d.logOption=lg.logOption??conf.logOption??10;
  cfg={soilSP:conf.soilSetpoint??40,soilH:conf.soilHyst??5,rhSP:conf.rhSetpoint??70,rhH:conf.rhHyst??5,logOption:d.logOption};
- d.commandStatus=sys.commandStatus??'idle';d.waitingCmd=sys.waitingCmd??0;d.waitingToken=sys.waitingToken??0;d.lastUpdate=sys.lastUpdate??dev.lastUpdate??null;d.connectionStatus=sys.connectionStatus??'online';
+ d.commandStatus=sys.commandStatus??'idle';d.waitingCmd=sys.waitingCmd??0;d.waitingToken=sys.waitingToken??0;d.lastUpdate=sys.lastUpdate??dev.lastUpdate??latestRoot.lastUpdate??null;d.connectionStatus=firebaseOnline?'online':'offline';
+ // lastUpdate pada firmware adalah counter yang harus berubah setiap siklus publish.
+ const hb=d.lastUpdate;
+ if(hb!==null && hb!==undefined && hb!==heartbeatValue){heartbeatValue=hb;heartbeatLastChangedAt=Date.now();heartbeatInitialized=true;}
+ checkDeviceHeartbeat();
+ if(!deviceOnline){clearDeviceTelemetry();}
+
  $('soilSP').value=cfg.soilSP;$('soilH').value=cfg.soilH;$('rhSP').value=cfg.rhSP;$('rhH').value=cfg.rhH;$('logInterval').value=String(LOG_OPTIONS.indexOf(Number(cfg.logOption))>=0?LOG_OPTIONS.indexOf(Number(cfg.logOption)):3);
  $('logFile').textContent=d.logFileName||'--';$('dataNo').textContent=d.dataNumber;$('waitingCmd').textContent=d.waitingCmd;$('commandStatus').textContent=d.commandStatus;
  $('loggerBadge').textContent=d.loggingActive?'ACTIVE':'STOPPED';$('loggerBadge').className='tag '+(d.loggingActive?'':'off');
@@ -1055,7 +1083,7 @@ function applyRoot(root){
  $('pumpSwitch').setAttribute('aria-checked',String(pumpCommandPending?$('pumpSwitch').checked:d.pump));
  if(!pumpCommandPending){$('pumpCommandStatus').textContent=d.pump?'POMPA ON · FEEDBACK ESP32':'POMPA OFF · FEEDBACK ESP32';}
  $('relay1State').textContent=d.relay[0]?'ON · AUTO':'OFF · AUTO';$('relay2State').textContent=d.relay[1]?'ON · AUTO':'OFF · AUTO';
- if($('conn'))if($('conn'))$('conn').textContent='FIREBASE · '+(d.connectionStatus||'ONLINE').toString().toUpperCase();$('sideState').textContent=d.wifiConnected?'DEVICE ONLINE':'WAITING FOR DEVICE';
+ if($('conn'))$('conn').textContent='FIREBASE · '+(firebaseOnline?'ONLINE':'OFFLINE');$('sideState').textContent=deviceOnline?'DEVICE ONLINE':'DEVICE OFFLINE';
  recordHistory();renderOverview();renderDetail();renderDiagnostics();drawCharts();requestAnimationFrame(fitCurrentPage);
 }
 function firebaseConnect() {
@@ -1125,9 +1153,10 @@ function firebaseConnect() {
             ? 'FIREBASE CONNECTED'
             : 'FIREBASE OFFLINE';
 
-          $('sideState').textContent = online
-            ? 'DEVICE / DATABASE LINK'
-            : 'DATABASE DISCONNECTED';
+          firebaseOnline=online;
+          if($('conn'))$('conn').textContent='FIREBASE · '+(online?'ONLINE':'OFFLINE');
+          if(!online){setDeviceOnline(false);}
+          else {checkDeviceHeartbeat();}
         });
 
       } catch (error) {
@@ -1213,5 +1242,5 @@ function init(){
  $('logFile').textContent='--';$('dataNo').textContent='0';if($('conn'))if($('conn'))$('conn').textContent='FIREBASE NOT CONFIGURED';$('sideState').textContent='WAITING FOR DEVICE';
  renderOverview();renderDetail();drawCharts();renderDiagnostics();firebaseConnect();
 }
-init();clock();setInterval(clock,1000);window.addEventListener('resize',()=>requestAnimationFrame(fitCurrentPage));window.addEventListener('orientationchange',()=>setTimeout(fitCurrentPage,180));setTimeout(fitCurrentPage,100);
+init();clock();setInterval(clock,1000);setInterval(checkDeviceHeartbeat,3000);window.addEventListener('resize',()=>requestAnimationFrame(fitCurrentPage));window.addEventListener('orientationchange',()=>setTimeout(fitCurrentPage,180));setTimeout(fitCurrentPage,100);
 </script></body></html>
